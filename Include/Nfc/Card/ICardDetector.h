@@ -1,0 +1,30 @@
+/**
+ * @file ICardDetector.h
+ * @author Nathan Houwaart (n.m.houwaart@hva.nl)
+ * @brief Interface for NFC card detection
+ * @version 0.1
+ * @date 2025-11-09
+ * 
+ * @copyright Copyright (c) 2025
+ * 
+ */
+
+#pragma once
+
+#include <etl/expected.h>
+#include <etl/vector.h>
+
+#include "Error/Error.h"
+
+class ICardDetector {
+public:
+    virtual ~ICardDetector() = default;
+
+    /**
+     * @brief Detects an NFC card and retrieves its information
+     * 
+     * @return etl::expected<CardInfo, error::Error> card information on success, Error on failure
+     */
+    etl::expected<CardInfo, error::Error> detectCard() = 0;
+
+};
