@@ -41,7 +41,9 @@ namespace error {
         MissingDEP,
         SAMerror,
         FrameCheckFailed,
-        InvalidResponse
+        InvalidResponse,
+        NotImplemented,
+        Unknown
     };
 
 } // namespace error

@@ -3,6 +3,7 @@
 # Add subdirectories
 add_subdirectory(Comms)
 add_subdirectory(Pn532)
+add_subdirectory(Rc522)
 
 # Create library target
 if(NFCCPP_BUILD_SHARED_LIBS)
@@ -17,8 +18,9 @@ add_library(NfcCpp::NfcCpp ALIAS NfcCpp)
 # Collect all source files from subdirectories
 target_sources(NfcCpp
     PRIVATE
-        $<TARGET_OBJECTS:NfcCpp_Comms>
+        $<TARGET_OBJECTS:NfcCpp_Comms_Serial>
         $<TARGET_OBJECTS:NfcCpp_Pn532>
+        $<TARGET_OBJECTS:NfcCpp_Rc522>
 )
 
 # Include directories

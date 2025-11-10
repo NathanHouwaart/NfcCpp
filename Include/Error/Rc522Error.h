@@ -26,6 +26,8 @@ namespace error {
         AuthError,
         FrameError,
         ProtocolError,
+        NotImplemented,
+        Unknown
     };
 
 } // namespace error

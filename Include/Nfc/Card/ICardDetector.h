@@ -15,6 +15,7 @@
 #include <etl/vector.h>
 
 #include "Error/Error.h"
+#include "CardInfo.h"
 
 class ICardDetector {
 public:
@@ -25,6 +26,14 @@ public:
      * 
      * @return etl::expected<CardInfo, error::Error> card information on success, Error on failure
      */
-    etl::expected<CardInfo, error::Error> detectCard() = 0;
+    virtual etl::expected<CardInfo, error::Error> detectCard() = 0;
+
+    /**
+     * @brief Checks if a card is currently present
+     * 
+     * @return true if a card is present
+     * @return false if no card is present
+     */
+    virtual bool isCardPresent() = 0;
 
 };

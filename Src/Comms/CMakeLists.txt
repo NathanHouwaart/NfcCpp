@@ -3,13 +3,19 @@
 # Add Serial subdirectory
 add_subdirectory(Serial)
 
-# Create object library for Comms
+# Create object library for Comms that includes Serial objects
 add_library(NfcCpp_Comms OBJECT)
 
 # Add source files from Serial subdirectory
 target_sources(NfcCpp_Comms
     PRIVATE
         $<TARGET_OBJECTS:NfcCpp_Comms_Serial>
+)
+
+# Link Serial library so its symbols are exported
+target_link_libraries(NfcCpp_Comms
+    PUBLIC
+        NfcCpp_Comms_Serial
 )
 
 # Include directories

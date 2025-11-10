@@ -14,31 +14,31 @@
 #include <etl/expected.h>
 #include <etl/vector.h>
 
-#include "Error/ApduError.h"
+#include "Error/Error.h"
 #include "ApduResponse.h"
 
 /**
  * @brief Interface for APDU transceivers
  */
-class ApduTransceiver {
+class IApduTransceiver {
 public:
-    virtual ~ApduTransceiver() = default;
+    virtual ~IApduTransceiver() = default;
 
     /**
      * @brief Transmits an APDU command and receives the response
      * 
      * @param apduCommand apdu command to transmit
-     * @return etl::expected<ApduResponse, error::ApduError> apdu response on success, ApduError on failure
+     * @return etl::expected<ApduResponse, error::Error> apdu response on success, ApduError on failure
      */
-    etl::expected<ApduResponse, error::ApduError> transmitApdu(const etl::ivector<uint8_t>& apduCommand) = 0;
+    virtual etl::expected<ApduResponse, error::Error> transceive(const etl::ivector<uint8_t>& apdu) = 0;
 private: 
 
     /**
      * @brief Parses raw APDU response data into an ApduResponse object
      * 
      * @param raw raw APDU response data
-     * @return etl::expected<ApduResponse, error::ApduError> apdu response on success, ApduError on failure
+     * @return etl::expected<ApduResponse, error::Error> apdu response on success, ApduError on failure
      */
-    etl::expected<ApduResponse, error::ApduError> parseApduResponse(const etl::ivector<uint8_t>& raw) = 0;
+    virtual etl::expected<ApduResponse, error::Error> parseApduResponse(const etl::ivector<uint8_t>& raw) = 0;
 
-}
+};

@@ -32,4 +32,4 @@ public:
     uint16_t getStatusWord() const {
         return (static_cast<uint16_t>(sw1) << 8) | sw2;
     }
-}
+};

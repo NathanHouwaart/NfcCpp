@@ -1,17 +1,17 @@
-# PN532 NFC driver module
+# RC522 NFC reader driver module (placeholder)
 
 # Create object library
-add_library(NfcCpp_Pn532 OBJECT)
+add_library(NfcCpp_Rc522 OBJECT)
 
 # Add source files
-target_sources(NfcCpp_Pn532
+target_sources(NfcCpp_Rc522
     PRIVATE
-        Pn532Driver.cpp
-        Pn532ApduAdapter.cpp
+        Rc522Driver.cpp
+        Rc522ApduAdapter.cpp
 )
 
 # Include directories
-target_include_directories(NfcCpp_Pn532
+target_include_directories(NfcCpp_Rc522
     PUBLIC
         ${CMAKE_SOURCE_DIR}/Include
     PRIVATE
@@ -20,7 +20,7 @@ target_include_directories(NfcCpp_Pn532
 )
 
 # Link dependencies
-target_link_libraries(NfcCpp_Pn532
+target_link_libraries(NfcCpp_Rc522
     PRIVATE
         etl::etl
 )

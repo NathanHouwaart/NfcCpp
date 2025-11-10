@@ -13,6 +13,7 @@
 
 #include <cstdarg>
 #include <cstdio>
+#include <cstring>
 
 #define ENABLE_LOGGING 1
 
@@ -22,10 +23,30 @@
 
 class Logger {
 public:
+    // ANSI color codes
+    static constexpr const char* COLOR_RESET   = "\033[0m";
+    static constexpr const char* COLOR_RED     = "\033[31m";
+    static constexpr const char* COLOR_YELLOW  = "\033[33m";
+    static constexpr const char* COLOR_GREEN   = "\033[32m";
+    static constexpr const char* COLOR_CYAN    = "\033[36m";
+    static constexpr const char* COLOR_GRAY    = "\033[90m";
+
     static void log(const char* level, const char* file, int line, const char* fmt, ...) {
 #if ENABLE_LOGGING
-        // Optional: prefix with level, file and line
-        std::printf("[%s][%s:%d] ", level, file, line);
+        // Choose color based on log level
+        const char* color = COLOR_RESET;
+        if (std::strcmp(level, "ERROR") == 0) {
+            color = COLOR_RED;
+        } else if (std::strcmp(level, "WARN") == 0) {
+            color = COLOR_YELLOW;
+        } else if (std::strcmp(level, "INFO") == 0) {
+            color = COLOR_GREEN;
+        }
+
+        // Print colored level with file and line info
+        std::printf("%s[%s]%s %s[%s:%d]%s ", 
+                    color, level, COLOR_RESET,
+                    COLOR_GRAY, file, line, COLOR_RESET);
 
         va_list args;
         va_start(args, fmt);
