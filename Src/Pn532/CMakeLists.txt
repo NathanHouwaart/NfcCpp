@@ -8,6 +8,7 @@ target_sources(NfcCpp_Pn532
     PRIVATE
         Pn532Driver.cpp
         Pn532ApduAdapter.cpp
+        Pn532ResponseFrame.cpp
 )
 
 # Include directories
