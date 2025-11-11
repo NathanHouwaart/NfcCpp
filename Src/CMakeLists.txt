@@ -4,6 +4,7 @@
 add_subdirectory(Comms)
 add_subdirectory(Pn532)
 add_subdirectory(Rc522)
+add_subdirectory(Nfc)
 
 # Create library target
 if(NFCCPP_BUILD_SHARED_LIBS)
@@ -21,6 +22,8 @@ target_sources(NfcCpp
         $<TARGET_OBJECTS:NfcCpp_Comms_Serial>
         $<TARGET_OBJECTS:NfcCpp_Pn532>
         $<TARGET_OBJECTS:NfcCpp_Rc522>
+        $<TARGET_OBJECTS:NfcCpp_Nfc_Card>
+        $<TARGET_OBJECTS:NfcCpp_Nfc_Wire>
 )
 
 # Include directories
