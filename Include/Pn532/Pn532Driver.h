@@ -55,7 +55,7 @@ public:
     void init();
 
     // Command execution
-    etl::expected<CommandResult, Error> executeCommand(IPn532Command& command);
+    etl::expected<CommandResult, Error> executeCommand(pn532::IPn532Command& command);
 
     // Firmware and status
     etl::expected<FirmwareInfo, Error> getFirmwareVersion();

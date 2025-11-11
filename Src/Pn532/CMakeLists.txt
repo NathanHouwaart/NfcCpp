@@ -9,6 +9,12 @@ target_sources(NfcCpp_Pn532
         Pn532Driver.cpp
         Pn532ApduAdapter.cpp
         Pn532ResponseFrame.cpp
+        CommandRequest.cpp
+        CommandResponse.cpp
+        Commands/GetFirmwareVersion.cpp
+        Commands/PerformSelfTest.cpp
+        Commands/InListPassiveTarget.cpp
+        Commands/InDataExchange.cpp
 )
 
 # Include directories

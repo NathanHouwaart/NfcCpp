@@ -11,7 +11,7 @@ void Pn532Driver::init() {
 }
 
 // Command execution
-etl::expected<CommandResult, Error> Pn532Driver::executeCommand(IPn532Command& command) {
+etl::expected<CommandResult, Error> Pn532Driver::executeCommand(pn532::IPn532Command& command) {
     // TODO: Implement command execution
     return etl::unexpected(Error::fromPn532(Pn532Error::Timeout));
 }
