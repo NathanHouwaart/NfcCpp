@@ -20,6 +20,7 @@
 #define LOG_INFO(fmt, ...)  Logger::log("INFO", __FILE__, __LINE__, fmt, ##__VA_ARGS__)
 #define LOG_WARN(fmt, ...)  Logger::log("WARN", __FILE__, __LINE__, fmt, ##__VA_ARGS__)
 #define LOG_ERROR(fmt, ...) Logger::log("ERROR", __FILE__, __LINE__, fmt, ##__VA_ARGS__)
+#define LOG_HEX(level, name, data, len) Logger::logHex(level, __FILE__, __LINE__, name, data, len)
 
 class Logger {
 public:
@@ -53,6 +54,32 @@ public:
         std::vprintf(fmt, args);  // or snprintf into a fixed buffer for embedded
         va_end(args);
 
+        std::printf("\n");
+#endif
+    }
+
+    static void logHex(const char* level, const char* file, int line, const char* name, const void* data, size_t len) {
+#if ENABLE_LOGGING
+        // Choose color based on log level
+        const char* color = COLOR_RESET;
+        if (std::strcmp(level, "ERROR") == 0) {
+            color = COLOR_RED;
+        } else if (std::strcmp(level, "WARN") == 0) {
+            color = COLOR_YELLOW;
+        } else if (std::strcmp(level, "INFO") == 0) {
+            color = COLOR_GREEN;
+        }
+
+        // Print colored level with file and line info
+        std::printf("%s[%s]%s %s[%s:%d]%s %s [%zu bytes]: ", 
+                    color, level, COLOR_RESET,
+                    COLOR_GRAY, file, line, COLOR_RESET,
+                    name, len);
+
+        const uint8_t* bytes = static_cast<const uint8_t*>(data);
+        for (size_t i = 0; i < len; ++i) {
+            std::printf("%02X ", bytes[i]);
+        }
         std::printf("\n");
 #endif
     }

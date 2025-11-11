@@ -15,6 +15,7 @@
 #include <etl/expected.h>
 #include <cstdint>
 #include "Error/Error.h"
+#include "Nfc/BufferSizes.h"
 
 namespace nfc
 {
@@ -33,17 +34,18 @@ namespace nfc
          * @brief Wrap a PDU (Protocol Data Unit) into an APDU
          * 
          * @param pdu PDU to wrap
-         * @return etl::vector<uint8_t, 261> Wrapped APDU (max 256 bytes + 5 byte header)
+         * @return etl::vector<uint8_t, buffer::APDU_COMMAND_MAX> Wrapped APDU
          */
-        virtual etl::vector<uint8_t, 261> wrap(const etl::ivector<uint8_t>& pdu) = 0;
+        virtual etl::vector<uint8_t, buffer::APDU_COMMAND_MAX> wrap(const etl::ivector<uint8_t>& pdu) = 0;
 
         /**
          * @brief Unwrap an APDU response to get the PDU
          * 
          * @param apdu APDU response to unwrap
-         * @return etl::expected<etl::vector<uint8_t, 256>, error::Error> Unwrapped PDU or error
+         * @return etl::expected<etl::vector<uint8_t, buffer::APDU_DATA_MAX>, error::Error> Unwrapped PDU or error
          */
-        virtual etl::expected<etl::vector<uint8_t, 256>, error::Error> unwrap(const etl::ivector<uint8_t>& apdu) = 0;
+        virtual etl::expected<etl::vector<uint8_t, buffer::APDU_DATA_MAX>, error::Error> unwrap(const etl::ivector<uint8_t>& apdu) = 0;
     };
 
 } // namespace nfc
+

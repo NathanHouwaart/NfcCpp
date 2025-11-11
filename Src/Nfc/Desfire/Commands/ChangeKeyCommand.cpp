@@ -10,7 +10,7 @@
  */
 
 #include "Nfc/Desfire/Commands/ChangeKeyCommand.h"
-#include "Nfc/Card/DesfireContext.h"
+#include "Nfc/Desfire/DesfireContext.h"
 
 using namespace nfc;
 

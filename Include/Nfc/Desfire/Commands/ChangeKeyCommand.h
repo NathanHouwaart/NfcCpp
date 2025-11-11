@@ -15,7 +15,7 @@
 #include "../DesfireKeyType.h"
 #include <etl/vector.h>
 #include <etl/optional.h>
-#include <etl/pair.h>
+#include <etl/utility.h>
 
 namespace nfc
 {

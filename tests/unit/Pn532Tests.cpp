@@ -4,6 +4,7 @@
 #include "Error/Error.h"
 
 using namespace error;
+using namespace pn532;
 
 // Mock Hardware Bus for testing
 class MockHardwareBus : public comms::IHardwareBus {
@@ -24,9 +25,9 @@ public:
         m_isOpen = false;
     }
     
-    bool isOpen() const override {
-        return m_isOpen;
-    }
+    // bool isOpen() const override {
+    //     return m_isOpen;
+    // }
     
     etl::expected<void, Error> write(const etl::ivector<uint8_t>& data) override {
         lastWrittenData.clear();

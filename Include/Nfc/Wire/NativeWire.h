@@ -12,6 +12,7 @@
 #pragma once
 
 #include "IWire.h"
+#include "Nfc/BufferSizes.h"
 
 namespace nfc
 {
@@ -29,17 +30,17 @@ namespace nfc
          * @brief Wrap a PDU into native format
          * 
          * @param pdu PDU to wrap
-         * @return etl::vector<uint8_t, 261> Wrapped data
+         * @return etl::vector<uint8_t, buffer::APDU_COMMAND_MAX> Wrapped data
          */
-        etl::vector<uint8_t, 261> wrap(const etl::ivector<uint8_t>& pdu) override;
+        etl::vector<uint8_t, buffer::APDU_COMMAND_MAX> wrap(const etl::ivector<uint8_t>& pdu) override;
 
         /**
          * @brief Unwrap native format response
          * 
          * @param apdu Response to unwrap
-         * @return etl::expected<etl::vector<uint8_t, 256>, error::Error> Unwrapped PDU or error
+         * @return etl::expected<etl::vector<uint8_t, buffer::APDU_DATA_MAX>, error::Error> Unwrapped PDU or error
          */
-        etl::expected<etl::vector<uint8_t, 256>, error::Error> unwrap(const etl::ivector<uint8_t>& apdu) override;
+        etl::expected<etl::vector<uint8_t, buffer::APDU_DATA_MAX>, error::Error> unwrap(const etl::ivector<uint8_t>& apdu) override;
     };
 
 } // namespace nfc

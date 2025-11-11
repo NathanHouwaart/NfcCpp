@@ -10,9 +10,10 @@
  */
 
 #include "Pn532/Pn532ApduAdapter.h"
+#include "Pn532/Pn532Driver.h"
 #include "Utils/Logging.h"
 
-Pn532ApduAdapter::Pn532ApduAdapter(Pn532Driver& driver)
+Pn532ApduAdapter::Pn532ApduAdapter(pn532::Pn532Driver& driver)
     : driver(driver) {
     LOG_INFO("Pn532ApduAdapter initialized");
 }

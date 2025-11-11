@@ -11,22 +11,21 @@
 
 #include "Nfc/Wire/NativeWire.h"
 
-namespace nfc
+using namespace nfc;
+using namespace nfc::buffer;
+
+etl::vector<uint8_t, APDU_COMMAND_MAX> NativeWire::wrap(const etl::ivector<uint8_t>& pdu)
 {
-    etl::vector<uint8_t, 261> NativeWire::wrap(const etl::ivector<uint8_t>& pdu)
-    {
-        // TODO: Implement native wrapping
-        // Native mode typically just passes through the PDU
-        etl::vector<uint8_t, 261> result(pdu.begin(), pdu.end());
-        return result;
-    }
+    // TODO: Implement native wrapping
+    // Native mode typically just passes through the PDU
+    etl::vector<uint8_t, APDU_COMMAND_MAX> result(pdu.begin(), pdu.end());
+    return result;
+}
 
-    etl::expected<etl::vector<uint8_t, 256>, error::Error> NativeWire::unwrap(const etl::ivector<uint8_t>& apdu)
-    {
-        // TODO: Implement native unwrapping
-        // Native mode typically just passes through the response
-        etl::vector<uint8_t, 256> result(apdu.begin(), apdu.end());
-        return result;
-    }
-
-} // namespace nfc
+etl::expected<etl::vector<uint8_t, APDU_DATA_MAX>, error::Error> NativeWire::unwrap(const etl::ivector<uint8_t>& apdu)
+{
+    // TODO: Implement native unwrapping
+    // Native mode typically just passes through the response
+    etl::vector<uint8_t, APDU_DATA_MAX> result(apdu.begin(), apdu.end());
+    return result;
+}

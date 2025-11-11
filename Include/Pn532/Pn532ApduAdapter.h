@@ -15,11 +15,16 @@
 #include "Nfc/Apdu/ApduResponse.h"
 #include "Nfc/Card/ICardDetector.h"
 #include "Nfc/Card/CardInfo.h"
-#include "Pn532/Pn532Driver.h"
 #include "Error/Error.h"
 
 #include <etl/vector.h>
 #include <etl/expected.h>
+
+// Forward declaration
+namespace pn532
+{
+    class Pn532Driver;
+}
 
 /**
  * @brief Adapter that wraps Pn532Driver to provide APDU and card detection interfaces
@@ -34,7 +39,7 @@ public:
      * @brief Construct a new Pn532ApduAdapter
      * @param driver Reference to the PN532 driver instance
      */
-    explicit Pn532ApduAdapter(Pn532Driver& driver);
+    explicit Pn532ApduAdapter(pn532::Pn532Driver& driver);
     
     /**
      * @brief Destroy the Pn532ApduAdapter
@@ -76,5 +81,5 @@ private:
         const etl::ivector<uint8_t>& raw
     );
 
-    Pn532Driver& driver;  ///< Reference to the PN532 driver
+    pn532::Pn532Driver& driver;  ///< Reference to the PN532 driver
 };

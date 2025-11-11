@@ -10,7 +10,7 @@
  */
 
 #include "Nfc/Desfire/Commands/AuthenticateCommand.h"
-#include "Nfc/Card/DesfireContext.h"
+#include "Nfc/Desfire/DesfireContext.h"
 
 using namespace nfc;
 
