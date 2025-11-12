@@ -1,4 +1,5 @@
 #include "Pn532/Pn532Driver.h"
+#include "Pn532/Commands/GetFirmwareVersion.h"
 #include "Utils/Logging.h"
 
 #include "Pn532/CommandRequest.h"
@@ -51,8 +52,15 @@ etl::expected<CommandResult, Error> Pn532Driver::executeCommand(IPn532Command &c
 // Firmware and status
 etl::expected<FirmwareInfo, Error> Pn532Driver::getFirmwareVersion()
 {
-    // TODO: Implement get firmware version
-    return etl::unexpected(Error::fromPn532(Pn532Error::Timeout));
+    GetFirmwareVersion cmd;
+    auto result = executeCommand(cmd);
+    
+    if (!result.has_value())
+    {
+        return etl::unexpected(result.error());
+    }
+    
+    return cmd.getFirmwareInfo();
 }
 
 etl::expected<void, Error> Pn532Driver::performSelftest()

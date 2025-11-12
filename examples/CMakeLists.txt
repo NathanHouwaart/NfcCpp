@@ -8,3 +8,6 @@ add_subdirectory(serial_communication)
 
 # Example 3: Card Detection
 add_subdirectory(card_detection)
+
+# Example 4: PN532 Command Test (Interactive)
+add_subdirectory(pn532_command_test)

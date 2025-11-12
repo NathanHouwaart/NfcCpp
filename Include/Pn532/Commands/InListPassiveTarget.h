@@ -87,7 +87,6 @@ namespace pn532
         bool parseUid(const Pn532ResponseFrame& frame, size_t& index, TargetInfo& targetInfo);
         void parseATS(const Pn532ResponseFrame& frame, size_t& index, TargetInfo& targetInfo);
         bool parseOtherTarget(const Pn532ResponseFrame& frame, size_t& index, TargetInfo& targetInfo);
-        void populateResponsePayload(CommandResponse& result, uint8_t targetNumber, const TargetInfo& targetInfo);
     };
 
 } // namespace pn532

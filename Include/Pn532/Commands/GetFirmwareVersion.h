@@ -26,7 +26,7 @@ namespace pn532
         uint8_t ic;
         uint8_t ver;
         uint8_t rev;
-        uint8_t supportFlags;
+        uint8_t support;
 
         /**
          * @brief Get string representation

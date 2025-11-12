@@ -14,6 +14,8 @@ using namespace error;
 
 namespace pn532
 {
+    // Forward declaration
+    struct FirmwareInfo;
 
     enum class Pn532Baudrate
     {
@@ -23,14 +25,6 @@ namespace pn532
         Baud57600,
         Baud115200,
         Baud230400
-    };
-
-    struct FirmwareInfo
-    {
-        uint8_t ic;
-        uint8_t ver;
-        uint8_t rev;
-        uint8_t support;
     };
 
     struct GeneralStatus

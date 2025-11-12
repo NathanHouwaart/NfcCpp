@@ -78,6 +78,14 @@ namespace pn532
 
     private:
         SelfTestOptions options;
+        
+        /**
+         * @brief Get default timeout for a test type
+         * 
+         * @param test Test type
+         * @return uint32_t Default timeout in milliseconds
+         */
+        static uint32_t defaultTimeoutFor(TestType test);
     };
 
 } // namespace pn532
