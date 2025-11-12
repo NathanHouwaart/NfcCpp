@@ -14,8 +14,8 @@
 namespace nfc
 {
     CardManager::CardManager(
-        IApduTransceiver& transceiverRef,
-        ICardDetector& detectorRef,
+        ::IApduTransceiver& transceiverRef,
+        ::ICardDetector& detectorRef,
         const ReaderCapabilities& caps)
         : transceiver(transceiverRef)
         , detector(detectorRef)
@@ -68,19 +68,13 @@ namespace nfc
 
     etl::expected<CardSession*, error::Error> CardManager::createSession()
     {
-        // TODO: Implement session creation
-        
-        // Check if we have card info
+        // Check if we have card info from a previous detectCard() call
         if (!currentCardInfo.has_value())
         {
-            auto detectResult = detectCard();
-            if (!detectResult.has_value())
-            {
-                return etl::unexpected(detectResult.error());
-            }
+            return etl::unexpected(error::Error::fromCardManager(error::CardManagerError::NoCardPresent));
         }
 
-        // Create session
+        // Create session from the already-detected card
         auto sessionResult = CardSession::create(transceiver, currentCardInfo.value());
         
         if (!sessionResult.has_value())

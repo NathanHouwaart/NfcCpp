@@ -21,30 +21,41 @@ namespace nfc
     template<typename T>
     T* CardSession::getCardAs()
     {
-        // TODO: Implement type-safe variant access
-        return nullptr;
+        return etl::get_if<T>(&card);
     }
 
     template<typename T>
     const T* CardSession::getCardAs() const
     {
-        // TODO: Implement type-safe variant access
-        return nullptr;
+        return etl::get_if<T>(&card);
     }
 
     template<typename T>
     T* CardSession::getContextAs()
     {
-        // TODO: Implement type-safe variant access
-        return nullptr;
+        return etl::get_if<T>(&context);
     }
 
     template<typename T>
     const T* CardSession::getContextAs() const
     {
-        // TODO: Implement type-safe variant access
-        return nullptr;
+        return etl::get_if<T>(&context);
     }
+
+    // Explicit template instantiations
+    template DesfireCard* CardSession::getCardAs<DesfireCard>();
+    template const DesfireCard* CardSession::getCardAs<DesfireCard>() const;
+    template MifareClassicCard* CardSession::getCardAs<MifareClassicCard>();
+    template const MifareClassicCard* CardSession::getCardAs<MifareClassicCard>() const;
+    template UltralightCard* CardSession::getCardAs<UltralightCard>();
+    template const UltralightCard* CardSession::getCardAs<UltralightCard>() const;
+
+    template DesfireContext* CardSession::getContextAs<DesfireContext>();
+    template const DesfireContext* CardSession::getContextAs<DesfireContext>() const;
+    template MifareClassicContext* CardSession::getContextAs<MifareClassicContext>();
+    template const MifareClassicContext* CardSession::getContextAs<MifareClassicContext>() const;
+    template UltralightContext* CardSession::getContextAs<UltralightContext>();
+    template const UltralightContext* CardSession::getContextAs<UltralightContext>() const;
 
     DesfireCard* CardSession::getDesfireCard()
     {
@@ -98,7 +109,7 @@ namespace nfc
     }
 
     etl::expected<CardSession, error::Error> CardSession::create(
-        IApduTransceiver& transceiver,
+        ::IApduTransceiver& transceiver,
         const CardInfo& info)
     {
         // TODO: Implement session creation based on card type

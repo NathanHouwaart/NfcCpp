@@ -17,38 +17,39 @@ CardType CardInfo::detectType()
 {
     // Detect card type based on ATQA and SAK values
     // Reference: NFC Forum Type Tags and ISO14443 specifications
+    // Note: ATQA is stored in little-endian format (as received from PN532)
     
-    // DESFire cards: ATQA = 0x0344 or 0x0044, SAK = 0x20
-    if ((atqa == 0x0344 || atqa == 0x0044) && sak == 0x20)
+    // DESFire cards: ATQA = 0x4403 (LE) or 0x4400 (LE), SAK = 0x20
+    if ((atqa == 0x4403 || atqa == 0x4400) && sak == 0x20)
     {
         type = CardType::MifareDesfire;
         return type;
     }
     
-    // MIFARE Ultralight: ATQA = 0x0044, SAK = 0x00
-    if (atqa == 0x0044 && sak == 0x00)
+    // MIFARE Ultralight: ATQA = 0x4400 (LE), SAK = 0x00
+    if (atqa == 0x4400 && sak == 0x00)
     {
         type = CardType::MifareUltralight;
         return type;
     }
     
-    // NTAG213/215/216: ATQA = 0x0044, SAK = 0x00 (with ATS)
+    // NTAG213/215/216: ATQA = 0x4400 (LE), SAK = 0x00 (with ATS)
     // Note: Similar to Ultralight, but can be distinguished by ATS presence
-    if (atqa == 0x0044 && sak == 0x00 && !ats.empty())
+    if (atqa == 0x4400 && sak == 0x00 && !ats.empty())
     {
         type = CardType::Ntag213_215_216;
         return type;
     }
     
-    // MIFARE Classic 1K: ATQA = 0x0004, SAK = 0x08
-    if (atqa == 0x0004 && sak == 0x08)
+    // MIFARE Classic 1K: ATQA = 0x0400 (LE), SAK = 0x08
+    if (atqa == 0x0400 && sak == 0x08)
     {
         type = CardType::MifareClassic;
         return type;
     }
     
-    // MIFARE Classic 4K: ATQA = 0x0002, SAK = 0x18
-    if (atqa == 0x0002 && sak == 0x18)
+    // MIFARE Classic 4K: ATQA = 0x0200 (LE), SAK = 0x18
+    if (atqa == 0x0200 && sak == 0x18)
     {
         type = CardType::MifareClassic;
         return type;
@@ -61,8 +62,8 @@ CardType CardInfo::detectType()
         return type;
     }
     
-    // FeliCa: ATQA = 0x0001, SAK = 0x01
-    if (atqa == 0x0001 && sak == 0x01)
+    // FeliCa: ATQA = 0x0100 (LE), SAK = 0x01
+    if (atqa == 0x0100 && sak == 0x01)
     {
         type = CardType::FeliCa;
         return type;
@@ -137,6 +138,10 @@ etl::string<255> CardInfo::toString() const
     }
     
     // Build final string
+    // Note: ATQA is displayed in big-endian format (conventional notation)
+    // even though it's stored in little-endian format internally
+    uint16_t atqaDisplay = ((atqa & 0xFF) << 8) | ((atqa >> 8) & 0xFF);
+    
     std::snprintf(buffer, sizeof(buffer),
                  "Card Type: %s\n"
                  "UID: %s (%zu bytes)\n"
@@ -145,7 +150,7 @@ etl::string<255> CardInfo::toString() const
                  "ATS: %s",
                  typeStr,
                  uidStr, uid.size(),
-                 atqa,
+                 atqaDisplay,
                  sak,
                  atsStr);
     

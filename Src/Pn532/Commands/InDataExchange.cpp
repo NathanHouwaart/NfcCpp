@@ -88,6 +88,7 @@ namespace pn532
 
         // Extract status byte
         cachedStatusByte = data[0];
+        auto status = static_cast<InDataExchangeStatus>(cachedStatusByte);
         
         // Extract response data from card (everything after status byte)
         cachedResponse.clear();
@@ -96,9 +97,31 @@ namespace pn532
             cachedResponse.assign(data.begin() + 1, data.end());
         }
         
-        // NOTE: We return OK even if card-level status indicates error.
-        // This separates transport errors (PN532 communication) from card errors.
-        // Callers should check isSuccess() or getStatus() for card-level errors.
+        // Check card-level status and return error for failures
+        // This way callers don't need to manually check the status byte
+        if (status != InDataExchangeStatus::Success)
+        {
+            // Map InDataExchange status to appropriate PN532 error
+            Pn532Error error;
+            switch (status)
+            {
+                case InDataExchangeStatus::Timeout:
+                    error = Pn532Error::Timeout;
+                    break;
+                case InDataExchangeStatus::CardDisappeared:
+                case InDataExchangeStatus::TargetReleased:
+                    error = Pn532Error::Timeout;
+                    break;
+                case InDataExchangeStatus::CrcError:
+                case InDataExchangeStatus::ParityError:
+                    error = Pn532Error::ParityError;
+                    break;
+                default:
+                    error = Pn532Error::MifareFramingError;
+                    break;
+            }
+            return etl::unexpected(Error::fromPn532(error));
+        }
         
         return createCommandResponse(frame.getCommandCode(), data);
     }

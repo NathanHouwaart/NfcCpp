@@ -42,8 +42,8 @@ namespace nfc
          * @param capabilities Reader capabilities
          */
         CardManager(
-            IApduTransceiver& transceiver,
-            ICardDetector& detector,
+            ::IApduTransceiver& transceiver,
+            ::ICardDetector& detector,
             const ReaderCapabilities& capabilities);
 
         /**
@@ -109,8 +109,8 @@ namespace nfc
         const ReaderCapabilities& getCapabilities() const;
 
     private:
-        IApduTransceiver& transceiver;
-        ICardDetector& detector;
+        ::IApduTransceiver& transceiver;
+        ::ICardDetector& detector;
         ReaderCapabilities capabilities;
 
         NativeWire nativeWire;

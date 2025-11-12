@@ -11,6 +11,7 @@
 
 #include "Pn532/Pn532ApduAdapter.h"
 #include "Pn532/Commands/InListPassiveTarget.h"
+#include "Pn532/Commands/InDataExchange.h"
 #include "Pn532/Pn532Driver.h"
 #include "Utils/Logging.h"
 
@@ -65,7 +66,16 @@ etl::expected<CardInfo, error::Error> Pn532ApduAdapter::detectCard() {
 
         // print hex of UID
         LOG_HEX("INFO", "Detected card UID", target.uid.data(), target.uid.size());
-        return CardInfo{target.uid, target.atqa, target.sak};
+        
+        // Create CardInfo with full information including ATS
+        CardInfo cardInfo;
+        cardInfo.uid = target.uid;
+        cardInfo.atqa = target.atqa;
+        cardInfo.sak = target.sak;
+        cardInfo.ats = target.ats;
+        cardInfo.detectType();  // Detect card type based on ATQA/SAK
+        
+        return cardInfo;
     }
 
     LOG_WARN("No card detected");
@@ -74,14 +84,29 @@ etl::expected<CardInfo, error::Error> Pn532ApduAdapter::detectCard() {
 }
 
 bool Pn532ApduAdapter::isCardPresent() {
-    LOG_INFO("Checking card presence");
+    LOG_INFO("Checking if card is present");
+
+    // Quick check: Send InDataExchange with minimal data to target 1
+    // If the command succeeds, card is present
+    // If it fails (timeout, card disappeared, etc.), card is not present
+    InDataExchangeOptions opts;
+    opts.targetNumber = 1;  // Target from last detectCard()
+    opts.payload = {0x00};  // Minimal payload
+    opts.responseTimeoutMs = 500;  // Quick timeout (500ms)
     
-    // TODO: Implement quick card presence check
-    // This could use a simplified detection or cached state
+    InDataExchange cmd(opts);
+    auto result = driver.executeCommand(cmd);
     
-    // For now, return false
-    LOG_WARN("Card presence check not yet implemented");
-    return false;
+    // Command success = card present and responding
+    // Command failure = card not present or not responding
+    if (result.has_value()) {
+        LOG_INFO("Card present (successful exchange)");
+        return true;
+    }
+    else {
+        LOG_INFO("Card not present");
+        return false;
+    }
 }
 
 etl::expected<ApduResponse, error::Error> Pn532ApduAdapter::parseApduResponse(

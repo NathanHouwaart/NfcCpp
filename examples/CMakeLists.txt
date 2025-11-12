@@ -14,3 +14,6 @@ add_subdirectory(pn532_command_test)
 
 # Example 5: Cross-Platform Timing Utilities
 add_subdirectory(timing_example)
+
+# Example 6: CardManager Usage (Detection and Session Management)
+add_subdirectory(card_manager_example)
