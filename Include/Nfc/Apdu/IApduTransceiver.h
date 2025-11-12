@@ -4,9 +4,9 @@
  * @brief Defines APDU transceiver interface
  * @version 0.1
  * @date 2025-11-09
- * 
+ *
  * @copyright Copyright (c) 2025
- * 
+ *
  */
 
 #pragma once
@@ -17,28 +17,33 @@
 #include "Error/Error.h"
 #include "ApduResponse.h"
 
-/**
- * @brief Interface for APDU transceivers
- */
-class IApduTransceiver {
-public:
-    virtual ~IApduTransceiver() = default;
+namespace nfc
+{
 
     /**
-     * @brief Transmits an APDU command and receives the response
-     * 
-     * @param apduCommand apdu command to transmit
-     * @return etl::expected<ApduResponse, error::Error> apdu response on success, ApduError on failure
+     * @brief Interface for APDU transceivers
      */
-    virtual etl::expected<ApduResponse, error::Error> transceive(const etl::ivector<uint8_t>& apdu) = 0;
-private: 
+    class IApduTransceiver
+    {
+    public:
+        virtual ~IApduTransceiver() = default;
 
-    /**
-     * @brief Parses raw APDU response data into an ApduResponse object
-     * 
-     * @param raw raw APDU response data
-     * @return etl::expected<ApduResponse, error::Error> apdu response on success, ApduError on failure
-     */
-    virtual etl::expected<ApduResponse, error::Error> parseApduResponse(const etl::ivector<uint8_t>& raw) = 0;
+        /**
+         * @brief Transmits an APDU command and receives the response
+         *
+         * @param apduCommand apdu command to transmit
+         * @return etl::expected<ApduResponse, error::Error> apdu response on success, ApduError on failure
+         */
+        virtual etl::expected<ApduResponse, error::Error> transceive(const etl::ivector<uint8_t> &apdu) = 0;
 
-};
+    private:
+        /**
+         * @brief Parses raw APDU response data into an ApduResponse object
+         *
+         * @param raw raw APDU response data
+         * @return etl::expected<ApduResponse, error::Error> apdu response on success, ApduError on failure
+         */
+        virtual etl::expected<ApduResponse, error::Error> parseApduResponse(const etl::ivector<uint8_t> &raw) = 0;
+    };
+
+} // namespace nfc

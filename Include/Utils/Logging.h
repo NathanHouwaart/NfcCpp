@@ -14,6 +14,7 @@
 #include <cstdarg>
 #include <cstdio>
 #include <cstring>
+#include <cstdint>
 
 #define ENABLE_LOGGING 1
 

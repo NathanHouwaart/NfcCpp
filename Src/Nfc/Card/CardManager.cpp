@@ -14,8 +14,8 @@
 namespace nfc
 {
     CardManager::CardManager(
-        ::IApduTransceiver& transceiverRef,
-        ::ICardDetector& detectorRef,
+        IApduTransceiver& transceiverRef,
+        ICardDetector& detectorRef,
         const ReaderCapabilities& caps)
         : transceiver(transceiverRef)
         , detector(detectorRef)

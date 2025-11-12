@@ -182,48 +182,70 @@ namespace error {
                         return "CRCError";
                     case Pn532Error::ParityError:
                         return "ParityError";
-                    case Pn532Error::CollisionError:
-                        return "CollisionError";
+                    case Pn532Error::BitCountError:
+                        return "BitCountError";
                     case Pn532Error::MifareFramingError:
                         return "MifareFramingError";
+                    case Pn532Error::CollisionError:
+                        return "CollisionError";
                     case Pn532Error::BufferSizeInsufficient:
                         return "BufferSizeInsufficient";
-                    case Pn532Error::SelftestFail:
-                        return "SelftestFail";
                     case Pn532Error::RFBufferOverflow:
                         return "RFBufferOverflow";
                     case Pn532Error::RFFieldTimeout:
                         return "RFFieldTimeout";
                     case Pn532Error::RFProtocolError:
                         return "RFProtocolError";
-                    case Pn532Error::InvalidAckFrame:
-                        return "InvalidAckFrame";
                     case Pn532Error::TemperatureError:
                         return "TemperatureError";
                     case Pn532Error::InternalBufferOverflow:
                         return "InternalBufferOverflow";
                     case Pn532Error::InvalidParameter:
                         return "InvalidParameter";
+                    case Pn532Error::CommandNotSupported:
+                        return "CommandNotSupported";
+                    case Pn532Error::DataFormatError:
+                        return "DataFormatError";
                     case Pn532Error::MifareAutError:
                         return "MifareAutError";
                     case Pn532Error::UIDCheckByteError:
                         return "UIDCheckByteError";
-                    case Pn532Error::WrongConfig:
-                        return "WrongConfig";
-                    case Pn532Error::WrongCommand:
-                        return "WrongCommand";
+                    case Pn532Error::InvalidDeviceState:
+                        return "InvalidDeviceState";
+                    case Pn532Error::OperationNotAllowed:
+                        return "OperationNotAllowed";
+                    case Pn532Error::CommandNotAcceptable:
+                        return "CommandNotAcceptable";
                     case Pn532Error::Released:
                         return "Released";
+                    case Pn532Error::CardExchanged:
+                        return "CardExchanged";
+                    case Pn532Error::CardDisappeared:
+                        return "CardDisappeared";
+                    case Pn532Error::Nfcid3Mismatch:
+                        return "Nfcid3Mismatch";
                     case Pn532Error::OverCurrent:
                         return "OverCurrent";
                     case Pn532Error::MissingDEP:
                         return "MissingDEP";
+                    case Pn532Error::SelftestFail:
+                        return "SelftestFail";
+                    case Pn532Error::InvalidAckFrame:
+                        return "InvalidAckFrame";
+                    case Pn532Error::WrongConfig:
+                        return "WrongConfig";
+                    case Pn532Error::WrongCommand:
+                        return "WrongCommand";
                     case Pn532Error::SAMerror:
                         return "SAMerror";
                     case Pn532Error::FrameCheckFailed:
                         return "FrameCheckFailed";
                     case Pn532Error::InvalidResponse:
                         return "InvalidResponse";
+                    case Pn532Error::NotImplemented:
+                        return "NotImplemented";
+                    case Pn532Error::Unknown:
+                        return "Unknown";
                     default:
                         return "UndefinedPn532Error";
                 }

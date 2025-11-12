@@ -21,7 +21,6 @@
 namespace nfc
 {
     // Forward declarations
-    class IApduTransceiver;
     class ISecurePipe;
     class PlainPipe;
     class MacPipe;
@@ -29,6 +28,7 @@ namespace nfc
     class IDesfireCommand;
     struct DesfireRequest;
     struct DesfireResult;
+    class IApduTransceiver;
 
     /**
      * @brief DESFire card class

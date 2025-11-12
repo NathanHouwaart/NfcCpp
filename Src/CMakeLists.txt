@@ -24,6 +24,7 @@ target_sources(NfcCpp
         $<TARGET_OBJECTS:NfcCpp_Rc522>
         $<TARGET_OBJECTS:NfcCpp_Nfc_Card>
         $<TARGET_OBJECTS:NfcCpp_Nfc_Wire>
+        $<TARGET_OBJECTS:NfcCpp_Nfc_Desfire>
 )
 
 # Include directories

@@ -16,41 +16,6 @@ using namespace error;
 
 namespace pn532
 {
-    const char* inDataExchangeStatusToString(InDataExchangeStatus status)
-    {
-        switch (status)
-        {
-        case InDataExchangeStatus::Success: return "Success";
-        case InDataExchangeStatus::Timeout: return "Timeout - target has not answered";
-        case InDataExchangeStatus::CrcError: return "CRC error detected by CIU";
-        case InDataExchangeStatus::ParityError: return "Parity error detected by CIU";
-        case InDataExchangeStatus::ErroneousBitCount: return "Erroneous Bit Count during anti-collision/select";
-        case InDataExchangeStatus::MifareFramingError: return "Framing error during Mifare operation";
-        case InDataExchangeStatus::BitCollisionError: return "Abnormal bit-collision during anti-collision";
-        case InDataExchangeStatus::BufferSizeInsufficient: return "Communication buffer size insufficient";
-        case InDataExchangeStatus::RfBufferOverflow: return "RF Buffer overflow detected";
-        case InDataExchangeStatus::RfFieldNotSwitched: return "RF field not switched on in time";
-        case InDataExchangeStatus::RfProtocolError: return "RF Protocol error";
-        case InDataExchangeStatus::TemperatureError: return "Temperature error";
-        case InDataExchangeStatus::InternalBufferOverflow: return "Internal buffer overflow";
-        case InDataExchangeStatus::InvalidParameter: return "Invalid parameter";
-        case InDataExchangeStatus::DepCommandNotSupported: return "DEP command not supported in target mode";
-        case InDataExchangeStatus::DataFormatMismatch: return "Data format does not match specification";
-        case InDataExchangeStatus::AuthenticationError: return "Mifare authentication error";
-        case InDataExchangeStatus::UidCheckByteWrong: return "UID Check byte is wrong";
-        case InDataExchangeStatus::InvalidDeviceState: return "Invalid device state";
-        case InDataExchangeStatus::OperationNotAllowed: return "Operation not allowed in this configuration";
-        case InDataExchangeStatus::CommandNotAcceptable: return "Command not acceptable in current context";
-        case InDataExchangeStatus::TargetReleased: return "Target has been released by initiator";
-        case InDataExchangeStatus::CardIdMismatch: return "Card ID does not match";
-        case InDataExchangeStatus::CardDisappeared: return "Previously activated card has disappeared";
-        case InDataExchangeStatus::Nfcid3Mismatch: return "NFCID3 initiator/target mismatch";
-        case InDataExchangeStatus::OverCurrent: return "Over-current event detected";
-        case InDataExchangeStatus::NadMissing: return "NAD missing in DEP frame";
-        default: return "Unknown status";
-        }
-    }
-
     InDataExchange::InDataExchange(const InDataExchangeOptions& opts)
         : options(opts), cachedStatusByte(0xFF)
     {
@@ -88,7 +53,6 @@ namespace pn532
 
         // Extract status byte
         cachedStatusByte = data[0];
-        auto status = static_cast<InDataExchangeStatus>(cachedStatusByte);
         
         // Extract response data from card (everything after status byte)
         cachedResponse.clear();
@@ -97,30 +61,13 @@ namespace pn532
             cachedResponse.assign(data.begin() + 1, data.end());
         }
         
-        // Check card-level status and return error for failures
-        // This way callers don't need to manually check the status byte
-        if (status != InDataExchangeStatus::Success)
+        // Check card-level status and return PN532 error for failures
+        // Status byte 0x00 = success, anything else is an error
+        // The status byte values directly correspond to Pn532Error enum values
+        if (cachedStatusByte != 0x00)
         {
-            // Map InDataExchange status to appropriate PN532 error
-            Pn532Error error;
-            switch (status)
-            {
-                case InDataExchangeStatus::Timeout:
-                    error = Pn532Error::Timeout;
-                    break;
-                case InDataExchangeStatus::CardDisappeared:
-                case InDataExchangeStatus::TargetReleased:
-                    error = Pn532Error::Timeout;
-                    break;
-                case InDataExchangeStatus::CrcError:
-                case InDataExchangeStatus::ParityError:
-                    error = Pn532Error::ParityError;
-                    break;
-                default:
-                    error = Pn532Error::MifareFramingError;
-                    break;
-            }
-            return etl::unexpected(Error::fromPn532(error));
+            Pn532Error pn532Error = static_cast<Pn532Error>(cachedStatusByte);
+            return etl::unexpected(Error::fromPn532(pn532Error));
         }
         
         return createCommandResponse(frame.getCommandCode(), data);
@@ -136,19 +83,16 @@ namespace pn532
         return cachedStatusByte;
     }
 
-    InDataExchangeStatus InDataExchange::getStatus() const
+    Pn532Error InDataExchange::getStatus() const
     {
-        return static_cast<InDataExchangeStatus>(cachedStatusByte);
+        return static_cast<Pn532Error>(cachedStatusByte);
     }
 
-    const char* InDataExchange::getStatusString() const
-    {
-        return inDataExchangeStatusToString(getStatus());
-    }
+    
 
     bool InDataExchange::isSuccess() const
     {
-        return cachedStatusByte == static_cast<uint8_t>(InDataExchangeStatus::Success);
+        return cachedStatusByte == 0x00;
     }
 
     const etl::ivector<uint8_t>& InDataExchange::getResponseData() const

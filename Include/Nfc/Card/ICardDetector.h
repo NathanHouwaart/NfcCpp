@@ -4,9 +4,9 @@
  * @brief Interface for NFC card detection
  * @version 0.1
  * @date 2025-11-09
- * 
+ *
  * @copyright Copyright (c) 2025
- * 
+ *
  */
 
 #pragma once
@@ -17,23 +17,32 @@
 #include "Error/Error.h"
 #include "CardInfo.h"
 
-class ICardDetector {
-public:
-    virtual ~ICardDetector() = default;
+namespace nfc
+{
 
     /**
-     * @brief Detects an NFC card and retrieves its information
-     * 
-     * @return etl::expected<CardInfo, error::Error> card information on success, Error on failure
+     * @brief Interface for NFC card detection
+     *
      */
-    virtual etl::expected<CardInfo, error::Error> detectCard() = 0;
+    class ICardDetector
+    {
+    public:
+        virtual ~ICardDetector() = default;
 
-    /**
-     * @brief Checks if a card is currently present
-     * 
-     * @return true if a card is present
-     * @return false if no card is present
-     */
-    virtual bool isCardPresent() = 0;
+        /**
+         * @brief Detects an NFC card and retrieves its information
+         *
+         * @return etl::expected<CardInfo, error::Error> card information on success, Error on failure
+         */
+        virtual etl::expected<CardInfo, error::Error> detectCard() = 0;
 
-};
+        /**
+         * @brief Checks if a card is currently present
+         *
+         * @return true if a card is present
+         * @return false if no card is present
+         */
+        virtual bool isCardPresent() = 0;
+    };
+
+} // namespace nfc

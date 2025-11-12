@@ -13,7 +13,7 @@
 // Command-specific structures
 #include "Commands/GetFirmwareVersion.h"
 #include "Commands/GetGeneralStatus.h"
-#include "Commands/SetSerialBaudRate.h"  // Includes Pn532Baudrate enum
+#include "Commands/SetSerialBaudRate.h"
 
 using namespace error;
 

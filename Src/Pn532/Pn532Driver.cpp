@@ -1,18 +1,20 @@
+
+#include "Nfc/BufferSizes.h"
+#include "Utils/Logging.h"
+#include "Utils/Timing.h"
+
 #include "Pn532/Pn532Driver.h"
+#include "Pn532/Pn532ResponseFrame.h"
+#include "Pn532/CommandRequest.h"
+#include "Pn532/Pn532RequestFrame.h"
+#include "Pn532/Pn532Constants.h"
+
 #include "Pn532/Commands/GetFirmwareVersion.h"
 #include "Pn532/Commands/PerformSelfTest.h"
 #include "Pn532/Commands/GetGeneralStatus.h"
 #include "Pn532/Commands/SAMConfiguration.h"
 #include "Pn532/Commands/RFConfiguration.h"
 #include "Pn532/Commands/SetSerialBaudRate.h"
-#include "Pn532/Pn532ResponseFrame.h"
-#include "Nfc/BufferSizes.h"
-#include "Utils/Logging.h"
-#include "Utils/Timing.h"
-
-#include "Pn532/CommandRequest.h"
-#include "Pn532/Pn532RequestFrame.h"
-#include "Pn532/Pn532Constants.h"
 
 using namespace error;
 using namespace pn532;
@@ -335,10 +337,9 @@ etl::expected<void, Error> Pn532Driver::setSamConfiguration(uint8_t mode)
     LOG_INFO("Setting SAM configuration to mode: 0x%02X", mode);
     
     // Create SAMConfiguration command with the specified mode
-    SAMConfigurationOptions opts;
-    opts.mode = static_cast<SamMode>(mode);
-    
-    SAMConfiguration cmd(opts);
+    auto cmd = SAMConfiguration(SAMConfigurationOptions{
+        .mode = static_cast<SamMode>(mode)
+    });
     
     auto result = executeCommand(cmd);
     if (!result.has_value())
@@ -361,16 +362,10 @@ etl::expected<void, Error> Pn532Driver::setMaxRetries(const uint8_t maxRetries)
 {
     LOG_INFO("Setting max retries to: %u", maxRetries);
     
-    // Create RFConfiguration command for MaxRetries
-    // MaxRetries (0x05) requires 3 bytes:
-    // [MxRtyATR] [MxRtyPSL] [MxRtyPassiveActivation]
-    RFConfigurationOptions opts;
-    opts.item = RFConfigItem::MaxRetries;
-    opts.configData.push_back(maxRetries);  // ATR retries
-    opts.configData.push_back(maxRetries);  // PSL retries
-    opts.configData.push_back(maxRetries);  // Passive activation retries
-    
-    RFConfiguration cmd(opts);
+    RFConfiguration cmd(RFConfigurationOptions{
+        .item = RFConfigItem::MaxRetries,
+        .configData = {maxRetries, maxRetries, maxRetries}
+    });
     
     auto result = executeCommand(cmd);
     if (!result.has_value())

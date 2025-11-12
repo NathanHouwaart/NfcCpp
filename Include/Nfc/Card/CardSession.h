@@ -143,7 +143,7 @@ namespace nfc
          * @return etl::expected<CardSession, error::Error> Card session or error
          */
         static etl::expected<CardSession, error::Error> create(
-            ::IApduTransceiver& transceiver,
+            IApduTransceiver& transceiver,
             const CardInfo& info);
 
     private:

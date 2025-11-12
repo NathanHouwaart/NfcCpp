@@ -19,14 +19,19 @@
 
 #include "CardType.h"
 
-struct CardInfo {
-   etl::vector<uint8_t, 10> uid;    // Unique Identifier of the card
-   uint16_t atqa;                   // ATQA value
-   uint8_t  sak;                    // SAK value
-   etl::vector<uint8_t, 32> ats;    // ATS (Answer To Select) data, if applicable
-   CardType type;                   // Detected card type
+namespace nfc
+{
 
-   CardType detectType();
+   struct CardInfo {
+      etl::vector<uint8_t, 10> uid;    // Unique Identifier of the card
+      uint16_t atqa;                   // ATQA value
+      uint8_t  sak;                    // SAK value
+      etl::vector<uint8_t, 32> ats;    // ATS (Answer To Select) data, if applicable
+      CardType type;                   // Detected card type
 
-   etl::string<255> toString() const;
-};
+      CardType detectType();
+
+      etl::string<255> toString() const;
+   };
+
+} // namespace nfc

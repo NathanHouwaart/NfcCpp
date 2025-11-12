@@ -109,25 +109,31 @@ namespace nfc
     }
 
     etl::expected<CardSession, error::Error> CardSession::create(
-        ::IApduTransceiver& transceiver,
+        IApduTransceiver& transceiver,
         const CardInfo& info)
     {
-        // TODO: Implement session creation based on card type
         CardSession session(info);
         
         // Create appropriate card and context based on type
         switch (info.type)
         {
             case CardType::MifareDesfire:
-                // TODO: Create DESFire card and context
+                // Create DESFire card with the transceiver
+                session.card.emplace<DesfireCard>(transceiver);
+                // Context is created within DesfireCard
                 break;
+                
             case CardType::MifareClassic:
-                // TODO: Create MIFARE Classic card and context
+                // Create MIFARE Classic card (placeholder for now)
+                session.card.emplace<MifareClassicCard>();
                 break;
+                
             case CardType::MifareUltralight:
             case CardType::Ntag213_215_216:
-                // TODO: Create Ultralight card and context
+                // Create Ultralight card (placeholder for now)
+                session.card.emplace<UltralightCard>();
                 break;
+                
             default:
                 return etl::unexpected(error::Error::fromCardManager(error::CardManagerError::UnsupportedCardType));
         }
