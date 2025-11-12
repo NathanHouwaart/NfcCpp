@@ -61,3 +61,23 @@ target_include_directories(test_pn532
 )
 
 add_test(NAME Pn532Tests COMMAND test_pn532)
+
+# Timing Utilities Tests
+add_executable(test_timing
+    Utils/TimingTests.cpp
+)
+
+target_link_libraries(test_timing
+    PRIVATE
+        NfcCpp::NfcCpp
+        etl::etl
+        gtest
+        gtest_main
+)
+
+target_include_directories(test_timing
+    PRIVATE
+        ${CMAKE_SOURCE_DIR}/Include
+)
+
+add_test(NAME TimingTests COMMAND test_timing)

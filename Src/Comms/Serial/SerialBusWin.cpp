@@ -138,6 +138,11 @@ namespace comms
         etl::expected<size_t, Error> SerialBusWin::read(etl::ivector<uint8_t> &buffer, size_t length)
         {
             // Implementation to read data from the serial port on Windows
+            if(buffer.capacity() < length){
+                LOG_ERROR("Read buffer too small for requested length on serial port: %s", portName.c_str());
+                return etl::unexpected(Error::fromHardware(HardwareError::BufferOverflow));
+            }
+
             DWORD bytesRead;
             BOOL result = ReadFile(
                 this->serialHandler,                // handle to the serial port
@@ -153,6 +158,7 @@ namespace comms
                 return etl::unexpected(Error::fromHardware(HardwareError::ReadFailed));
             }
             LOG_INFO("Read %u bytes from serial port: %s", bytesRead, portName.c_str());
+            buffer.uninitialized_resize(bytesRead);  // Resize buffer to actual bytes read, keep data intact
             return static_cast<size_t>(bytesRead);
         }
 

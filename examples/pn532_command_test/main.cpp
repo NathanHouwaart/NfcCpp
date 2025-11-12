@@ -19,6 +19,7 @@
 #include "Pn532/Commands/InDataExchange.h"
 #include "Comms/Serial/SerialBusWin.hpp"
 #include "Utils/Logging.h"
+#include "etl/to_string.h"
 
 using namespace pn532;
 using namespace error;
@@ -30,6 +31,15 @@ using namespace error;
 #define COLOR_RED     "\033[31m"
 #define COLOR_CYAN    "\033[36m"
 #define COLOR_BOLD    "\033[1m"
+
+#include "etl/string.h"
+
+// Deduce size for string literals
+template <size_t N>
+constexpr auto to_etl_string(const char (&literal)[N]) {
+    etl::string<N - 1> s{literal};
+    return s;
+}
 
 void printHeader(const char* title)
 {
@@ -80,8 +90,12 @@ void testGetFirmwareVersion(Pn532Driver& driver)
     }
     else
     {
-        printError("Failed to get firmware version");
-        // Error has no public getErrorLayer or message method, just indicate failure
+        // get Error information
+        auto error = result.error();
+        auto errorMessage = etl::string<128>("Failed to get firmware version: ");
+        errorMessage += error.toString();
+        
+        printError(errorMessage.c_str());
     }
 }
 
@@ -324,18 +338,20 @@ int main(int argc, char* argv[])
     // Create serial bus
     comms::serial::SerialBusWin serialBus(comPort, 115200);
     
-    // // Open connection
-    // printInfo("Opening serial connection...");
-    // auto openResult = serialBus.open();
-    // if (!openResult.has_value())
-    // {
-    //     printError("Failed to open serial port!");
-    //     std::cout << "\nUsage: pn532_command_test [COM_PORT]\n";
-    //     std::cout << "Example: pn532_command_test COM3\n";
-    //     return 1;
-    // }
+    // Open connection
+    printInfo("Opening serial connection...");
+    auto openResult = serialBus.open();
+    if (!openResult.has_value())
+    {
+        auto error = openResult.error();
+        auto errorMessage = etl::string<128>("Failed to open serial port: ");
+        errorMessage += error.toString();
+        
+        printError(errorMessage.c_str());
+        return 1;
+    }
     
-    // printSuccess("Serial port opened successfully!");
+    printSuccess("Serial port opened successfully!");
     
     // Create PN532 driver
     Pn532Driver driver(serialBus);

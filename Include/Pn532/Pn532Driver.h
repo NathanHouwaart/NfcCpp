@@ -35,12 +35,7 @@ namespace pn532
         etl::array<uint8_t, 4> tags;
     };
 
-    struct CommandResult
-    {
-        uint8_t status;
-        etl::vector<uint8_t, 256> data;
-    };
-
+    // Legacy struct - deprecated, use CommandResponse instead
     struct Pn532Response
     {
         uint8_t command;
@@ -57,7 +52,7 @@ namespace pn532
         void init();
 
         // Command execution
-        etl::expected<CommandResult, Error> executeCommand(IPn532Command &command);
+        etl::expected<CommandResponse, Error> executeCommand(IPn532Command &command);
 
         // Firmware and status
         etl::expected<FirmwareInfo, Error> getFirmwareVersion();
@@ -84,19 +79,22 @@ namespace pn532
     private:
         // Member variables
         comms::IHardwareBus &bus;
-        static constexpr uint32_t DEFAULT_TIMEOUT_MS = 1000;
+        static constexpr uint32_t DEFAULT_TIMEOUT_MS = 500;
         static constexpr etl::array<uint8_t, 6> ACK_FRAME = {0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00};
-
+        
         // Private methods
-        etl::expected<void, Error> sendCommand(uint8_t cmd, const etl::ivector<uint8_t> &data);
+        etl::expected<Pn532ResponseFrame, Error> transceive(const CommandRequest & request);
+        etl::expected<void, Error> sendCommand(const etl::ivector<uint8_t> &data);
         etl::expected<Pn532Response, Error> getResponse(uint8_t onCommand, uint32_t timeoutMs);
         etl::expected<void, Error> sendAndAcknowledgeCommand(uint8_t command);
 
-        void wakeUp();
+        etl::expected<void, Error> wakeUp();
         bool waitForChip(const int timeout);
 
         static bool checkAck(const etl::ivector<uint8_t> &buffer);
-        static bool isValidFrame(const etl::ivector<uint8_t> &frame);
+        static etl::expected<Pn532ResponseFrame, Error> parseResponseFrame(
+            const etl::ivector<uint8_t> &frame, 
+            uint8_t sentCommandCode);
     };
 
 } // namespace pn532

@@ -83,6 +83,10 @@ namespace error {
                 return Error{ErrorLayer::Desfire, err};
             }
 
+            ErrorLayer getLayer() const {
+                return layer;
+            }
+
             template<typename T>
             bool is() const {
                 return etl::holds_alternative<T>(errorCode);
