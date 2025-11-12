@@ -1,5 +1,6 @@
 #include "Pn532/Pn532Driver.h"
 #include "Pn532/Commands/GetFirmwareVersion.h"
+#include "Pn532/Commands/PerformSelfTest.h"
 #include "Pn532/Pn532ResponseFrame.h"
 #include "Nfc/BufferSizes.h"
 #include "Utils/Logging.h"
@@ -53,6 +54,10 @@ etl::expected<CommandResponse, Error> Pn532Driver::executeCommand(IPn532Command 
 
 etl::expected<Pn532ResponseFrame, Error> Pn532Driver::transceive(const CommandRequest &request)
 {
+    // Extract timeout from request (set by the command)
+    const uint32_t responseTimeout = request.timeoutMs();
+    LOG_INFO("Transceive using timeout: %u ms", responseTimeout);
+    
     // 0. Build PN532 frame from request
     auto frameResult = Pn532RequestFrame::build(request);
     if (!frameResult)
@@ -97,40 +102,50 @@ etl::expected<Pn532ResponseFrame, Error> Pn532Driver::transceive(const CommandRe
         return etl::unexpected(Error::fromPn532(Pn532Error::InvalidAckFrame));
     }
 
-    // 5. Wait for the rest of the response frame
-    if (!waitForChip(DEFAULT_TIMEOUT_MS))
+    // 5. Check if command expects a data frame response
+    // Some commands (like EchoBack) only expect ACK, no data frame
+    if (!request.expectsDataFrame())
+    {
+        LOG_INFO("Command does not expect data frame, returning empty response");
+        // Create an empty response frame (command code will be validated by parseResponse)
+        etl::vector<uint8_t, Pn532ResponseFrame::MaxPayloadSize> emptyPayload;
+        return Pn532ResponseFrame(request.getCommandCode() + protocol::RESPONSE_CODE_OFFSET, emptyPayload);
+    }
+
+    // 6. Wait for the rest of the response frame (use command-specific timeout)
+    if (!waitForChip(responseTimeout))
     {
         LOG_ERROR("Timeout waiting for PN532 response frame");
         return etl::unexpected(Error::fromPn532(Pn532Error::Timeout));
     }
 
-    // 6. Read first part of response to determine length
-    etl::vector<uint8_t, nfc::buffer::PN532_FRAME_MAX> fullResponseBuffer;
-    result = bus.read(responseBuffer, 4);
-    if (!result || result.value() != 4)
-    {
-        LOG_ERROR("Expected 4 bytes, got %zu", result.value_or(0));
-        return etl::unexpected(result.error());
-    }
+    // 7. Read the response frame data
+    // We read all available bytes (up to max frame size) and let parseResponseFrame()
+    // validate the structure - this avoids making assumptions about frame format
+    etl::vector<uint8_t, nfc::buffer::PN532_FRAME_MAX> responseFrame;
+    size_t availableBytes = bus.available();
     
-    // Copy to fullResponseBuffer
-    fullResponseBuffer.insert(fullResponseBuffer.end(), responseBuffer.begin(), responseBuffer.begin() + 4);
+    if (availableBytes == 0)
+    {
+        LOG_ERROR("No data available after waiting for response");
+        return etl::unexpected(Error::fromPn532(Pn532Error::Timeout));
+    }
 
-    // 7. Determine full frame length
-    size_t frameLength = responseBuffer[3] + 3; // Length + TFI + CMD + checksum
-    result = bus.read(responseBuffer, frameLength);
+    // Read up to the available bytes or max frame size, whichever is smaller
+    size_t bytesToRead = (availableBytes < nfc::buffer::PN532_FRAME_MAX) ? availableBytes : nfc::buffer::PN532_FRAME_MAX;
+    result = bus.read(responseFrame, bytesToRead);
+    
     if (!result)
     {
-        LOG_ERROR("Failed to read full response frame");
+        LOG_ERROR("Failed to read response frame");
         return etl::unexpected(result.error());
     }
-    // Copy to fullResponseBuffer
-    fullResponseBuffer.insert(fullResponseBuffer.end(), responseBuffer.begin(), responseBuffer.begin() + frameLength);
 
-    LOG_HEX("INFO", "Received full response frame", fullResponseBuffer.data(), fullResponseBuffer.size());
+    LOG_HEX("INFO", "Received response frame", responseFrame.data(), responseFrame.size());
 
-    // 8. Parse the response frame
-    auto parseResult = Pn532Driver::parseResponseFrame(fullResponseBuffer, request.getCommandCode()); // Command code is at index 1
+    // 8. Parse and validate the response frame
+    // parseResponseFrame() will find the start sequence, validate length, checksums, etc.
+    auto parseResult = Pn532Driver::parseResponseFrame(responseFrame, request.getCommandCode());
     if (!parseResult)
     {
         LOG_ERROR("Failed to parse response frame");
@@ -156,8 +171,140 @@ etl::expected<FirmwareInfo, Error> Pn532Driver::getFirmwareVersion()
 
 etl::expected<void, Error> Pn532Driver::performSelftest()
 {
-    // TODO: Implement self test
-    return etl::unexpected(Error::fromPn532(Pn532Error::Timeout));
+    LOG_INFO("=== Starting PN532 Self-Test Suite ===\n");
+    
+    // 1. ROM Checksum Test
+    LOG_INFO("Running ROM Checksum Test...");
+    {
+        SelfTestOptions opts;
+        opts.test = TestType::RomChecksum;
+        opts.responseTimeoutMs = 5000; // ROM test can take longer
+        
+        PerformSelfTest cmd(opts);
+        auto result = executeCommand(cmd);
+        
+        if (!result.has_value())
+        {
+            LOG_ERROR("ROM Checksum Test FAILED\n\n");
+            return etl::unexpected(result.error());
+        }
+        LOG_INFO("ROM Checksum Test PASSED\n\n");
+    }
+    
+    // 2. RAM Integrity Test
+    LOG_INFO("Running RAM Integrity Test...");
+    {
+        SelfTestOptions opts;
+        opts.test = TestType::RamIntegrity;
+        opts.responseTimeoutMs = 5000;
+        
+        PerformSelfTest cmd(opts);
+        auto result = executeCommand(cmd);
+        
+        if (!result.has_value())
+        {
+            LOG_ERROR("RAM Integrity Test FAILED\n\n");
+            return etl::unexpected(result.error());
+        }
+        LOG_INFO("RAM Integrity Test PASSED\n\n");
+    }
+    
+    // 3. Communication Line Test (Echo)
+    LOG_INFO("Running Communication Line Test...");
+    {
+        SelfTestOptions opts;
+        opts.test = TestType::CommunicationLine;
+        opts.parameters.push_back(0xDE);
+        opts.parameters.push_back(0xAD);
+        opts.parameters.push_back(0xBE);
+        opts.parameters.push_back(0xEF);
+        opts.verifyEcho = true;
+        opts.responseTimeoutMs = 1000;
+        
+        PerformSelfTest cmd(opts);
+        auto result = executeCommand(cmd);
+        
+        if (!result.has_value())
+        {
+            LOG_ERROR("Communication Line Test FAILED\n\n");
+            return etl::unexpected(result.error());
+        }
+        LOG_INFO("Communication Line Test PASSED (Echo verified)\n\n");
+    }
+    
+    // // 4. Polling to Target Test
+    // LOG_INFO("Running Polling to Target Test...");
+    // {
+    //     SelfTestOptions opts;
+    //     opts.test = TestType::PollingToTarget;
+    //     opts.responseTimeoutMs = 4000; // RF operations can take longer
+        
+    //     PerformSelfTest cmd(opts);
+    //     auto result = executeCommand(cmd);
+        
+    //     if (!result.has_value())
+    //     {
+    //         LOG_ERROR("Polling to Target Test FAILED");
+    //         return etl::unexpected(result.error());
+    //     }
+    //     LOG_INFO("Polling to Target Test PASSED");
+    // }
+    
+    // 5. Echo Back Test
+    LOG_INFO("Running Echo Back Test...");
+    {
+        SelfTestOptions opts;
+        opts.test = TestType::EchoBack;
+        opts.verifyEcho = true;
+        opts.parameters.push_back(0xBA);
+        opts.parameters.push_back(0xAD);
+        opts.parameters.push_back(0xF0);
+        opts.parameters.push_back(0x0D);
+        opts.responseTimeoutMs = 4000;
+        
+        PerformSelfTest cmd(opts);
+        auto result = executeCommand(cmd);
+        
+        if (!result.has_value())
+        {
+            LOG_ERROR("Echo Back Test FAILED\n\n");
+            return etl::unexpected(result.error());
+        }
+        LOG_INFO("Echo Back Test PASSED\n\n");
+    }
+    
+    // 6. Antenna Continuity Test
+    LOG_INFO("Running Antenna Continuity Test...");
+    {
+        SelfTestOptions opts;
+        opts.test = TestType::AntennaContinuity;
+        
+        // Create antenna threshold byte:
+        // High threshold: 1 << 1 = 0x02
+        // Low threshold:  1 << 0 = 0x01
+        // Use both comparators
+        uint8_t thresholdByte = PerformSelfTest::makeAntennaThreshold(
+            0x02,  // High threshold code
+            0x01,  // Low threshold code
+            true,  // Use upper comparator
+            true   // Use lower comparator
+        );
+        opts.parameters.push_back(thresholdByte);
+        opts.responseTimeoutMs = 5000;
+        
+        PerformSelfTest cmd(opts);
+        auto result = executeCommand(cmd);
+        
+        if (!result.has_value())
+        {
+            LOG_ERROR("Antenna Continuity Test FAILED\n");
+            return etl::unexpected(result.error());
+        }
+        LOG_INFO("Antenna Continuity Test PASSED\n");
+    }
+    
+    LOG_INFO("=== All Self-Tests PASSED ===");
+    return {}; // Success
 }
 
 etl::expected<GeneralStatus, Error> Pn532Driver::getGeneralStatus()

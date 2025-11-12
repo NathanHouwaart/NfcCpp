@@ -64,9 +64,9 @@ namespace pn532
          * @brief Factory method to create CommandRequest
          * 
          */
-        static CommandRequest createCommandRequest(uint8_t cmd, const etl::ivector<uint8_t>& payload, uint32_t timeout = 1000)
+        static CommandRequest createCommandRequest(uint8_t cmd, const etl::ivector<uint8_t>& payload, uint32_t timeout = 1000, bool expectsData = true)
         {
-            return CommandRequest(cmd, payload, timeout);
+            return CommandRequest(cmd, payload, timeout, expectsData);
         }
 
         /**

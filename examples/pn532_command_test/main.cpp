@@ -101,40 +101,41 @@ void testGetFirmwareVersion(Pn532Driver& driver)
 
 void testPerformSelfTest(Pn532Driver& driver)
 {
-    printHeader("Test 2: Perform Self Test");
+    // printHeader("Test 2: Perform Self Test");
     
-    // Test 1: Communication Line Test
-    std::cout << COLOR_YELLOW << "Running Communication Line Test..." << COLOR_RESET << "\n";
+    // // Test 1: Communication Line Test
+    // std::cout << COLOR_YELLOW << "Running Communication Line Test..." << COLOR_RESET << "\n";
     
-    SelfTestOptions opts;
-    opts.test = TestType::CommunicationLine;
-    opts.parameters.push_back(0xDE);
-    opts.parameters.push_back(0xAD);
-    opts.parameters.push_back(0xBE);
-    opts.parameters.push_back(0xEF);
-    opts.verifyEcho = true;
+    // SelfTestOptions opts;
+    // opts.test = TestType::CommunicationLine;
+    // opts.parameters.push_back(0xDE);
+    // opts.parameters.push_back(0xAD);
+    // opts.parameters.push_back(0xBE);
+    // opts.parameters.push_back(0xEF);
+    // opts.verifyEcho = true;
     
-    PerformSelfTest cmd(opts);
-    auto result = driver.executeCommand(cmd);
+    // PerformSelfTest cmd(opts);
+    // auto result = driver.executeCommand(cmd);
     
-    if (result.has_value())
-    {
-        printSuccess("Communication line test passed! (Echo verified)");
-    }
-    else
-    {
-        printError("Communication line test failed");
-    }
+    // if (result.has_value())
+    // {
+    //     printSuccess("Communication line test passed! (Echo verified)");
+    // }
+    // else
+    // {
+    //     printError("Communication line test failed");
+    // }
     
-    // Test 2: ROM Checksum Test
-    std::cout << "\n" << COLOR_YELLOW << "Running ROM Checksum Test..." << COLOR_RESET << "\n";
+    // // Test 2: ROM Checksum Test
+    // std::cout << "\n" << COLOR_YELLOW << "Running ROM Checksum Test..." << COLOR_RESET << "\n";
     
-    SelfTestOptions romOpts;
-    romOpts.test = TestType::RomChecksum;
+    // SelfTestOptions romOpts;
+    // romOpts.test = TestType::RomChecksum;
+    // romOpts.responseTimeoutMs = 5000; // ROM checksum can take longer
     
-    PerformSelfTest romCmd(romOpts);
-    auto romResult = driver.executeCommand(romCmd);
-    
+    // PerformSelfTest romCmd(romOpts);
+    // auto romResult = driver.executeCommand(romCmd);
+    auto romResult = driver.performSelftest();
     if (romResult.has_value())
     {
         printSuccess("ROM checksum test passed!");

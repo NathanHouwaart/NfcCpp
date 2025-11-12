@@ -44,7 +44,10 @@ namespace pn532
             payload.push_back(options.parameters[i]);
         }
         
-        return createCommandRequest(0x00, payload, options.responseTimeoutMs); // 0x00 = Diagnose
+        // EchoBack test (0x05) never returns a data frame, only ACK
+        bool expectsData = (options.test != TestType::EchoBack);
+        
+        return createCommandRequest(0x00, payload, options.responseTimeoutMs, expectsData); // 0x00 = Diagnose
     }
 
     etl::expected<CommandResponse, Error> PerformSelfTest::parseResponse(const Pn532ResponseFrame& frame)

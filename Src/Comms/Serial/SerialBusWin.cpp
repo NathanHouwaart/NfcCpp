@@ -186,7 +186,7 @@ namespace comms
                 LOG_ERROR("Error checking available bytes on serial port: %s", portName.c_str());
                 return 0;
             }
-            LOG_INFO("Available bytes to read on serial port %s: %lu", portName.c_str(), comStat.cbInQue);
+            // LOG_INFO("Available bytes to read on serial port %s: %lu", portName.c_str(), comStat.cbInQue);
             return static_cast<size_t>(comStat.cbInQue);
         }
 

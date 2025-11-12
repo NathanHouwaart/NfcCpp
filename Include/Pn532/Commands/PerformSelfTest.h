@@ -38,13 +38,10 @@ namespace pn532
      */
     struct SelfTestOptions
     {
-        TestType test;
-        etl::vector<uint8_t, 255> parameters;
-        bool verifyEcho;
-        uint32_t responseTimeoutMs;
-
-        SelfTestOptions() 
-            : test(TestType::CommunicationLine), verifyEcho(false), responseTimeoutMs(1000) {}
+        TestType test = TestType::CommunicationLine;
+        etl::vector<uint8_t, 255> parameters = {};
+        bool verifyEcho = false;
+        uint32_t responseTimeoutMs = 1000;
     };
 
     /**

@@ -71,6 +71,13 @@ namespace pn532
          */
         uint8_t getCommandCode() const;
 
+        /**
+         * @brief Check if the command expects a data frame response
+         * 
+         * @return bool True if data frame is expected
+         */
+        bool expectsDataFrame() const;
+
     private:
         /**
          * @brief Construct a new CommandRequest object
@@ -78,12 +85,14 @@ namespace pn532
          * @param cmd Command code
          * @param payload Payload data
          * @param timeout Response timeout in milliseconds
+         * @param expectsData Whether command expects a data frame response
          */
-        CommandRequest(uint8_t cmd, const etl::ivector<uint8_t>& payload, uint32_t timeout = 1000);
+        CommandRequest(uint8_t cmd, const etl::ivector<uint8_t>& payload, uint32_t timeout = 1000, bool expectsData = true);
 
         uint8_t commandCode;
         etl::vector<uint8_t, MaxPayloadSize> payload;
         uint32_t responseTimeoutMs;
+        bool expectsData;
 
     friend class IPn532Command;
     };

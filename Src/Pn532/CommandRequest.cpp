@@ -13,8 +13,8 @@
 
 namespace pn532
 {
-    CommandRequest::CommandRequest(uint8_t cmd, const etl::ivector<uint8_t>& payloadData, uint32_t timeout)
-        : commandCode(cmd), payload(payloadData.begin(), payloadData.end()), responseTimeoutMs(timeout)
+    CommandRequest::CommandRequest(uint8_t cmd, const etl::ivector<uint8_t>& payloadData, uint32_t timeout, bool expectsData)
+        : commandCode(cmd), payload(payloadData.begin(), payloadData.end()), responseTimeoutMs(timeout), expectsData(expectsData)
     {
         // TODO: Initialize command request
     }
@@ -54,6 +54,11 @@ namespace pn532
     {
         // TODO: Implement command code getter
         return commandCode;
+    }
+
+    bool CommandRequest::expectsDataFrame() const
+    {
+        return expectsData;
     }
 
 } // namespace pn532
