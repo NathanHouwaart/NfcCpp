@@ -50,11 +50,8 @@ namespace pn532
      */
     struct InListPassiveTargetOptions
     {
-        uint8_t maxTargets;
-        CardTargetType target;
-
-        InListPassiveTargetOptions() 
-            : maxTargets(1), target(CardTargetType::TypeA_106kbps) {}
+        uint8_t maxTargets = 1;
+        CardTargetType target = CardTargetType::TypeA_106kbps;
     };
 
     /**

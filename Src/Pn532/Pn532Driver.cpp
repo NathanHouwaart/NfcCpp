@@ -1,6 +1,7 @@
 #include "Pn532/Pn532Driver.h"
 #include "Pn532/Commands/GetFirmwareVersion.h"
 #include "Pn532/Commands/PerformSelfTest.h"
+#include "Pn532/Commands/GetGeneralStatus.h"
 #include "Pn532/Pn532ResponseFrame.h"
 #include "Nfc/BufferSizes.h"
 #include "Utils/Logging.h"
@@ -41,6 +42,7 @@ etl::expected<CommandResponse, Error> Pn532Driver::executeCommand(IPn532Command 
     }
 
     // 3. Parse the response frame into a command response (command-specific parsing)
+    // LOG_HEX("INFO", "Response frame for command parsing", responseFrameResult.value().payload.data(), responseFrameResult.value().size());
     auto commandResponseResult = command.parseResponse(responseFrameResult.value());
     if (!commandResponseResult)
     {
@@ -309,8 +311,15 @@ etl::expected<void, Error> Pn532Driver::performSelftest()
 
 etl::expected<GeneralStatus, Error> Pn532Driver::getGeneralStatus()
 {
-    // TODO: Implement get general status
-    return etl::unexpected(Error::fromPn532(Pn532Error::Timeout));
+    GetGeneralStatus cmd;
+    
+    auto result = executeCommand(cmd);
+    if(!result.has_value())
+    {
+        return etl::unexpected(result.error());
+    }
+    
+    return cmd.getGeneralStatus();
 }
 
 // Configuration
@@ -411,7 +420,7 @@ bool Pn532Driver::waitForChip(const int timeout)
     // Get the start time for timeout calculation
     const uint32_t start = utils::get_tick_ms();
     const uint32_t timeoutMs = static_cast<uint32_t>(timeout);
-    const uint32_t pollIntervalMs = 2; // Poll every 2ms
+    const uint32_t pollIntervalMs = 10; // Poll every 2ms
 
     // Wait until timeout or data is available
     while (!utils::has_timeout(start, timeoutMs))

@@ -17,6 +17,7 @@
 #include "Pn532/Commands/PerformSelfTest.h"
 #include "Pn532/Commands/InListPassiveTarget.h"
 #include "Pn532/Commands/InDataExchange.h"
+#include "Pn532/Pn532ApduAdapter.h"
 #include "Comms/Serial/SerialBusWin.hpp"
 #include "Utils/Logging.h"
 #include "etl/to_string.h"
@@ -135,14 +136,33 @@ void testPerformSelfTest(Pn532Driver& driver)
     
     // PerformSelfTest romCmd(romOpts);
     // auto romResult = driver.executeCommand(romCmd);
-    auto romResult = driver.performSelftest();
-    if (romResult.has_value())
+    auto selfTestResult = driver.performSelftest();
+    if (selfTestResult.has_value())
     {
-        printSuccess("ROM checksum test passed!");
+        printSuccess("Self-test passed!");
     }
     else
     {
-        printError("ROM checksum test failed");
+        printError("Self-test failed");
+    }
+}
+
+void testGetGeneralStatus(Pn532Driver& driver)
+{
+    printHeader("Test 2: Get General Status");
+    
+    auto result = driver.getGeneralStatus();
+    
+    if (result.has_value())
+    {
+        printSuccess("General status retrieved successfully!");
+        
+        const auto& status = result.value();
+        std::cout << status.toString()  << "\n";
+    }
+    else
+    {
+        printError("Failed to get general status");
     }
 }
 
@@ -356,11 +376,16 @@ int main(int argc, char* argv[])
     
     // Create PN532 driver
     Pn532Driver driver(serialBus);
+    Pn532ApduAdapter apduAdapter(driver);
+
     
     printInfo("Initializing PN532 driver...");
     driver.init();
     
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
+    apduAdapter.detectCard(); // Pre-initialize card detection
+
     
     // Run tests
     try
@@ -375,10 +400,15 @@ int main(int argc, char* argv[])
         
         testPerformSelfTest(driver);
         
-        std::cout << "\nPress ENTER to continue to card detection...";
-        std::cin.get();
+        // std::cout << "\nPress ENTER to continue to card detection...";
+        // std::cin.get();
         
-        testCardDetection(driver);
+        // testCardDetection(driver);
+
+        std::cout << "\nPress ENTER to continue to general status...";
+        std::cin.get();
+
+        testGetGeneralStatus(driver);
         
         std::cout << "\nPress ENTER to continue to data exchange...";
         std::cin.get();

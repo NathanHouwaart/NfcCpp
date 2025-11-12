@@ -10,12 +10,14 @@
 #include "Error/Error.h"
 #include "Comms/IHardwareBus.hpp"
 
+// Command-specific structures
+#include "Commands/GetFirmwareVersion.h"
+#include "Commands/GetGeneralStatus.h"
+
 using namespace error;
 
 namespace pn532
 {
-    // Forward declaration
-    struct FirmwareInfo;
 
     enum class Pn532Baudrate
     {
@@ -25,14 +27,6 @@ namespace pn532
         Baud57600,
         Baud115200,
         Baud230400
-    };
-
-    struct GeneralStatus
-    {
-        uint8_t error;
-        uint8_t field;
-        uint8_t nrTargets;
-        etl::array<uint8_t, 4> tags;
     };
 
     // Legacy struct - deprecated, use CommandResponse instead

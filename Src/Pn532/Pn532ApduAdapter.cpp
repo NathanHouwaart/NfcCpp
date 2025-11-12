@@ -10,8 +10,12 @@
  */
 
 #include "Pn532/Pn532ApduAdapter.h"
+#include "Pn532/Commands/InListPassiveTarget.h"
 #include "Pn532/Pn532Driver.h"
 #include "Utils/Logging.h"
+
+using namespace pn532;
+using namespace error;
 
 Pn532ApduAdapter::Pn532ApduAdapter(pn532::Pn532Driver& driver)
     : driver(driver) {
@@ -38,27 +42,22 @@ etl::expected<ApduResponse, error::Error> Pn532ApduAdapter::transceive(
 etl::expected<CardInfo, error::Error> Pn532ApduAdapter::detectCard() {
     LOG_INFO("Detecting card presence");
     
-    // TODO: Implement card detection via PN532
-    // This would typically involve:
-    // 1. Send InListPassiveTarget command
-    // 2. Parse the response to get UID, ATQA, SAK, ATS
-    // 3. Determine card type based on response
-    // 4. Return CardInfo structure
-    
-    // Example structure for when implemented:
-    // CardInfo info;
-    // auto result = driver.inListPassiveTarget(...);
-    // if (result) {
-    //     info.uid = result->uid;
-    //     info.atqa = result->atqa;
-    //     info.sak = result->sak;
-    //     info.ats = result->ats;
-    //     info.type = info.detectType();
-    //     return info;
-    // }
-    
-    LOG_WARN("Card detection not yet implemented");
-    return etl::unexpected(error::Error::fromPn532(error::Pn532Error::NotImplemented));
+    auto cmd = InListPassiveTarget(
+        InListPassiveTargetOptions{
+            .maxTargets = 1,
+            .target = CardTargetType::TypeA_106kbps
+        }
+    );
+
+    auto result = driver.executeCommand(cmd);
+
+    if (!result) {
+        LOG_WARN("Card detection failed");
+        return etl::unexpected(error::Error::fromPn532(error::Pn532Error::NotImplemented));
+    }
+
+    LOG_INFO("Card detected successfully");
+    return {};
 }
 
 bool Pn532ApduAdapter::isCardPresent() {

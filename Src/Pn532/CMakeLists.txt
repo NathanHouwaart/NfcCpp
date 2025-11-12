@@ -13,6 +13,7 @@ target_sources(NfcCpp_Pn532
         CommandRequest.cpp
         CommandResponse.cpp
         Commands/GetFirmwareVersion.cpp
+        Commands/GetGeneralStatus.cpp
         Commands/PerformSelfTest.cpp
         Commands/InListPassiveTarget.cpp
         Commands/InDataExchange.cpp
