@@ -4,6 +4,7 @@
 #include "Pn532/Commands/GetGeneralStatus.h"
 #include "Pn532/Commands/SAMConfiguration.h"
 #include "Pn532/Commands/RFConfiguration.h"
+#include "Pn532/Commands/SetSerialBaudRate.h"
 #include "Pn532/Pn532ResponseFrame.h"
 #include "Nfc/BufferSizes.h"
 #include "Utils/Logging.h"
@@ -329,13 +330,15 @@ etl::expected<GeneralStatus, Error> Pn532Driver::getGeneralStatus()
     return cmd.getGeneralStatus();
 }
 
-// Configuration
 etl::expected<void, Error> Pn532Driver::setSamConfiguration(uint8_t mode)
 {
     LOG_INFO("Setting SAM configuration to mode: 0x%02X", mode);
     
     // Create SAMConfiguration command with the specified mode
-    SAMConfiguration cmd(static_cast<SamMode>(mode));
+    SAMConfigurationOptions opts;
+    opts.mode = static_cast<SamMode>(mode);
+    
+    SAMConfiguration cmd(opts);
     
     auto result = executeCommand(cmd);
     if (!result.has_value())
@@ -382,8 +385,23 @@ etl::expected<void, Error> Pn532Driver::setMaxRetries(const uint8_t maxRetries)
 
 etl::expected<void, Error> Pn532Driver::setSerialBaudrate(Pn532Baudrate baudrate)
 {
-    // TODO: Implement set serial baudrate
-    return etl::unexpected(Error::fromPn532(Pn532Error::Timeout));
+    LOG_INFO("Setting serial baud rate to: 0x%02X", static_cast<uint8_t>(baudrate));
+    
+    SetSerialBaudRateOptions opts;
+    opts.baudRate = baudrate;
+    
+    SetSerialBaudRate cmd(opts);
+    
+    auto result = executeCommand(cmd);
+    if (!result.has_value())
+    {
+        LOG_ERROR("Set serial baud rate failed");
+        return etl::unexpected(result.error());
+    }
+    
+    LOG_INFO("Serial baud rate set successfully");
+    LOG_WARN("Remember to change the host serial baud rate to match!");
+    return {};
 }
 
 // Register operations

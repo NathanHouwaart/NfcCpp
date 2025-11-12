@@ -49,7 +49,6 @@ namespace pn532
     {
     public:
         explicit SAMConfiguration(const SAMConfigurationOptions& opts);
-        SAMConfiguration(SamMode mode); // Convenience constructor
 
         etl::string_view name() const override;
         CommandRequest buildRequest() override;

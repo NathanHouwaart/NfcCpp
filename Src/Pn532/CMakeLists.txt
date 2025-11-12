@@ -17,6 +17,7 @@ target_sources(NfcCpp_Pn532
         Commands/PerformSelfTest.cpp
         Commands/SAMConfiguration.cpp
         Commands/RFConfiguration.cpp
+        Commands/SetSerialBaudRate.cpp
         Commands/InListPassiveTarget.cpp
         Commands/InDataExchange.cpp
 )

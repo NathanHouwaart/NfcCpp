@@ -13,22 +13,12 @@
 // Command-specific structures
 #include "Commands/GetFirmwareVersion.h"
 #include "Commands/GetGeneralStatus.h"
+#include "Commands/SetSerialBaudRate.h"  // Includes Pn532Baudrate enum
 
 using namespace error;
 
 namespace pn532
 {
-
-    enum class Pn532Baudrate
-    {
-        Baud9600,
-        Baud19200,
-        Baud38400,
-        Baud57600,
-        Baud115200,
-        Baud230400
-    };
-
     // Legacy struct - deprecated, use CommandResponse instead
     struct Pn532Response
     {

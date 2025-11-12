@@ -21,11 +21,6 @@ namespace pn532
     {
     }
 
-    SAMConfiguration::SAMConfiguration(SamMode mode)
-        : options{mode, 0x00, false}
-    {
-    }
-
     etl::string_view SAMConfiguration::name() const
     {
         return "SAMConfiguration";
