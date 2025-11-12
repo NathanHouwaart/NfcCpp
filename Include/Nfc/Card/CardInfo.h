@@ -13,6 +13,7 @@
 
 #include <etl/vector.h>
 #include <etl/variant.h>
+#include <etl/string.h>
 
 #include <cstdint>
 
@@ -26,4 +27,6 @@ struct CardInfo {
    CardType type;                   // Detected card type
 
    CardType detectType();
+
+   etl::string<255> toString() const;
 };

@@ -158,7 +158,7 @@ void testGetGeneralStatus(Pn532Driver& driver)
         printSuccess("General status retrieved successfully!");
         
         const auto& status = result.value();
-        std::cout << status.toString()  << "\n";
+        std::cout << status.toString().c_str()  << "\n";
     }
     else
     {
@@ -387,7 +387,14 @@ int main(int argc, char* argv[])
     
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
-    apduAdapter.detectCard(); // Pre-initialize card detection
+    auto result = apduAdapter.detectCard(); // Pre-initialize card detection
+    if(!result.has_value() || result.value().detectType() == CardType::Unknown)
+    {
+        printError("No card detected");
+        return 1;
+    }
+    
+    std::cout << "Detected Card: " << result.value().toString().c_str() << "\n";
 
     
     // Run tests

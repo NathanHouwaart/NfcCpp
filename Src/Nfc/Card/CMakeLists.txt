@@ -4,6 +4,7 @@ add_library(NfcCpp_Nfc_Card OBJECT)
 
 target_sources(NfcCpp_Nfc_Card
     PRIVATE
+        CardInfo.cpp
         CardManager.cpp
         CardSession.cpp
         ReaderCapabilities.cpp
