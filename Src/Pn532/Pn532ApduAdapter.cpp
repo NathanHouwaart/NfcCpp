@@ -42,10 +42,20 @@ etl::expected<ApduResponse, error::Error> Pn532ApduAdapter::transceive(
 etl::expected<CardInfo, error::Error> Pn532ApduAdapter::detectCard() {
     LOG_INFO("Detecting card presence");
     
+    // First, configure SAM to Normal mode (required before card operations)
+    auto samResult = driver.setSamConfiguration(0x01);  // 0x01 = Normal mode
+    if (!samResult)
+    {
+        LOG_ERROR("Failed to configure SAM");
+        return etl::unexpected(samResult.error());
+    }
+    
+    // Now detect the card with appropriate timeout
     auto cmd = InListPassiveTarget(
         InListPassiveTargetOptions{
             .maxTargets = 1,
-            .target = CardTargetType::TypeA_106kbps
+            .target = CardTargetType::TypeA_106kbps,
+            .responseTimeoutMs = 5000  // 5 second timeout for card detection
         }
     );
 
@@ -53,10 +63,12 @@ etl::expected<CardInfo, error::Error> Pn532ApduAdapter::detectCard() {
 
     if (!result) {
         LOG_WARN("Card detection failed");
-        return etl::unexpected(error::Error::fromPn532(error::Pn532Error::NotImplemented));
+        return etl::unexpected(result.error());
     }
 
     LOG_INFO("Card detected successfully");
+    
+    // TODO: Extract card info from detected targets
     return {};
 }
 

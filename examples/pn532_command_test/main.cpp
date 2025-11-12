@@ -381,6 +381,9 @@ int main(int argc, char* argv[])
     
     printInfo("Initializing PN532 driver...");
     driver.init();
+    driver.setSamConfiguration(0x01); // Normal mode
+    driver.setMaxRetries(0x01);       // 1 retry
+    
     
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
 

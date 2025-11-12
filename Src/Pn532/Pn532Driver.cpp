@@ -2,6 +2,8 @@
 #include "Pn532/Commands/GetFirmwareVersion.h"
 #include "Pn532/Commands/PerformSelfTest.h"
 #include "Pn532/Commands/GetGeneralStatus.h"
+#include "Pn532/Commands/SAMConfiguration.h"
+#include "Pn532/Commands/RFConfiguration.h"
 #include "Pn532/Pn532ResponseFrame.h"
 #include "Nfc/BufferSizes.h"
 #include "Utils/Logging.h"
@@ -120,6 +122,11 @@ etl::expected<Pn532ResponseFrame, Error> Pn532Driver::transceive(const CommandRe
         LOG_ERROR("Timeout waiting for PN532 response frame");
         return etl::unexpected(Error::fromPn532(Pn532Error::Timeout));
     }
+
+    // 6a. Small delay to ensure PN532 finishes transmitting the complete frame
+    // At 115200 baud, even a 50-byte frame takes ~4.3ms to transmit
+    // This prevents reading partial frames
+    utils::delay_ms(20);
 
     // 7. Read the response frame data
     // We read all available bytes (up to max frame size) and let parseResponseFrame()
@@ -325,8 +332,20 @@ etl::expected<GeneralStatus, Error> Pn532Driver::getGeneralStatus()
 // Configuration
 etl::expected<void, Error> Pn532Driver::setSamConfiguration(uint8_t mode)
 {
-    // TODO: Implement set SAM configuration
-    return etl::unexpected(Error::fromPn532(Pn532Error::Timeout));
+    LOG_INFO("Setting SAM configuration to mode: 0x%02X", mode);
+    
+    // Create SAMConfiguration command with the specified mode
+    SAMConfiguration cmd(static_cast<SamMode>(mode));
+    
+    auto result = executeCommand(cmd);
+    if (!result.has_value())
+    {
+        LOG_ERROR("SAM configuration failed");
+        return etl::unexpected(result.error());
+    }
+    
+    LOG_INFO("SAM configuration successful");
+    return {};
 }
 
 etl::expected<void, Error> Pn532Driver::setRfField(const bool state)
@@ -337,8 +356,28 @@ etl::expected<void, Error> Pn532Driver::setRfField(const bool state)
 
 etl::expected<void, Error> Pn532Driver::setMaxRetries(const uint8_t maxRetries)
 {
-    // TODO: Implement set max retries
-    return etl::unexpected(Error::fromPn532(Pn532Error::Timeout));
+    LOG_INFO("Setting max retries to: %u", maxRetries);
+    
+    // Create RFConfiguration command for MaxRetries
+    // MaxRetries (0x05) requires 3 bytes:
+    // [MxRtyATR] [MxRtyPSL] [MxRtyPassiveActivation]
+    RFConfigurationOptions opts;
+    opts.item = RFConfigItem::MaxRetries;
+    opts.configData.push_back(maxRetries);  // ATR retries
+    opts.configData.push_back(maxRetries);  // PSL retries
+    opts.configData.push_back(maxRetries);  // Passive activation retries
+    
+    RFConfiguration cmd(opts);
+    
+    auto result = executeCommand(cmd);
+    if (!result.has_value())
+    {
+        LOG_ERROR("Set max retries failed");
+        return etl::unexpected(result.error());
+    }
+    
+    LOG_INFO("Max retries set successfully");
+    return {};
 }
 
 etl::expected<void, Error> Pn532Driver::setSerialBaudrate(Pn532Baudrate baudrate)

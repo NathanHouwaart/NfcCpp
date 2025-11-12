@@ -32,7 +32,9 @@ namespace pn532
         etl::vector<uint8_t, 3> payload;
         payload.push_back(options.maxTargets);
         payload.push_back(static_cast<uint8_t>(options.target));
-        return createCommandRequest(0x4A, payload); // 0x4A = InListPassiveTarget
+        
+        // Use the timeout from options (default 5000ms for card detection)
+        return createCommandRequest(0x4A, payload, options.responseTimeoutMs); // 0x4A = InListPassiveTarget
     }
 
     etl::expected<CommandResponse, Error> InListPassiveTarget::parseResponse(const Pn532ResponseFrame& frame)

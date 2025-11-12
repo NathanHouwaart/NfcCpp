@@ -52,6 +52,7 @@ namespace pn532
     {
         uint8_t maxTargets = 1;
         CardTargetType target = CardTargetType::TypeA_106kbps;
+        uint32_t responseTimeoutMs = 5000;  // 5 seconds default for card detection
     };
 
     /**
