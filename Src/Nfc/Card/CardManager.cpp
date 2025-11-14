@@ -72,8 +72,8 @@ namespace nfc
         if (!currentCardInfo.has_value())
         {
             return etl::unexpected(error::Error::fromCardManager(error::CardManagerError::NoCardPresent));
+            
         }
-
         // Create session from the already-detected card
         auto sessionResult = CardSession::create(transceiver, currentCardInfo.value());
         

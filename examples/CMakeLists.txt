@@ -17,3 +17,6 @@ add_subdirectory(timing_example)
 
 # Example 6: CardManager Usage (Detection and Session Management)
 add_subdirectory(card_manager_example)
+
+# Example 7: Basic Setup Example
+add_subdirectory(basic_setup_example)

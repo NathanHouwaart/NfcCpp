@@ -45,19 +45,19 @@ namespace nfc
          */
         explicit DesfireCard(IApduTransceiver& transceiver);
 
-        /**
-         * @brief Get the DESFire context
-         * 
-         * @return DesfireContext& Reference to the context
-         */
-        DesfireContext& getContext();
+        // /**
+        //  * @brief Get the DESFire context
+        //  * 
+        //  * @return DesfireContext& Reference to the context
+        //  */
+        // DesfireContext& getContext();
 
-        /**
-         * @brief Get the DESFire context (const)
-         * 
-         * @return const DesfireContext& Reference to the context
-         */
-        const DesfireContext& getContext() const;
+        // /**
+        //  * @brief Get the DESFire context (const)
+        //  * 
+        //  * @return const DesfireContext& Reference to the context
+        //  */
+        // const DesfireContext& getContext() const;
 
         /**
          * @brief Execute a DESFire command

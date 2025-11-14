@@ -37,7 +37,12 @@ namespace error {
         DuplicateError = 0xDE,
         EepromError = 0xEE,
         FileNotFound = 0xF0,
-        FileIntegrityError = 0xF1
+        FileIntegrityError = 0xF1,
+        
+        // Additional errors for internal state management
+        AuthenticationFailed = 0xFD,
+        InvalidState = 0xFE,
+        InvalidResponse = 0xFF
     };
 
 } // namespace error

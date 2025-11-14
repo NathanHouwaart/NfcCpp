@@ -366,6 +366,12 @@ namespace error {
                         return "FileNotFound";
                     case DesfireError::FileIntegrityError:
                         return "FileIntegrityError";
+                    case DesfireError::AuthenticationFailed:
+                        return "AuthenticationFailed";
+                    case DesfireError::InvalidState:
+                        return "InvalidState";
+                    case DesfireError::InvalidResponse:
+                        return "InvalidResponse";
                     default:
                         return "UndefinedDesfireError";
                 }

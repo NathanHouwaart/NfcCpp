@@ -135,6 +135,7 @@ namespace nfc
         etl::vector<uint8_t, 32> encryptedResponse;
         etl::vector<uint8_t, 16> rndA;
         etl::vector<uint8_t, 16> rndB;
+        etl::vector<uint8_t, 8> currentIv;  // Current IV for CBC operations
     };
 
 } // namespace nfc

@@ -18,6 +18,9 @@
 #include "Nfc/Desfire/IDesfireCommand.h"
 #include "Nfc/Desfire/DesfireRequest.h"
 #include "Nfc/Desfire/DesfireResult.h"
+#include "Nfc/Desfire/Commands/SelectApplicationCommand.h"
+#include "Nfc/Desfire/Commands/AuthenticateCommand.h"
+#include "Error/DesfireError.h"
 
 using namespace nfc;
 
@@ -31,26 +34,92 @@ DesfireCard::DesfireCard(IApduTransceiver& transceiver)
     // TODO: Initialize pipes
 }
 
-DesfireContext& DesfireCard::getContext()
-{
-    return context;
-}
+// DesfireContext& DesfireCard::getContext()
+// {
+//     return context;
+// }
 
-const DesfireContext& DesfireCard::getContext() const
-{
-    return context;
-}
+// const DesfireContext& DesfireCard::getContext() const
+// {
+//     return context;
+// }
 
 etl::expected<void, error::Error> DesfireCard::executeCommand(IDesfireCommand& command)
 {
-    // TODO: Implement command execution
-    return etl::unexpected(error::Error::fromHardware(error::HardwareError::NotSupported));
+    // Reset command state
+    command.reset();
+    
+    // Execute command with potential multi-frame responses
+    while (!command.isComplete())
+    {
+        // Build request
+        auto requestResult = command.buildRequest(context);
+        if (!requestResult)
+        {
+            return etl::unexpected(requestResult.error());
+        }
+        
+        DesfireRequest& request = requestResult.value();
+        
+        // Build DESFire APDU: 0x90 [CMD] 0x00 0x00 [Lc] [Data...] 0x00
+        etl::vector<uint8_t, 261> apdu;
+        apdu.push_back(0x90);  // CLA: DESFire proprietary
+        apdu.push_back(request.commandCode);  // INS: command code
+        apdu.push_back(0x00);  // P1
+        apdu.push_back(0x00);  // P2
+        
+        if (!request.data.empty())
+        {
+            apdu.push_back(static_cast<uint8_t>(request.data.size()));  // Lc: data length
+            for (size_t i = 0; i < request.data.size(); ++i)
+            {
+                apdu.push_back(request.data[i]);
+            }
+        }
+        else
+        {
+            apdu.push_back(0x00);  // Lc = 0
+        }
+        
+        apdu.push_back(0x00);  // Le: expect response
+        
+        // Transceive APDU
+        auto apduResult = transceiver.transceive(apdu);
+        if (!apduResult)
+        {
+            return etl::unexpected(apduResult.error());
+        }
+        
+        ApduResponse& apduResponse = apduResult.value();
+        
+        // Check APDU status
+        if (!apduResponse.isSuccess())
+        {
+            // Map DESFire status to error
+            // SW1=0x91, SW2=DESFire status code
+            if (apduResponse.sw1 == 0x91)
+            {
+                auto desfireStatus = static_cast<error::DesfireError>(apduResponse.sw2);
+                return etl::unexpected(error::Error::fromDesfire(desfireStatus));
+            }
+            return etl::unexpected(error::Error::fromApdu(error::ApduError::Unknown));
+        }
+        
+        // Parse response
+        auto parseResult = command.parseResponse(apduResponse.data, context);
+        if (!parseResult)
+        {
+            return etl::unexpected(parseResult.error());
+        }
+    }
+    
+    return {};
 }
 
 etl::expected<void, error::Error> DesfireCard::selectApplication(const etl::array<uint8_t, 3>& aid)
 {
-    // TODO: Implement application selection
-    return etl::unexpected(error::Error::fromHardware(error::HardwareError::NotSupported));
+    SelectApplicationCommand command(aid);
+    return executeCommand(command);
 }
 
 etl::expected<void, error::Error> DesfireCard::authenticate(
@@ -58,8 +127,13 @@ etl::expected<void, error::Error> DesfireCard::authenticate(
     const etl::vector<uint8_t, 24>& key,
     DesfireAuthMode mode)
 {
-    // TODO: Implement authentication
-    return etl::unexpected(error::Error::fromHardware(error::HardwareError::NotSupported));
+    AuthenticateCommandOptions options;
+    options.mode = mode;
+    options.keyNo = keyNo;
+    options.key = key;
+    
+    AuthenticateCommand command(options);
+    return executeCommand(command);
 }
 
 etl::expected<etl::vector<uint8_t, 10>, error::Error> DesfireCard::getRealCardUid()

@@ -7,6 +7,7 @@ add_library(NfcCpp_Nfc_Desfire OBJECT
     EncPipe.cpp
     Commands/AuthenticateCommand.cpp
     Commands/ChangeKeyCommand.cpp
+    Commands/SelectApplicationCommand.cpp
 )
 
 target_include_directories(NfcCpp_Nfc_Desfire PUBLIC
