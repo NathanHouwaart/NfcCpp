@@ -52,26 +52,41 @@ etl::expected<DesfireResult, error::Error> SelectApplicationCommand::parseRespon
 {
     DesfireResult result;
     
-    // Response should be empty (only status code is sent separately)
-    // Status 0x00 = success, application selected
-    result.statusCode = 0x00;
-    result.data.clear();
-    
-    // Update context with selected AID
-    context.selectedAid.clear();
-    for (size_t i = 0; i < 3; ++i)
+    // Response format from wire: [Status][Data...]
+    if (response.empty())
     {
-        context.selectedAid.push_back(aid[i]);
+        return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidResponse));
     }
     
-    // Clear authentication state when changing applications
-    context.authenticated = false;
-    context.commMode = CommMode::Plain;
-    context.keyNo = 0;
-    context.sessionKeyEnc.clear();
-    context.sessionKeyMac.clear();
-    context.iv.clear();
-    context.iv.resize(8, 0);
+    // Extract status code
+    result.statusCode = response[0];
+    
+    // Extract data (if any)
+    result.data.clear();
+    for (size_t i = 1; i < response.size(); ++i)
+    {
+        result.data.push_back(response[i]);
+    }
+    
+    // Only update context if successful
+    if (result.isSuccess())
+    {
+        // Update context with selected AID
+        context.selectedAid.clear();
+        for (size_t i = 0; i < 3; ++i)
+        {
+            context.selectedAid.push_back(aid[i]);
+        }
+        
+        // Clear authentication state when changing applications
+        context.authenticated = false;
+        context.commMode = CommMode::Plain;
+        context.keyNo = 0;
+        context.sessionKeyEnc.clear();
+        context.sessionKeyMac.clear();
+        context.iv.clear();
+        context.iv.resize(8, 0);
+    }
     
     complete = true;
     

@@ -29,6 +29,7 @@ namespace nfc
     struct DesfireRequest;
     struct DesfireResult;
     class IApduTransceiver;
+    class IWire;
 
     /**
      * @brief DESFire card class
@@ -42,8 +43,9 @@ namespace nfc
          * @brief Construct a new DesfireCard
          * 
          * @param transceiver APDU transceiver
+         * @param wire Wire strategy for APDU framing (managed by CardManager)
          */
-        explicit DesfireCard(IApduTransceiver& transceiver);
+        DesfireCard(IApduTransceiver& transceiver, IWire& wire);
 
         // /**
         //  * @brief Get the DESFire context
@@ -114,6 +116,7 @@ namespace nfc
     private:
         IApduTransceiver& transceiver;
         DesfireContext context;
+        IWire* wire;  // Wire strategy for APDU framing
 
         PlainPipe* plainPipe;
         MacPipe* macPipe;

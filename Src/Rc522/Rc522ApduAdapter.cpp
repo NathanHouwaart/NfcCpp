@@ -12,6 +12,7 @@
 
 #include "Rc522/Rc522ApduAdapter.h"
 #include "Rc522/Rc522Driver.h"
+#include "Nfc/Wire/IWire.h"
 #include "Utils/Logging.h"
 
 using namespace nfc;
@@ -25,10 +26,14 @@ namespace rc522
         LOG_WARN("Rc522ApduAdapter created - RC522 not implemented");
     }
 
-    etl::expected<ApduResponse, error::Error> Rc522ApduAdapter::transceive(
+    void Rc522ApduAdapter::setWire(IWire& wire)
+    {
+        LOG_ERROR("RC522 setWire not implemented");
+    }
+
+    etl::expected<etl::vector<uint8_t, buffer::APDU_DATA_MAX>, error::Error> Rc522ApduAdapter::transceive(
         const etl::ivector<uint8_t> &apdu)
     {
-
         LOG_ERROR("RC522 APDU transceive not implemented");
         return etl::unexpected(error::Error::fromRc522(error::Rc522Error::NotImplemented));
     }

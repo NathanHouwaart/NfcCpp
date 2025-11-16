@@ -110,7 +110,8 @@ namespace nfc
 
     etl::expected<CardSession, error::Error> CardSession::create(
         IApduTransceiver& transceiver,
-        const CardInfo& info)
+        const CardInfo& info,
+        IWire& wire)
     {
         CardSession session(info);
         
@@ -118,8 +119,8 @@ namespace nfc
         switch (info.type)
         {
             case CardType::MifareDesfire:
-                // Create DESFire card with the transceiver
-                session.card.emplace<DesfireCard>(transceiver);
+                // Create DESFire card with the transceiver and wire from CardManager
+                session.card.emplace<DesfireCard>(transceiver, wire);
                 // Context is created within DesfireCard
                 break;
                 

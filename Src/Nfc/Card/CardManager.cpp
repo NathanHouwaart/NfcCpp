@@ -55,6 +55,11 @@ namespace nfc
         if (result.has_value())
         {
             currentCardInfo = result.value();
+            
+            // Configure adapter with current wire protocol for this card session
+            // Note: Wire selection is done via setWire() before detection
+            transceiver.setWire(*activeWire);
+            
             return result.value();
         }
         
@@ -74,8 +79,8 @@ namespace nfc
             return etl::unexpected(error::Error::fromCardManager(error::CardManagerError::NoCardPresent));
             
         }
-        // Create session from the already-detected card
-        auto sessionResult = CardSession::create(transceiver, currentCardInfo.value());
+        // Create session from the already-detected card, passing the managed wire
+        auto sessionResult = CardSession::create(transceiver, currentCardInfo.value(), *activeWire);
         
         if (!sessionResult.has_value())
         {

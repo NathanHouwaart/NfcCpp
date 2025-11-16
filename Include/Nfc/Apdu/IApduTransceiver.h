@@ -15,13 +15,18 @@
 #include <etl/vector.h>
 
 #include "Error/Error.h"
-#include "ApduResponse.h"
+#include "Nfc/BufferSizes.h"
 
 namespace nfc
 {
+    class IWire; // Forward declaration
 
     /**
      * @brief Interface for APDU transceivers
+     * 
+     * The adapter is configured with a Wire protocol at session start via setWire().
+     * All subsequent transceive calls use that protocol to interpret card responses.
+     * Returns normalized PDU format: [Status][Data...]
      */
     class IApduTransceiver
     {
@@ -29,21 +34,27 @@ namespace nfc
         virtual ~IApduTransceiver() = default;
 
         /**
-         * @brief Transmits an APDU command and receives the response
+         * @brief Configure the wire protocol for the current card session
+         * 
+         * Must be called after card detection and before transceive operations.
+         * The wire protocol determines how card responses are interpreted.
          *
-         * @param apduCommand apdu command to transmit
-         * @return etl::expected<ApduResponse, error::Error> apdu response on success, ApduError on failure
+         * @param wire Wire protocol (Native or ISO) based on card capabilities
          */
-        virtual etl::expected<ApduResponse, error::Error> transceive(const etl::ivector<uint8_t> &apdu) = 0;
+        virtual void setWire(IWire& wire) = 0;
 
-    private:
         /**
-         * @brief Parses raw APDU response data into an ApduResponse object
+         * @brief Transmits data to card and receives normalized PDU response
          *
-         * @param raw raw APDU response data
-         * @return etl::expected<ApduResponse, error::Error> apdu response on success, ApduError on failure
+         * Uses the Wire protocol configured via setWire() to interpret responses.
+         * Returns PDU format: [Status][Data...] where Status is DESFire status byte.
+         *
+         * @param apdu Command data to transmit
+         * @return etl::expected<etl::vector<uint8_t, buffer::APDU_DATA_MAX>, error::Error> 
+         *         PDU response or error
          */
-        virtual etl::expected<ApduResponse, error::Error> parseApduResponse(const etl::ivector<uint8_t> &raw) = 0;
+        virtual etl::expected<etl::vector<uint8_t, buffer::APDU_DATA_MAX>, error::Error> transceive(
+            const etl::ivector<uint8_t> &apdu) = 0;
     };
 
 } // namespace nfc

@@ -20,18 +20,22 @@
 #include "Nfc/Desfire/DesfireResult.h"
 #include "Nfc/Desfire/Commands/SelectApplicationCommand.h"
 #include "Nfc/Desfire/Commands/AuthenticateCommand.h"
+#include "Nfc/Wire/IWire.h"
+#include "Nfc/Wire/IsoWire.h"
 #include "Error/DesfireError.h"
 
 using namespace nfc;
 
-DesfireCard::DesfireCard(IApduTransceiver& transceiver)
+DesfireCard::DesfireCard(IApduTransceiver& transceiver, IWire& wireRef)
     : transceiver(transceiver)
     , context()
+    , wire(&wireRef)
     , plainPipe(nullptr)
     , macPipe(nullptr)
     , encPipe(nullptr)
 {
     // TODO: Initialize pipes
+    // Wire is now managed by CardManager and passed in
 }
 
 // DesfireContext& DesfireCard::getContext()
@@ -49,10 +53,10 @@ etl::expected<void, error::Error> DesfireCard::executeCommand(IDesfireCommand& c
     // Reset command state
     command.reset();
     
-    // Execute command with potential multi-frame responses
+    // Multi-stage loop for commands that require multiple frames
     while (!command.isComplete())
     {
-        // Build request
+        // 1. Build request (PDU format: [CMD][Data...])
         auto requestResult = command.buildRequest(context);
         if (!requestResult)
         {
@@ -61,55 +65,41 @@ etl::expected<void, error::Error> DesfireCard::executeCommand(IDesfireCommand& c
         
         DesfireRequest& request = requestResult.value();
         
-        // Build DESFire APDU: 0x90 [CMD] 0x00 0x00 [Lc] [Data...] 0x00
-        etl::vector<uint8_t, 261> apdu;
-        apdu.push_back(0x90);  // CLA: DESFire proprietary
-        apdu.push_back(request.commandCode);  // INS: command code
-        apdu.push_back(0x00);  // P1
-        apdu.push_back(0x00);  // P2
-        
-        if (!request.data.empty())
+        // 2. Build PDU (Protocol Data Unit)
+        etl::vector<uint8_t, 256> pdu;
+        pdu.push_back(request.commandCode);
+        for (size_t i = 0; i < request.data.size(); ++i)
         {
-            apdu.push_back(static_cast<uint8_t>(request.data.size()));  // Lc: data length
-            for (size_t i = 0; i < request.data.size(); ++i)
-            {
-                apdu.push_back(request.data[i]);
-            }
-        }
-        else
-        {
-            apdu.push_back(0x00);  // Lc = 0
+            pdu.push_back(request.data[i]);
         }
         
-        apdu.push_back(0x00);  // Le: expect response
+        // 3. Wrap PDU into APDU using wire strategy
+        etl::vector<uint8_t, 261> apdu = wire->wrap(pdu);
         
-        // Transceive APDU
-        auto apduResult = transceiver.transceive(apdu);
-        if (!apduResult)
+        // 4. Transceive APDU (adapter unwraps using configured wire)
+        // Returns normalized PDU: [Status][Data...]
+        auto pduResult = transceiver.transceive(apdu);
+        if (!pduResult)
         {
-            return etl::unexpected(apduResult.error());
+            return etl::unexpected(pduResult.error());
         }
         
-        ApduResponse& apduResponse = apduResult.value();
+        etl::vector<uint8_t, 256>& unwrappedPdu = pduResult.value();
         
-        // Check APDU status
-        if (!apduResponse.isSuccess())
-        {
-            // Map DESFire status to error
-            // SW1=0x91, SW2=DESFire status code
-            if (apduResponse.sw1 == 0x91)
-            {
-                auto desfireStatus = static_cast<error::DesfireError>(apduResponse.sw2);
-                return etl::unexpected(error::Error::fromDesfire(desfireStatus));
-            }
-            return etl::unexpected(error::Error::fromApdu(error::ApduError::Unknown));
-        }
-        
-        // Parse response
-        auto parseResult = command.parseResponse(apduResponse.data, context);
+        // 7. Parse response (updates command state)
+        auto parseResult = command.parseResponse(unwrappedPdu, context);
         if (!parseResult)
         {
             return etl::unexpected(parseResult.error());
+        }
+        
+        DesfireResult& result = parseResult.value();
+        
+        // 8. Check for errors (unless it's an additional frame request)
+        if (!result.isSuccess() && result.statusCode != 0xAF)
+        {
+            auto desfireStatus = static_cast<error::DesfireError>(result.statusCode);
+            return etl::unexpected(error::Error::fromDesfire(desfireStatus));
         }
     }
     
@@ -128,9 +118,9 @@ etl::expected<void, error::Error> DesfireCard::authenticate(
     DesfireAuthMode mode)
 {
     AuthenticateCommandOptions options;
-    options.mode = mode;
     options.keyNo = keyNo;
     options.key = key;
+    options.mode = mode;
     
     AuthenticateCommand command(options);
     return executeCommand(command);

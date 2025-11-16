@@ -66,7 +66,18 @@ namespace rc522
          * @return Expected ApduResponse on success, Error on failure
          * @note Not implemented - placeholder only
          */
-        etl::expected<ApduResponse, error::Error> transceive(
+        /**
+         * @brief Configure wire protocol for current card session
+         * @param wire Wire protocol (Native or ISO)
+         */
+        void setWire(IWire& wire) override;
+
+        /**
+         * @brief Transmit data to card and receive PDU response
+         * @param apdu Command data to send
+         * @return Expected PDU [Status][Data...] on success, Error on failure
+         */
+        etl::expected<etl::vector<uint8_t, buffer::APDU_DATA_MAX>, error::Error> transceive(
             const etl::ivector<uint8_t> &apdu) override;
 
         // ICardDetector interface implementation

@@ -25,6 +25,8 @@
 
 namespace nfc
 {
+    // Forward declarations
+    class IWire;
 
     /**
      * @brief Card session class
@@ -140,11 +142,13 @@ namespace nfc
          * 
          * @param transceiver APDU transceiver
          * @param info Card information
+         * @param wire Wire strategy for APDU framing (from CardManager)
          * @return etl::expected<CardSession, error::Error> Card session or error
          */
         static etl::expected<CardSession, error::Error> create(
             IApduTransceiver& transceiver,
-            const CardInfo& info);
+            const CardInfo& info,
+            IWire& wire);
 
     private:
         /**

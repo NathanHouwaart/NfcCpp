@@ -13,6 +13,7 @@
 #include "Nfc/Desfire/DesfireContext.h"
 #include "Utils/DesfireCrypto.h"
 #include "Error/DesfireError.h"
+#include "Utils/Logging.h"
 #include <cstring>
 
 using namespace nfc;
@@ -73,13 +74,34 @@ etl::expected<DesfireResult, error::Error> AuthenticateCommand::parseResponse(
     DesfireContext& context)
 {
     DesfireResult result;
-    result.statusCode = 0x00;
+    
+    // Response format from wire: [Status][Data...]
+    if (response.empty())
+    {
+        return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidResponse));
+    }
+    
+    // Extract status code
+    result.statusCode = response[0];
+    
+    // Check for errors
+    if (!result.isSuccess() && !result.isAdditionalFrame())
+    {
+        return etl::unexpected(error::Error::fromDesfire(static_cast<error::DesfireError>(result.statusCode)));
+    }
+    
+    // Extract data (skip status byte)
+    etl::vector<uint8_t, 256> data;
+    for (size_t i = 1; i < response.size(); ++i)
+    {
+        data.push_back(response[i]);
+    }
     
     switch (stage)
     {
         case Stage::Initial:
             // STEP 2: Received encrypted RndB from card
-            if (response.size() < 8)
+            if (data.size() < 8)
             {
                 return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidResponse));
             }
@@ -88,24 +110,16 @@ etl::expected<DesfireResult, error::Error> AuthenticateCommand::parseResponse(
             encryptedChallenge.clear();
             for (size_t i = 0; i < 8; ++i)
             {
-                encryptedChallenge.push_back(response[i]);
+                encryptedChallenge.push_back(data[i]);
             }
             
             // STEP 3: Decrypt challenge to get RndB
+            // Note: IV is reset to 0 before decryption (per addons code)
             decryptChallenge();
             
-            // STEP 4: Update IV for ISO mode
-            if (options.mode == DesfireAuthMode::ISO)
-            {
-                // IV = encrypted RndB
-                for (size_t i = 0; i < 8; ++i)
-                {
-                    currentIv[i] = encryptedChallenge[i];
-                }
-            }
-            
-            // STEP 5: Rotate RndB right by 1 byte
-            rotateRight(rndB, 1);
+            // STEP 4: Rotate RndB left by 1 byte (despite protocol saying "right")
+            // Per addons code and actual protocol bytes: [a,b,c,...,h] -> [b,c,...,h,a]
+            rotateLeft(rndB, 1);
             
             // STEP 6: Generate RndA
             generateRandom(rndA, 8);
@@ -119,13 +133,13 @@ etl::expected<DesfireResult, error::Error> AuthenticateCommand::parseResponse(
             
         case Stage::ChallengeSent:
             // STEP 11: Received encrypted RndA' from card
-            if (response.size() < 8)
+            if (data.size() < 8)
             {
                 return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidResponse));
             }
             
             // STEP 12-14: Verify authentication confirmation
-            if (!verifyAuthConfirmation(response))
+            if (!verifyAuthConfirmation(data))
             {
                 return etl::unexpected(error::Error::fromDesfire(error::DesfireError::AuthenticationFailed));
             }
@@ -133,8 +147,8 @@ etl::expected<DesfireResult, error::Error> AuthenticateCommand::parseResponse(
             // STEP 15: Generate session key
             uint8_t sessionKeyRaw[16];
             
-            // Rotate RndB back left by 1 byte to get original
-            rotateLeft(rndB, 1);
+            // Rotate RndB back right by 1 byte to get original (reverse of left rotation)
+            rotateRight(rndB, 1);
             
             DesFireCrypto::generateSessionKey(rndA.data(), rndB.data(), sessionKeyRaw);
             
@@ -201,33 +215,22 @@ void AuthenticateCommand::generateAuthResponse()
     encryptedResponse.clear();
     encryptedResponse.resize(16);
     
+    // ISO mode: CBC chain continues from encrypted RndB; Legacy mode: IV=0
+    uint8_t iv[8] = {0};
     if (options.mode == DesfireAuthMode::ISO)
     {
-        // ISO mode: Use CBC with updated IV
-        DesFireCrypto::des3CbcEncrypt(
-            plainResponse.data(),
-            16,
-            options.key.data(),
-            currentIv.data(),
-            encryptedResponse.data());
-        
-        // STEP 9: Update IV = last 8 bytes of encrypted response
         for (size_t i = 0; i < 8; ++i)
         {
-            currentIv[i] = encryptedResponse[8 + i];
+            iv[i] = encryptedChallenge[i];
         }
     }
-    else
-    {
-        // Legacy mode: Use CBC with IV=0
-        uint8_t zeroIv[8] = {0};
-        DesFireCrypto::des3CbcEncrypt(
-            plainResponse.data(),
-            16,
-            options.key.data(),
-            zeroIv,
-            encryptedResponse.data());
-    }
+    
+    DesFireCrypto::des3CbcEncrypt(
+        plainResponse.data(),
+        16,
+        options.key.data(),
+        iv,
+        encryptedResponse.data());
 }
 
 bool AuthenticateCommand::verifyAuthConfirmation(const etl::ivector<uint8_t>& response)
@@ -238,12 +241,18 @@ bool AuthenticateCommand::verifyAuthConfirmation(const etl::ivector<uint8_t>& re
     
     if (options.mode == DesfireAuthMode::ISO)
     {
-        // ISO mode: Use CBC with current IV
+        // ISO mode: CBC chain continues - use second block of our encrypted response as IV
+        uint8_t iv[8];
+        for (size_t i = 0; i < 8; ++i)
+        {
+            iv[i] = encryptedResponse[8 + i];
+        }
+        
         DesFireCrypto::des3CbcDecrypt(
             response.data(),
             8,
             options.key.data(),
-            currentIv.data(),
+            iv,
             decryptedRndA.data());
     }
     else
@@ -260,14 +269,21 @@ bool AuthenticateCommand::verifyAuthConfirmation(const etl::ivector<uint8_t>& re
     
     // STEP 14: Compare with our original RndA
     if (decryptedRndA.size() != rndA.size())
+    {
+        LOG_ERROR("RndA size mismatch");
         return false;
+    }
     
     for (size_t i = 0; i < rndA.size(); ++i)
     {
         if (decryptedRndA[i] != rndA[i])
+        {
+            LOG_ERROR("RndA verification failed at byte %zu: expected 0x%02X, got 0x%02X", i, rndA[i], decryptedRndA[i]);
             return false;
+        }
     }
     
+    LOG_INFO("Authentication verified successfully!");
     return true;
 }
 

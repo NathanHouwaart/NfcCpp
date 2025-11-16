@@ -13,35 +13,83 @@
 #include "Pn532/Commands/InListPassiveTarget.h"
 #include "Pn532/Commands/InDataExchange.h"
 #include "Pn532/Pn532Driver.h"
+#include "Nfc/Wire/IWire.h"
 #include "Utils/Logging.h"
 
 using namespace error;
+using namespace nfc;
 
 namespace pn532
 {
 
     Pn532ApduAdapter::Pn532ApduAdapter(Pn532Driver &driver)
-        : driver(driver)
+        : driver(driver), activeWire(nullptr)
     {
         LOG_INFO("Pn532ApduAdapter initialized");
     }
 
-    etl::expected<ApduResponse, error::Error> Pn532ApduAdapter::transceive(
+    void Pn532ApduAdapter::setWire(IWire& wire)
+    {
+        activeWire = &wire;
+        LOG_INFO("Wire protocol configured for adapter");
+    }
+
+    etl::expected<etl::vector<uint8_t, buffer::APDU_DATA_MAX>, error::Error> Pn532ApduAdapter::transceive(
         const etl::ivector<uint8_t> &apdu)
     {
+        if (!activeWire)
+        {
+            LOG_ERROR("Wire not configured - call setWire() first");
+            return etl::unexpected(error::Error::fromCardManager(error::CardManagerError::NoCardPresent));
+        }
 
         LOG_INFO("Transmitting APDU command, length: %zu", apdu.size());
+        LOG_HEX("DEBUG", "APDU TX", apdu.data(), apdu.size());
 
-        // TODO: Implement actual APDU transmission via PN532
-        // This would typically involve:
-        // 1. Selecting the card/application
-        // 2. Sending the APDU command
-        // 3. Receiving the response
-        // 4. Parsing the response
+        // Prepare InDataExchange command with APDU payload
+        InDataExchangeOptions opts;
+        opts.targetNumber = 1;  // Target from last detectCard()
+        opts.responseTimeoutMs = 5000;  // 5 second timeout
+        
+        // Copy APDU into payload
+        opts.payload.clear();
+        for (const uint8_t byte : apdu)
+        {
+            opts.payload.push_back(byte);
+        }
 
-        // For now, return a placeholder error
-        LOG_WARN("APDU transceive not yet implemented");
-        return etl::unexpected(error::Error::fromPn532(error::Pn532Error::NotImplemented));
+        InDataExchange cmd(opts);
+        auto result = driver.executeCommand(cmd);
+
+        if (!result)
+        {
+            LOG_ERROR("InDataExchange failed");
+            return etl::unexpected(result.error());
+        }
+
+        // Check if the exchange was successful at PN532 level
+        if (!cmd.isSuccess())
+        {
+            LOG_ERROR("InDataExchange status error: 0x%02X", cmd.getStatusByte());
+            return etl::unexpected(error::Error::fromPn532(cmd.getStatus()));
+        }
+
+        // Get raw card response and unwrap using configured wire protocol
+        const auto& responseData = cmd.getResponseData();
+        LOG_HEX("DEBUG", "Card RX (raw)", responseData.data(), responseData.size());
+        
+        // Wire unwraps protocol-specific framing to normalized PDU: [Status][Data...]
+        auto pduResult = activeWire->unwrap(responseData);
+        if (!pduResult)
+        {
+            LOG_ERROR("Wire unwrap failed");
+            return etl::unexpected(pduResult.error());
+        }
+        
+        const auto& pdu = pduResult.value();
+        LOG_HEX("DEBUG", "PDU (unwrapped)", pdu.data(), pdu.size());
+        
+        return pdu;
     }
 
     etl::expected<CardInfo, error::Error> Pn532ApduAdapter::detectCard()
@@ -116,35 +164,6 @@ namespace pn532
             LOG_INFO("Card not present");
             return false;
         }
-    }
-
-    etl::expected<ApduResponse, error::Error> Pn532ApduAdapter::parseApduResponse(
-        const etl::ivector<uint8_t> &raw)
-    {
-
-        // APDU responses must be at least 2 bytes (SW1 and SW2)
-        if (raw.size() < 2)
-        {
-            LOG_ERROR("Invalid APDU response: too short (size: %zu)", raw.size());
-            return etl::unexpected(error::Error::fromApdu(error::ApduError::Unknown));
-        }
-
-        ApduResponse response;
-
-        // Extract status words (last 2 bytes)
-        response.sw1 = raw[raw.size() - 2];
-        response.sw2 = raw[raw.size() - 1];
-
-        // Extract data (everything except last 2 bytes)
-        if (raw.size() > 2)
-        {
-            response.data.assign(raw.begin(), raw.begin() + (raw.size() - 2));
-        }
-
-        LOG_INFO("Parsed APDU response: SW1=0x%02X, SW2=0x%02X, data_length=%zu",
-                 response.sw1, response.sw2, response.data.size());
-
-        return response;
     }
 
 } // namespace pn532

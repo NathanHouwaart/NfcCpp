@@ -51,11 +51,17 @@ namespace pn532
         // IApduTransceiver interface implementation
 
         /**
-         * @brief Transmit an APDU command and receive the response
-         * @param apdu The APDU command to send
-         * @return Expected ApduResponse on success, Error on failure
+         * @brief Configure wire protocol for current card session
+         * @param wire Wire protocol (Native or ISO)
          */
-        etl::expected<ApduResponse, error::Error> transceive(
+        void setWire(IWire& wire) override;
+
+        /**
+         * @brief Transmit data to card and receive PDU response
+         * @param apdu Command data to send
+         * @return Expected PDU [Status][Data...] on success, Error on failure
+         */
+        etl::expected<etl::vector<uint8_t, buffer::APDU_DATA_MAX>, error::Error> transceive(
             const etl::ivector<uint8_t> &apdu) override;
 
         // ICardDetector interface implementation
@@ -73,15 +79,8 @@ namespace pn532
         bool isCardPresent() override;
 
     private:
-        /**
-         * @brief Parse raw response data into ApduResponse structure
-         * @param raw Raw response bytes from the card
-         * @return Expected ApduResponse on success, Error on failure
-         */
-        etl::expected<ApduResponse, error::Error> parseApduResponse(
-            const etl::ivector<uint8_t> &raw);
-
-        Pn532Driver &driver; 
+        Pn532Driver &driver;
+        IWire* activeWire;  // Current wire protocol for card session
     };
 
 } // namespace pn532

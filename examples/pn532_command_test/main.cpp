@@ -305,7 +305,6 @@ void testDataExchange(Pn532Driver& driver)
     if (result.has_value())
     {
         std::cout << "\n  Status Code: 0x" << std::hex << (int)cmd.getStatusByte() << std::dec << "\n";
-        std::cout << "  Status:      " << cmd.getStatusString() << "\n";
         
         if (cmd.isSuccess())
         {

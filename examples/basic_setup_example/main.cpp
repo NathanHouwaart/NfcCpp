@@ -40,6 +40,7 @@ int main()
         adapter, // ICardDetector (same object!)
         ReaderCapabilities::pn532()
     );
+    cardManager.setWire(WireKind::Iso); // Use ISO wire for DESFire ISO mode
 
     serial.init();
     pn532.init();
@@ -58,46 +59,49 @@ int main()
     }
     
     CardSession* session = cardSession.value();
-    
     const CardInfo& card = session->getCardInfo();
     
     // Demonstrate type-specific access
     std::cout << "\nAccessing card based on detected type..." << std::endl;
 
     auto* desfire = session->getCardAs<DesfireCard>();
-    if(desfire){
-        std::cout << "  - DESFire card object available" << std::endl;
-        std::cout << "  - Ready for DESFire operations (selectApplication, authenticate, etc.)" << std::endl;
-        
-        // Demonstrate DESFire authentication
-        std::cout << "\nAttempting DESFire authentication..." << std::endl;
-        
-        // Select master application (AID 0x000000)
-        etl::array<uint8_t, 3> masterAid = {0x00, 0x00, 0x00};
-        auto selectResult = desfire->selectApplication(masterAid);
-        if (!selectResult) {
-            std::cout << "  - Failed to select master application: " << selectResult.error().toString().c_str() << std::endl;
-        } else {
-            std::cout << "  + Master application selected" << std::endl;
-            
-            // Prepare factory default key (all zeros for 2K3DES)
-            etl::vector<uint8_t, 24> defaultKey;
-            for (int i = 0; i < 16; ++i) {
-                defaultKey.push_back(0x00);
-            }
-            
-            // Authenticate with key 0 using ISO mode
-            auto authResult = desfire->authenticate(0, defaultKey, DesfireAuthMode::ISO);
-            if (!authResult) {
-                std::cout << "  - Authentication failed: " << authResult.error().toString().c_str() << std::endl;
-            } else {
-                std::cout << "  + Authentication successful!" << std::endl;
-                std::cout << "  + Session key established" << std::endl;
-                std::cout << "  + Secure channel active" << std::endl;
-            }
-        }
-    }else{
+
+    // Guard: if no DESFire object, bail out early
+    if (!desfire) {
         std::cout << " Other card type or DESFire not initialized in session" << std::endl;
+        return 0;
+    }
+
+    std::cout << "  - DESFire card object available" << std::endl;
+    std::cout << "  - Ready for DESFire operations (selectApplication, authenticate, etc.)" << std::endl;
+
+    // Demonstrate DESFire authentication
+    std::cout << "\nAttempting DESFire authentication..." << std::endl;
+
+    // Select master application (AID 0x000000)
+    etl::array<uint8_t, 3> masterAid = {0x00, 0x00, 0x00};
+    auto selectResult = desfire->selectApplication(masterAid);
+    if (!selectResult) {
+        std::cout << "  - Failed to select master application: " << selectResult.error().toString().c_str() << std::endl;
+        return 0;
+    }
+
+    std::cout << "  + Master application selected" << std::endl;
+
+    // Prepare factory default key (all zeros for 2K3DES)
+    etl::vector<uint8_t, 24> defaultKey;
+    for (int i = 0; i < 16; ++i) {
+        defaultKey.push_back(0x00);
+    }
+
+    // Authenticate with key 0 using ISO mode (0x1A)
+    auto authResult = desfire->authenticate(0, defaultKey, DesfireAuthMode::ISO);
+    if (!authResult) {
+        std::cout << "  - Authentication failed: " << authResult.error().toString().c_str() << std::endl;
+    } else {
+        std::cout << "  + Authentication successful!" << std::endl;
+        std::cout << "  + Session key established" << std::endl;
+        std::cout << "  + Secure channel active" << std::endl;
     }
     
     return 0;

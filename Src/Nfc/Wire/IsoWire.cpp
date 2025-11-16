@@ -48,7 +48,8 @@ etl::vector<uint8_t, APDU_COMMAND_MAX> IsoWire::wrap(const etl::ivector<uint8_t>
 etl::expected<etl::vector<uint8_t, APDU_DATA_MAX>, error::Error> IsoWire::unwrap(const etl::ivector<uint8_t>& apdu)
 {
     // ISO 7816-4 APDU unwrapping
-    // Extract data and check SW1 SW2 status bytes
+    // Input format: [Data...][SW1][SW2]
+    // Output format: [Status][Data...] where Status is the DESFire status code
     
     if (apdu.size() < APDU_STATUS_SIZE)
     {
@@ -59,18 +60,25 @@ etl::expected<etl::vector<uint8_t, APDU_DATA_MAX>, error::Error> IsoWire::unwrap
     uint8_t sw1 = apdu[apdu.size() - 2];
     uint8_t sw2 = apdu[apdu.size() - 1];
 
-    // Check for success (0x9000) or additional frames (0x91XX)
-    if (!(sw1 == 0x90 && sw2 == 0x00) && sw1 != 0x91)
+    // ISO status mapping to DESFire status:
+    // 0x90 0x00 -> 0x00 (success)
+    // 0x91 0xXX -> 0xXX (DESFire status like 0xAF, 0xAE, etc.)
+    if (sw1 != 0x90 && sw1 != 0x91)
     {
+        // Unexpected ISO status word
         return etl::unexpected(error::Error::fromApdu(error::ApduError::Unknown));
     }
 
-    // Extract data (everything except last 2 status bytes)
     etl::vector<uint8_t, APDU_DATA_MAX> result;
+    
+    // Map ISO status to DESFire status byte
+    result.push_back(sw2);  // 0x00 for success, or DESFire status code
+    
+    // Extract data (everything except last 2 status bytes)
     for (size_t i = 0; i < apdu.size() - APDU_STATUS_SIZE; ++i)
     {
         result.push_back(apdu[i]);
     }
-
+    
     return result;
 }
