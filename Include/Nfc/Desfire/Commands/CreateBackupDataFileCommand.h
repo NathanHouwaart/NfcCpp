@@ -1,0 +1,101 @@
+/**
+ * @file CreateBackupDataFileCommand.h
+ * @author Nathan Houwaart (n.m.houwaart@hva.nl)
+ * @brief DESFire create backup data file command
+ * @version 0.1
+ * @date 2026-02-15
+ *
+ * @copyright Copyright (c) 2026
+ *
+ */
+
+#pragma once
+
+#include "../IDesfireCommand.h"
+
+namespace nfc
+{
+    /**
+     * @brief Create backup data file command options
+     *
+     * Payload layout (INS 0xCB):
+     * - FileNo (1 byte)
+     * - CommunicationSettings (1 byte): 0x00 plain, 0x01 MAC, 0x03 enciphered
+     * - AccessRights (2 bytes): [RW|CAR] [R|W]
+     * - FileSize (3 bytes, LSB first)
+     */
+    struct CreateBackupDataFileCommandOptions
+    {
+        uint8_t fileNo;
+        uint8_t communicationSettings;
+        uint8_t readAccess;
+        uint8_t writeAccess;
+        uint8_t readWriteAccess;
+        uint8_t changeAccess;
+        uint32_t fileSize;
+    };
+
+    /**
+     * @brief Create backup data file command
+     *
+     * Creates a DESFire backup data file (INS 0xCB).
+     */
+    class CreateBackupDataFileCommand : public IDesfireCommand
+    {
+    public:
+        /**
+         * @brief Construct create backup data file command
+         *
+         * @param options Command options
+         */
+        explicit CreateBackupDataFileCommand(const CreateBackupDataFileCommandOptions& options);
+
+        /**
+         * @brief Get command name
+         *
+         * @return etl::string_view Command name
+         */
+        etl::string_view name() const override;
+
+        /**
+         * @brief Build request
+         *
+         * @param context DESFire context
+         * @return etl::expected<DesfireRequest, error::Error> Request or error
+         */
+        etl::expected<DesfireRequest, error::Error> buildRequest(const DesfireContext& context) override;
+
+        /**
+         * @brief Parse response
+         *
+         * @param response Response data
+         * @param context DESFire context
+         * @return etl::expected<DesfireResult, error::Error> Result or error
+         */
+        etl::expected<DesfireResult, error::Error> parseResponse(
+            const etl::ivector<uint8_t>& response,
+            DesfireContext& context) override;
+
+        /**
+         * @brief Check if complete
+         *
+         * @return true Command complete
+         * @return false Command not complete
+         */
+        bool isComplete() const override;
+
+        /**
+         * @brief Reset state
+         */
+        void reset() override;
+
+    private:
+        bool validateOptions() const;
+        bool buildAccessRightsBytes(uint8_t& lowByte, uint8_t& highByte) const;
+
+        CreateBackupDataFileCommandOptions options;
+        bool complete;
+    };
+
+} // namespace nfc
+

@@ -1,0 +1,816 @@
+PS C:\Users\Nathan\Documents\NfcCpp> & $exe $com --aid $aid --auth-mode legacy --auth-key-no 0 --change-key-no 0 --auth-key-hex $des00 --new-key-type 2k3des --new-key-hex $k2_00 --new-key-version 0 --confirm-change
+DESFire Authenticate + ChangeKey Example
+COM: COM5 @ 115200
+AID: 00 00 00
+Auth key no: 0
+Change key no: 0
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:91] Serial port COM5 opened
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:350] Timeout set to 1000 ms on serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:218] Baud rate set to 115200 on serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:62] Serial port COM5 initialized with baud rate 115200
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:337] Setting SAM configuration to mode: 0x01
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: SAMConfiguration
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 1000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [12 bytes]: 00 00 FF 05 FB D4 14 01 00 00 17 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 12 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 9 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [9 bytes]: 00 00 FF 02 FE D5 15 16 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x15 with 0 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'SAMConfiguration' executed successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:351] SAM configuration successful
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:363] Setting max retries to: 1
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: RFConfiguration
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 1000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [13 bytes]: 00 00 FF 06 FA D4 32 05 01 01 01 F2 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 13 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 9 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [9 bytes]: 00 00 FF 02 FE D5 33 F8 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x33 with 0 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'RFConfiguration' executed successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:377] Max retries set successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:28] Pn532ApduAdapter initialized
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:97] Detecting card presence
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InListPassiveTarget
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [11 bytes]: 00 00 FF 04 FC D4 4A 01 00 E1 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 11 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 28 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [28 bytes]: 00 00 FF 15 EB D5 4B 01 01 03 44 20 07 04 1A 56 1A 99 5B 80 06 75 77 81 02 80 79 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x4B with 19 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InListPassiveTarget' executed successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:122] Detected card UID [7 bytes]: 04 1A 56 1A 99 5B 80
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:34] Wire protocol configured for adapter
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 9
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [9 bytes]: 90 5A 00 00 03 00 00 00 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [19 bytes]: 00 00 FF 0C F4 D4 40 01 90 5A 00 00 03 00 00 00 00 FE 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 19 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 12 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [12 bytes]: 00 00 FF 05 FB D5 41 00 91 00 59 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 3 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [2 bytes]: 91 00
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [1 bytes]: 00
+SelectApplication OK
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 7
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [7 bytes]: 90 0A 00 00 01 00 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [17 bytes]: 00 00 FF 0A F6 D4 40 01 90 0A 00 00 01 00 00 50 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 17 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 20 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [20 bytes]: 00 00 FF 0D F3 D5 41 00 C4 4B E5 4B 41 DD A5 D0 91 AF D8 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 11 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [10 bytes]: C4 4B E5 4B 41 DD A5 D0 91 AF
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [9 bytes]: AF C4 4B E5 4B 41 DD A5 D0
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 22
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [22 bytes]: 90 AF 00 00 10 23 B4 0B D1 25 F5 32 35 BD 6E 85 2E BA E6 41 5D 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [32 bytes]: 00 00 FF 19 E7 D4 40 01 90 AF 00 00 10 23 B4 0B D1 25 F5 32 35 BD 6E 85 2E BA E6 41 5D 00 4C 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 32 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 20 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [20 bytes]: 00 00 FF 0D F3 D5 41 00 B7 1A 78 6E FD 66 F1 5F 91 00 EF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 11 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [10 bytes]: B7 1A 78 6E FD 66 F1 5F 91 00
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [9 bytes]: 00 B7 1A 78 6E FD 66 F1 5F
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Nfc\Desfire\Commands\AuthenticateCommand.cpp:540] Authentication verified successfully!
+Authenticate OK
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 31
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [31 bytes]: 90 C4 00 00 19 00 59 D1 EA 49 17 D1 3B D2 99 7A 56 F3 95 96 C3 A2 A9 BE 79 5F BD B9 73 BC 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [41 bytes]: 00 00 FF 22 DE D4 40 01 90 C4 00 00 19 00 59 D1 EA 49 17 D1 3B D2 99 7A 56 F3 95 96 C3 A2 A9 BE 79 5F BD B9 73 BC 00 5C 00       
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 41 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 12 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [12 bytes]: 00 00 FF 05 FB D5 41 00 91 00 59 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 3 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [2 bytes]: 91 00
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [1 bytes]: 00
+ChangeKey OK
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:109] Serial port COM5 closed successfully
+PS C:\Users\Nathan\Documents\NfcCpp> & $exe $com --aid $aid --auth-mode legacy --auth-key-no 0 --change-key-no 0 --auth-key-hex $k2_00 --new-key-type des --new-key-hex $des00 --new-key-version 0 --confirm-change
+DESFire Authenticate + ChangeKey Example
+COM: COM5 @ 115200
+AID: 00 00 00
+Auth key no: 0
+Change key no: 0
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:91] Serial port COM5 opened
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:350] Timeout set to 1000 ms on serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:218] Baud rate set to 115200 on serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:62] Serial port COM5 initialized with baud rate 115200
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:337] Setting SAM configuration to mode: 0x01
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: SAMConfiguration
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 1000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [12 bytes]: 00 00 FF 05 FB D4 14 01 00 00 17 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 12 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 9 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [9 bytes]: 00 00 FF 02 FE D5 15 16 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x15 with 0 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'SAMConfiguration' executed successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:351] SAM configuration successful
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:363] Setting max retries to: 1
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: RFConfiguration
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 1000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [13 bytes]: 00 00 FF 06 FA D4 32 05 01 01 01 F2 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 13 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 9 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [9 bytes]: 00 00 FF 02 FE D5 33 F8 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x33 with 0 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'RFConfiguration' executed successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:377] Max retries set successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:28] Pn532ApduAdapter initialized
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:97] Detecting card presence
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InListPassiveTarget
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [11 bytes]: 00 00 FF 04 FC D4 4A 01 00 E1 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 11 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 28 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [28 bytes]: 00 00 FF 15 EB D5 4B 01 01 03 44 20 07 04 1A 56 1A 99 5B 80 06 75 77 81 02 80 79 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x4B with 19 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InListPassiveTarget' executed successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:122] Detected card UID [7 bytes]: 04 1A 56 1A 99 5B 80
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:34] Wire protocol configured for adapter
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 9
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [9 bytes]: 90 5A 00 00 03 00 00 00 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [19 bytes]: 00 00 FF 0C F4 D4 40 01 90 5A 00 00 03 00 00 00 00 FE 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 19 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 12 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [12 bytes]: 00 00 FF 05 FB D5 41 00 91 00 59 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 3 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [2 bytes]: 91 00
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [1 bytes]: 00
+SelectApplication OK
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 7
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [7 bytes]: 90 0A 00 00 01 00 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [17 bytes]: 00 00 FF 0A F6 D4 40 01 90 0A 00 00 01 00 00 50 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 17 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 20 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [20 bytes]: 00 00 FF 0D F3 D5 41 00 B0 58 5E D8 6C C9 76 0D 91 AF B4 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 11 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [10 bytes]: B0 58 5E D8 6C C9 76 0D 91 AF
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [9 bytes]: AF B0 58 5E D8 6C C9 76 0D
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 22
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [22 bytes]: 90 AF 00 00 10 EB 24 07 FA FA B6 1D 30 6C E3 B6 10 15 2C 30 E9 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [32 bytes]: 00 00 FF 19 E7 D4 40 01 90 AF 00 00 10 EB 24 07 FA FA B6 1D 30 6C E3 B6 10 15 2C 30 E9 00 20 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 32 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 12 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [12 bytes]: 00 00 FF 05 FB D5 41 00 91 AE AB 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 3 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [2 bytes]: 91 AE
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [1 bytes]: AE
+Authenticate failed: Desfire Error: AuthenticationError
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:109] Serial port COM5 closed successfully
+PS C:\Users\Nathan\Documents\NfcCpp> & $exe $com --aid $aid --auth-mode legacy --auth-key-no 0 --change-key-no 0 --auth-key-hex $k2_00 --new-key-type des --new-key-hex $des00 --new-key-version 0 --confirm-change
+DESFire Authenticate + ChangeKey Example
+COM: COM5 @ 115200
+AID: 00 00 00
+Auth key no: 0
+Change key no: 0
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:91] Serial port COM5 opened
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:350] Timeout set to 1000 ms on serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:218] Baud rate set to 115200 on serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:62] Serial port COM5 initialized with baud rate 115200
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:337] Setting SAM configuration to mode: 0x01
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: SAMConfiguration
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 1000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [12 bytes]: 00 00 FF 05 FB D4 14 01 00 00 17 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 12 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 9 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [9 bytes]: 00 00 FF 02 FE D5 15 16 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x15 with 0 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'SAMConfiguration' executed successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:351] SAM configuration successful
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:363] Setting max retries to: 1
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: RFConfiguration
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 1000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [13 bytes]: 00 00 FF 06 FA D4 32 05 01 01 01 F2 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 13 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 9 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [9 bytes]: 00 00 FF 02 FE D5 33 F8 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x33 with 0 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'RFConfiguration' executed successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:377] Max retries set successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:28] Pn532ApduAdapter initialized
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:97] Detecting card presence
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InListPassiveTarget
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [11 bytes]: 00 00 FF 04 FC D4 4A 01 00 E1 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 11 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 28 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [28 bytes]: 00 00 FF 15 EB D5 4B 01 01 03 44 20 07 04 1A 56 1A 99 5B 80 06 75 77 81 02 80 79 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x4B with 19 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InListPassiveTarget' executed successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:122] Detected card UID [7 bytes]: 04 1A 56 1A 99 5B 80
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:34] Wire protocol configured for adapter
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 9
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [9 bytes]: 90 5A 00 00 03 00 00 00 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [19 bytes]: 00 00 FF 0C F4 D4 40 01 90 5A 00 00 03 00 00 00 00 FE 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 19 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 12 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [12 bytes]: 00 00 FF 05 FB D5 41 00 91 00 59 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 3 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [2 bytes]: 91 00
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [1 bytes]: 00
+SelectApplication OK
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 7
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [7 bytes]: 90 0A 00 00 01 00 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [17 bytes]: 00 00 FF 0A F6 D4 40 01 90 0A 00 00 01 00 00 50 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 17 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 20 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [20 bytes]: 00 00 FF 0D F3 D5 41 00 27 8C C5 AB 2D DD 62 8F 91 AF 8C 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 11 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [10 bytes]: 27 8C C5 AB 2D DD 62 8F 91 AF
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [9 bytes]: AF 27 8C C5 AB 2D DD 62 8F
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 22
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [22 bytes]: 90 AF 00 00 10 3E 86 D5 CB 63 A8 6F 32 14 F3 AC 5C 64 23 EE 8E 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [32 bytes]: 00 00 FF 19 E7 D4 40 01 90 AF 00 00 10 3E 86 D5 CB 63 A8 6F 32 14 F3 AC 5C 64 23 EE 8E 00 7A 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 32 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 12 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [12 bytes]: 00 00 FF 05 FB D5 41 00 91 AE AB 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 3 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [2 bytes]: 91 AE
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [1 bytes]: AE
+Authenticate failed: Desfire Error: AuthenticationError
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:109] Serial port COM5 closed successfully
+PS C:\Users\Nathan\Documents\NfcCpp> & $exe $com --aid $aid --auth-mode legacy --auth-key-no 0 --change-key-no 0 --auth-key-hex $k2_00 --new-key-type des --new-key-hex $des00 --new-key-version 0 --confirm-change
+DESFire Authenticate + ChangeKey Example
+COM: COM5 @ 115200
+AID: 00 00 00
+Auth key no: 0
+Change key no: 0
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:91] Serial port COM5 opened
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:350] Timeout set to 1000 ms on serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:218] Baud rate set to 115200 on serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:62] Serial port COM5 initialized with baud rate 115200
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:337] Setting SAM configuration to mode: 0x01
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: SAMConfiguration
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 1000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [12 bytes]: 00 00 FF 05 FB D4 14 01 00 00 17 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 12 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 9 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [9 bytes]: 00 00 FF 02 FE D5 15 16 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x15 with 0 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'SAMConfiguration' executed successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:351] SAM configuration successful
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:363] Setting max retries to: 1
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: RFConfiguration
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 1000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [13 bytes]: 00 00 FF 06 FA D4 32 05 01 01 01 F2 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 13 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 9 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [9 bytes]: 00 00 FF 02 FE D5 33 F8 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x33 with 0 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'RFConfiguration' executed successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:377] Max retries set successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:28] Pn532ApduAdapter initialized
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:97] Detecting card presence
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InListPassiveTarget
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [11 bytes]: 00 00 FF 04 FC D4 4A 01 00 E1 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 11 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 28 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [28 bytes]: 00 00 FF 15 EB D5 4B 01 01 03 44 20 07 04 1A 56 1A 99 5B 80 06 75 77 81 02 80 79 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x4B with 19 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InListPassiveTarget' executed successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:122] Detected card UID [7 bytes]: 04 1A 56 1A 99 5B 80
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:34] Wire protocol configured for adapter
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 9
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [9 bytes]: 90 5A 00 00 03 00 00 00 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [19 bytes]: 00 00 FF 0C F4 D4 40 01 90 5A 00 00 03 00 00 00 00 FE 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 19 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 12 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [12 bytes]: 00 00 FF 05 FB D5 41 00 91 00 59 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 3 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [2 bytes]: 91 00
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [1 bytes]: 00
+SelectApplication OK
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 7
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [7 bytes]: 90 0A 00 00 01 00 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [17 bytes]: 00 00 FF 0A F6 D4 40 01 90 0A 00 00 01 00 00 50 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 17 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 20 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [20 bytes]: 00 00 FF 0D F3 D5 41 00 DE BD CA B6 E6 A6 41 F6 91 AF CC 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 11 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [10 bytes]: DE BD CA B6 E6 A6 41 F6 91 AF
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [9 bytes]: AF DE BD CA B6 E6 A6 41 F6
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 22
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [22 bytes]: 90 AF 00 00 10 7F 5C 30 53 C2 40 3D BA 8F 98 D8 6F 68 58 6E 7A 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [32 bytes]: 00 00 FF 19 E7 D4 40 01 90 AF 00 00 10 7F 5C 30 53 C2 40 3D BA 8F 98 D8 6F 68 58 6E 7A 00 2F 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 32 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 12 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [12 bytes]: 00 00 FF 05 FB D5 41 00 91 AE AB 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 3 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [2 bytes]: 91 AE
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [1 bytes]: AE
+Authenticate failed: Desfire Error: AuthenticationError
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:109] Serial port COM5 closed successfully
+PS C:\Users\Nathan\Documents\NfcCpp> $k2_00 = "11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11"
+PS C:\Users\Nathan\Documents\NfcCpp>  $k2_00 = "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+PS C:\Users\Nathan\Documents\NfcCpp> & $exe $com --aid $aid --auth-mode legacy --auth-key-no 0 --change-key-no 0 --auth-key-hex $k2_00 --new-key-type des --new-key-hex $des00 --new-key-version 0 --confirm-change
+DESFire Authenticate + ChangeKey Example
+COM: COM5 @ 115200
+AID: 00 00 00
+Auth key no: 0
+Change key no: 0
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:91] Serial port COM5 opened
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:350] Timeout set to 1000 ms on serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:218] Baud rate set to 115200 on serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:62] Serial port COM5 initialized with baud rate 115200
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:337] Setting SAM configuration to mode: 0x01
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: SAMConfiguration
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 1000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [12 bytes]: 00 00 FF 05 FB D4 14 01 00 00 17 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 12 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 9 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [9 bytes]: 00 00 FF 02 FE D5 15 16 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x15 with 0 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'SAMConfiguration' executed successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:351] SAM configuration successful
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:363] Setting max retries to: 1
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: RFConfiguration
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 1000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [13 bytes]: 00 00 FF 06 FA D4 32 05 01 01 01 F2 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 13 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 9 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [9 bytes]: 00 00 FF 02 FE D5 33 F8 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x33 with 0 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'RFConfiguration' executed successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:377] Max retries set successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:28] Pn532ApduAdapter initialized
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:97] Detecting card presence
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InListPassiveTarget
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [11 bytes]: 00 00 FF 04 FC D4 4A 01 00 E1 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 11 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 28 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [28 bytes]: 00 00 FF 15 EB D5 4B 01 01 03 44 20 07 04 1A 56 1A 99 5B 80 06 75 77 81 02 80 79 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x4B with 19 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InListPassiveTarget' executed successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:122] Detected card UID [7 bytes]: 04 1A 56 1A 99 5B 80
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:34] Wire protocol configured for adapter
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 9
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [9 bytes]: 90 5A 00 00 03 00 00 00 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [19 bytes]: 00 00 FF 0C F4 D4 40 01 90 5A 00 00 03 00 00 00 00 FE 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 19 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 12 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [12 bytes]: 00 00 FF 05 FB D5 41 00 91 00 59 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 3 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [2 bytes]: 91 00
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [1 bytes]: 00
+SelectApplication OK
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 7
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [7 bytes]: 90 0A 00 00 01 00 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [17 bytes]: 00 00 FF 0A F6 D4 40 01 90 0A 00 00 01 00 00 50 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 17 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 20 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [20 bytes]: 00 00 FF 0D F3 D5 41 00 8B A2 FF 18 E2 C6 FE 9B 91 AF 25 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 11 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [10 bytes]: 8B A2 FF 18 E2 C6 FE 9B 91 AF
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [9 bytes]: AF 8B A2 FF 18 E2 C6 FE 9B
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 22
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [22 bytes]: 90 AF 00 00 10 73 65 9E 35 34 8F FC D1 DD 4D 83 AD 5A B0 00 67 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [32 bytes]: 00 00 FF 19 E7 D4 40 01 90 AF 00 00 10 73 65 9E 35 34 8F FC D1 DD 4D 83 AD 5A B0 00 67 00 96 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 32 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 12 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [12 bytes]: 00 00 FF 05 FB D5 41 00 91 AE AB 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 3 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [2 bytes]: 91 AE
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [1 bytes]: AE
+Authenticate failed: Desfire Error: AuthenticationError
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:109] Serial port COM5 closed successfully
+PS C:\Users\Nathan\Documents\NfcCpp>  $k2_00 = "11 11 11 11 11 11 11 11"                        
+PS C:\Users\Nathan\Documents\NfcCpp> & $exe $com --aid $aid --auth-mode legacy --auth-key-no 0 --change-key-no 0 --auth-key-hex $k2_00 --new-key-type des --new-key-hex $des00 --new-key-version 0 --confirm-change
+DESFire Authenticate + ChangeKey Example
+COM: COM5 @ 115200
+AID: 00 00 00
+Auth key no: 0
+Change key no: 0
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:91] Serial port COM5 opened
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:350] Timeout set to 1000 ms on serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:218] Baud rate set to 115200 on serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:62] Serial port COM5 initialized with baud rate 115200
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:337] Setting SAM configuration to mode: 0x01
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: SAMConfiguration
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 1000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [12 bytes]: 00 00 FF 05 FB D4 14 01 00 00 17 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 12 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 9 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [9 bytes]: 00 00 FF 02 FE D5 15 16 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x15 with 0 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'SAMConfiguration' executed successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:351] SAM configuration successful
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:363] Setting max retries to: 1
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: RFConfiguration
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 1000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [13 bytes]: 00 00 FF 06 FA D4 32 05 01 01 01 F2 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 13 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 9 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [9 bytes]: 00 00 FF 02 FE D5 33 F8 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x33 with 0 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'RFConfiguration' executed successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:377] Max retries set successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:28] Pn532ApduAdapter initialized
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:97] Detecting card presence
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InListPassiveTarget
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [11 bytes]: 00 00 FF 04 FC D4 4A 01 00 E1 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 11 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 28 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [28 bytes]: 00 00 FF 15 EB D5 4B 01 01 03 44 20 07 04 1A 56 1A 99 5B 80 06 75 77 81 02 80 79 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x4B with 19 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InListPassiveTarget' executed successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:122] Detected card UID [7 bytes]: 04 1A 56 1A 99 5B 80
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:34] Wire protocol configured for adapter
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 9
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [9 bytes]: 90 5A 00 00 03 00 00 00 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [19 bytes]: 00 00 FF 0C F4 D4 40 01 90 5A 00 00 03 00 00 00 00 FE 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 19 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 12 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [12 bytes]: 00 00 FF 05 FB D5 41 00 91 00 59 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 3 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [2 bytes]: 91 00
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [1 bytes]: 00
+SelectApplication OK
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 7
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [7 bytes]: 90 0A 00 00 01 00 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [17 bytes]: 00 00 FF 0A F6 D4 40 01 90 0A 00 00 01 00 00 50 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 17 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 20 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [20 bytes]: 00 00 FF 0D F3 D5 41 00 2A D6 7C 63 A9 A9 64 B1 91 AF 64 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 11 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [10 bytes]: 2A D6 7C 63 A9 A9 64 B1 91 AF
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [9 bytes]: AF 2A D6 7C 63 A9 A9 64 B1
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 22
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [22 bytes]: 90 AF 00 00 10 14 D6 AC 3F 6F 64 52 A4 3B D1 BE E2 F8 AB A7 71 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [32 bytes]: 00 00 FF 19 E7 D4 40 01 90 AF 00 00 10 14 D6 AC 3F 6F 64 52 A4 3B D1 BE E2 F8 AB A7 71 00 97 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 32 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 12 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [12 bytes]: 00 00 FF 05 FB D5 41 00 91 AE AB 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 3 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [2 bytes]: 91 AE
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [1 bytes]: AE
+Authenticate failed: Desfire Error: AuthenticationError
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:109] Serial port COM5 closed successfully
+PS C:\Users\Nathan\Documents\NfcCpp> $k2_00 = "11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11" 
+PS C:\Users\Nathan\Documents\NfcCpp> & $exe $com --aid $aid --auth-mode legacy --auth-key-no 0 --change-key-no 0 --auth-key-hex $des00 --new-key-type 2k3des --new-key-hex $k2_00 --new-key-version 0 --confirm-change
+DESFire Authenticate + ChangeKey Example
+COM: COM5 @ 115200
+AID: 00 00 00
+Auth key no: 0
+Change key no: 0
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:91] Serial port COM5 opened
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:350] Timeout set to 1000 ms on serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:218] Baud rate set to 115200 on serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:62] Serial port COM5 initialized with baud rate 115200
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:337] Setting SAM configuration to mode: 0x01
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: SAMConfiguration
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 1000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [12 bytes]: 00 00 FF 05 FB D4 14 01 00 00 17 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 12 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 9 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [9 bytes]: 00 00 FF 02 FE D5 15 16 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x15 with 0 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'SAMConfiguration' executed successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:351] SAM configuration successful
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:363] Setting max retries to: 1
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: RFConfiguration
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 1000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [13 bytes]: 00 00 FF 06 FA D4 32 05 01 01 01 F2 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 13 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 9 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [9 bytes]: 00 00 FF 02 FE D5 33 F8 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x33 with 0 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'RFConfiguration' executed successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:377] Max retries set successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:28] Pn532ApduAdapter initialized
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:97] Detecting card presence
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InListPassiveTarget
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [11 bytes]: 00 00 FF 04 FC D4 4A 01 00 E1 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 11 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 28 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [28 bytes]: 00 00 FF 15 EB D5 4B 01 01 03 44 20 07 04 1A 56 1A 99 5B 80 06 75 77 81 02 80 79 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x4B with 19 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InListPassiveTarget' executed successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:122] Detected card UID [7 bytes]: 04 1A 56 1A 99 5B 80
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:34] Wire protocol configured for adapter
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 9
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [9 bytes]: 90 5A 00 00 03 00 00 00 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [19 bytes]: 00 00 FF 0C F4 D4 40 01 90 5A 00 00 03 00 00 00 00 FE 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 19 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 12 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [12 bytes]: 00 00 FF 05 FB D5 41 00 91 00 59 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 3 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [2 bytes]: 91 00
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [1 bytes]: 00
+SelectApplication OK
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 7
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [7 bytes]: 90 0A 00 00 01 00 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [17 bytes]: 00 00 FF 0A F6 D4 40 01 90 0A 00 00 01 00 00 50 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 17 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 20 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [20 bytes]: 00 00 FF 0D F3 D5 41 00 DF C3 ED DC 83 80 85 FD 91 AF BA 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 11 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [10 bytes]: DF C3 ED DC 83 80 85 FD 91 AF
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [9 bytes]: AF DF C3 ED DC 83 80 85 FD
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 22
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [22 bytes]: 90 AF 00 00 10 67 67 41 D0 94 87 CA 5F 15 16 F4 E0 B4 8A 2B B8 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [32 bytes]: 00 00 FF 19 E7 D4 40 01 90 AF 00 00 10 67 67 41 D0 94 87 CA 5F 15 16 F4 E0 B4 8A 2B B8 00 59 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 32 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 12 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [12 bytes]: 00 00 FF 05 FB D5 41 00 91 AE AB 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 3 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [2 bytes]: 91 AE
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [1 bytes]: AE
+Authenticate failed: Desfire Error: AuthenticationError
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:109] Serial port COM5 closed successfully
+PS C:\Users\Nathan\Documents\NfcCpp> $des00 = "11 11 11 11 11 11 11 11"
+PS C:\Users\Nathan\Documents\NfcCpp> & $exe $com --aid $aid --auth-mode legacy --auth-key-no 0 --change-key-no 0 --auth-key-hex $des00 --new-key-type 2k3des --new-key-hex $k2_00 --new-key-version 0 --confirm-change
+DESFire Authenticate + ChangeKey Example
+COM: COM5 @ 115200
+AID: 00 00 00
+Auth key no: 0
+Change key no: 0
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:91] Serial port COM5 opened
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:350] Timeout set to 1000 ms on serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:218] Baud rate set to 115200 on serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:62] Serial port COM5 initialized with baud rate 115200
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:337] Setting SAM configuration to mode: 0x01
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: SAMConfiguration
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 1000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [12 bytes]: 00 00 FF 05 FB D4 14 01 00 00 17 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 12 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 9 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [9 bytes]: 00 00 FF 02 FE D5 15 16 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x15 with 0 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'SAMConfiguration' executed successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:351] SAM configuration successful
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:363] Setting max retries to: 1
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: RFConfiguration
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 1000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [13 bytes]: 00 00 FF 06 FA D4 32 05 01 01 01 F2 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 13 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 9 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [9 bytes]: 00 00 FF 02 FE D5 33 F8 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x33 with 0 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'RFConfiguration' executed successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:377] Max retries set successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:28] Pn532ApduAdapter initialized
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:97] Detecting card presence
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InListPassiveTarget
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [11 bytes]: 00 00 FF 04 FC D4 4A 01 00 E1 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 11 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 28 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [28 bytes]: 00 00 FF 15 EB D5 4B 01 01 03 44 20 07 04 1A 56 1A 99 5B 80 06 75 77 81 02 80 79 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x4B with 19 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InListPassiveTarget' executed successfully
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:122] Detected card UID [7 bytes]: 04 1A 56 1A 99 5B 80
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:34] Wire protocol configured for adapter
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 9
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [9 bytes]: 90 5A 00 00 03 00 00 00 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [19 bytes]: 00 00 FF 0C F4 D4 40 01 90 5A 00 00 03 00 00 00 00 FE 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 19 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 12 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [12 bytes]: 00 00 FF 05 FB D5 41 00 91 00 59 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 3 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [2 bytes]: 91 00
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [1 bytes]: 00
+SelectApplication OK
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 7
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [7 bytes]: 90 0A 00 00 01 00 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [17 bytes]: 00 00 FF 0A F6 D4 40 01 90 0A 00 00 01 00 00 50 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 17 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 20 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [20 bytes]: 00 00 FF 0D F3 D5 41 00 8A D4 3B 2E B5 F5 F7 B6 91 AF 8C 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 11 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [10 bytes]: 8A D4 3B 2E B5 F5 F7 B6 91 AF
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [9 bytes]: AF 8A D4 3B 2E B5 F5 F7 B6
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:46] Transmitting APDU command, length: 22
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:47] APDU TX [22 bytes]: 90 AF 00 00 10 3C C0 CC 8A C3 6A FD 20 21 40 AE 18 CF 29 67 3A 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:36] Executing command: InDataExchange
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:66] Transceive using timeout: 5000 ms
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:77] Sending frame [32 bytes]: 00 00 FF 19 E7 D4 40 01 90 AF 00 00 10 3C C0 CC 8A C3 6A FD 20 21 40 AE 18 CF 29 67 3A 00 40 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 10 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:134] Wrote 32 bytes to serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 6 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:103] Received ACK frame [6 bytes]: 00 00 FF 00 FF 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:160] Read 12 bytes from serial port: COM5
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:156] Received response frame [12 bytes]: 00 00 FF 05 FB D5 41 00 91 AE AB 00
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:626] Successfully parsed response frame for command 0x41 with 3 bytes payload
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532Driver.cpp:58] Command 'InDataExchange' executed successfully
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:79] Card RX (raw) [2 bytes]: 91 AE
+[DEBUG] [C:\Users\Nathan\Documents\NfcCpp\Src\Pn532\Pn532ApduAdapter.cpp:90] PDU (unwrapped) [1 bytes]: AE
+Authenticate failed: Desfire Error: AuthenticationError
+[INFO] [C:\Users\Nathan\Documents\NfcCpp\Src\Comms\Serial\SerialBusWin.cpp:109] Serial port COM5 closed successfully
+PS C:\Users\Nathan\Documents\NfcCpp> $des00 = "00 00 00 00 00 00 00 00"
+PS C:\Users\Nathan\Documents\NfcCpp> 

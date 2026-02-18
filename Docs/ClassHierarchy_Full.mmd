@@ -1,0 +1,1001 @@
+classDiagram
+direction LR
+class BusProperty_1
+class IHardwareBus_2
+class ISerialBus_3
+class Parity_4
+class StopBits_5
+class FlowControl_6
+class SerialBusWin_7
+class ApduError_8
+class CardManagerError_9
+class DesfireError_10
+class Error_11
+class ErrorLayer_12
+class HardwareError_13
+class LinkError_14
+class Pn532Error_15
+class Rc522Error_16
+class ApduResponse_17
+class IApduTransceiver_18
+class CardInfo_19
+class CardManager_20
+class CardSession_21
+class CardType_22
+class ICardDetector_23
+class ReaderCapabilities_24
+class AuthenticateCommandOptions_25
+class AuthenticateCommand_26
+class Stage__AuthenticateCommand__27
+class ChangeKeyCommandOptions_28
+class ChangeKeyCommand_29
+class Stage__ChangeKeyCommand__30
+class SelectApplicationCommand_31
+class DesfireAuthMode_32
+class DesfireCard_33
+class DesfireContext_34
+class CommMode_35
+class DesfireKeyType_36
+class DesfireRequest_37
+class DesfireResult_38
+class EncPipe_39
+class IDesfireCommand_40
+class ISecurePipe_41
+class MacPipe_42
+class PlainPipe_43
+class MifareClassicCard_44
+class MifareClassicContext_45
+class UltralightCard_46
+class UltralightContext_47
+class IsoWire_48
+class IWire_49
+class NativeWire_50
+class WireKind_51
+class CommandRequest_52
+class CommandResponse_53
+class FirmwareInfo_54
+class GetFirmwareVersion_55
+class GeneralStatus_56
+class GetGeneralStatus_57
+class InDataExchangeOptions_58
+class InDataExchange_59
+class TargetInfo_60
+class InListPassiveTargetOptions_61
+class InListPassiveTarget_62
+class CardTargetType_63
+class SelfTestOptions_64
+class PerformSelfTest_65
+class TestType_66
+class RFConfigurationOptions_67
+class RFConfiguration_68
+class RFConfigItem_69
+class SAMConfigurationOptions_70
+class SAMConfiguration_71
+class SamMode_72
+class SetSerialBaudRateOptions_73
+class SetSerialBaudRate_74
+class Pn532Baudrate_75
+class IPn532Command_76
+class Pn532ApduAdapter_77
+class Pn532Response_78
+class Pn532Driver_79
+class Pn532RequestFrame_80
+class Pn532ResponseFrame_81
+class Rc522ApduAdapter_82
+class Rc522Driver_83
+class DesFireCrypto_84
+class Logger_85
+BusProperty_1 : <<enumeration>>
+IHardwareBus_2 : <<interface>>
+ISerialBus_3 : <<interface>>
+Parity_4 : <<enumeration>>
+StopBits_5 : <<enumeration>>
+FlowControl_6 : <<enumeration>>
+ApduError_8 : <<enumeration>>
+CardManagerError_9 : <<enumeration>>
+DesfireError_10 : <<enumeration>>
+ErrorLayer_12 : <<enumeration>>
+HardwareError_13 : <<enumeration>>
+LinkError_14 : <<enumeration>>
+Pn532Error_15 : <<enumeration>>
+Rc522Error_16 : <<enumeration>>
+IApduTransceiver_18 : <<interface>>
+CardInfo_19 : <<struct>>
+CardType_22 : <<enumeration>>
+ICardDetector_23 : <<interface>>
+ReaderCapabilities_24 : <<struct>>
+AuthenticateCommandOptions_25 : <<struct>>
+Stage__AuthenticateCommand__27 : <<enumeration>>
+ChangeKeyCommandOptions_28 : <<struct>>
+Stage__ChangeKeyCommand__30 : <<enumeration>>
+DesfireAuthMode_32 : <<enumeration>>
+DesfireContext_34 : <<struct>>
+CommMode_35 : <<enumeration>>
+DesfireKeyType_36 : <<enumeration>>
+DesfireRequest_37 : <<struct>>
+DesfireResult_38 : <<struct>>
+IDesfireCommand_40 : <<interface>>
+ISecurePipe_41 : <<interface>>
+MifareClassicContext_45 : <<struct>>
+UltralightContext_47 : <<struct>>
+IsoWire_48 : <<interface>>
+IWire_49 : <<interface>>
+WireKind_51 : <<enumeration>>
+FirmwareInfo_54 : <<struct>>
+GeneralStatus_56 : <<struct>>
+InDataExchangeOptions_58 : <<struct>>
+InDataExchange_59 : <<interface>>
+TargetInfo_60 : <<struct>>
+InListPassiveTargetOptions_61 : <<struct>>
+InListPassiveTarget_62 : <<interface>>
+CardTargetType_63 : <<enumeration>>
+SelfTestOptions_64 : <<struct>>
+TestType_66 : <<enumeration>>
+RFConfigurationOptions_67 : <<struct>>
+RFConfigItem_69 : <<enumeration>>
+SAMConfigurationOptions_70 : <<struct>>
+SamMode_72 : <<enumeration>>
+SetSerialBaudRateOptions_73 : <<struct>>
+Pn532Baudrate_75 : <<enumeration>>
+IPn532Command_76 : <<interface>>
+Pn532Response_78 : <<struct>>
+class BusProperty_1 {
+  BaudRate
+  Parity
+  StopBits
+  FlowControl
+  Timeout
+  SpiMode
+  BitsPerWord
+  SpiSpeed
+  I2cAddress
+  BufferSize
+}
+class IHardwareBus_2 {
+  - bool openFlag = false
+  + virtual ~IHardwareBus() = default
+  + virtual etl::expected~void, error::Error~ init() = 0
+  + virtual etl::expected~void, error::Error~ open() = 0
+  + virtual void close() = 0
+  + virtual etl::expected~void, error::Error~ write(const etl::ivector~uint8_t~& data) = 0
+  + virtual etl::expected~size_t, error::Error~ read(etl::ivector~uint8_t~& buffer, size_t length) = 0
+  + virtual etl::expected~void, error::Error~ flush() = 0
+  + virtual size_t available() const = 0
+  + virtual etl::expected~void, error::Error~ setProperty(BusProperty property, uint32_t value) = 0
+  + virtual etl::expected~uint32_t, error::Error~ getProperty(BusProperty property) const = 0
+  + bool isOpen() const
+  # void setIsOpen(bool flag)
+}
+class ISerialBus_3 {
+  + virtual ~ISerialBus() = default
+  + virtual etl::expected~void, Error~ setBaudRate(uint32_t baudrate) = 0
+  + virtual etl::expected~void, Error~ setParity(Parity parity) = 0
+  + virtual etl::expected~void, Error~ setStopBits(StopBits stopBits) = 0
+  + virtual etl::expected~void, Error~ setFlowControl(FlowControl flowControl) = 0
+  + virtual etl::expected~void, Error~ setTimeout(uint32_t timeout_ms) = 0
+}
+class Parity_4 {
+  None
+  Even
+  Odd
+}
+class StopBits_5 {
+  One
+  Two
+}
+class FlowControl_6 {
+  None
+  Hardware
+  Software
+}
+class SerialBusWin_7 {
+  - HANDLE serialHandler
+  - DCB dcbHandler
+  - COMMTIMEOUTS serialTimeouts
+  - etl::string~256~ portName
+  - uint32_t baudRate
+  + SerialBusWin(const etl::string~256~ &portname, uint32_t baudrate)
+  + ~SerialBusWin() override
+  + etl::expected~void, Error~ init() override
+  + etl::expected~void, Error~ open() override
+  + void close() override
+  + etl::expected~void, Error~ write(const etl::ivector~uint8_t~ &data) override
+  + etl::expected~size_t, Error~ read(etl::ivector~uint8_t~ &buffer, size_t length) override
+  + etl::expected~void, Error~ flush() override
+  + size_t available() const override
+  + etl::expected~void, Error~ setBaudRate(uint32_t baudrate) override
+  + etl::expected~void, Error~ setParity(Parity parity) override
+  + etl::expected~void, Error~ setStopBits(StopBits stopBits) override
+  + etl::expected~void, Error~ setFlowControl(FlowControl flowControl) override
+  + etl::expected~void, Error~ setTimeout(uint32_t timeoutMs) override
+  + etl::expected~void, Error~ setProperty(BusProperty property, uint32_t value) override
+  + etl::expected~uint32_t, Error~ getProperty(BusProperty property) const override
+}
+class ApduError_8 {
+  Ok
+  WrongLength
+  SecurityStatusNotSatisfied
+  ConditionsNotSatisfied
+  FileNotFound
+  WrongP1P2
+  Unknown
+}
+class CardManagerError_9 {
+  Ok = 0
+  NoCardPresent
+  MultipleCards
+  UnsupportedCardType
+  CardMute
+  AuthenticationRequired
+  OperationFailed
+  InvalidParameter
+}
+class DesfireError_10 {
+  Ok = 0x00
+  NoChanges = 0x0C
+  OutOfEeprom = 0x0E
+  IllegalCommand = 0x1C
+  IntegrityError = 0x1E
+  NoSuchKey = 0x40
+  LengthError = 0x7E
+  PermissionDenied = 0x9D
+  ParameterError = 0x9E
+  ApplicationNotFound = 0xA0
+  ApplIntegrityError = 0xA1
+  AuthenticationError = 0xAE
+  AdditionalFrame = 0xAF
+  BoundaryError = 0xBE
+  PiccIntegrityError = 0xC1
+  CommandAborted = 0xCA
+  PiccDisabled = 0xCD
+  CountError = 0xCE
+  DuplicateError = 0xDE
+  EepromError = 0xEE
+  FileNotFound = 0xF0
+  FileIntegrityError = 0xF1
+  AuthenticationFailed = 0xFD
+  InvalidState = 0xFE
+  InvalidResponse = 0xFF
+}
+class Error_11 {
+  - ErrorLayer layer
+  - ErrorVariant errorCode
+  + Error(ErrorLayer layer, ErrorVariant errorCode) : layer(layer), errorCode(errorCode)
+  + static Error fromHardware(HardwareError err)
+  + static Error fromPn532(Pn532Error err)
+  + static Error fromLink(LinkError err)
+  + static Error fromRc522(Rc522Error err)
+  + static Error fromCardManager(CardManagerError err)
+  + static Error fromApdu(ApduError err)
+  + static Error fromDesfire(DesfireError err)
+  + ErrorLayer getLayer() const
+  + template~typename T~ bool is() const
+  + template~typename T~ T get() const
+  + etl::string_view layerName(ErrorLayer layer) const
+  + etl::string_view nameOf(HardwareError err) const
+  + etl::string_view nameOf(LinkError err) const
+  + etl::string_view nameOf(Pn532Error err) const
+  + etl::string_view nameOf(Rc522Error err) const
+  + etl::string_view nameOf(CardManagerError err) const
+  + etl::string_view nameOf(ApduError err) const
+  + etl::string_view nameOf(DesfireError err) const
+  + etl::string~160~ toString() const
+}
+class ErrorLayer_12 {
+  Hardware
+  Link
+  Pn532
+  Rc522
+  CardManager
+  Apdu
+  Desfire
+}
+class HardwareError_13 {
+  Ok = 0
+  Timeout
+  Nack
+  BusError
+  BufferOverflow
+  DeviceNotFound
+  WriteFailed
+  ReadFailed
+  InvalidConfiguration
+  NotSupported
+  Unknown
+}
+class LinkError_14 {
+  Ok = 0x00
+  Timeout = 0x01
+  CrcError = 0x02
+  ParityError = 0x03
+  Collision = 0x06
+  BufferInsufficient = 0x07
+  RfError = 0x0B
+  AuthenticationError = 0x14
+  CardDisappeared = 0x2B
+}
+class Pn532Error_15 {
+  Ok = 0x00
+  Timeout = 0x01
+  CRCError = 0x02
+  ParityError = 0x03
+  BitCountError = 0x04
+  MifareFramingError = 0x05
+  CollisionError = 0x06
+  BufferSizeInsufficient = 0x07
+  RFBufferOverflow = 0x09
+  RFFieldTimeout = 0x0A
+  RFProtocolError = 0x0B
+  TemperatureError = 0x0D
+  InternalBufferOverflow = 0x0E
+  InvalidParameter = 0x10
+  CommandNotSupported = 0x12
+  DataFormatError = 0x13
+  MifareAutError = 0x14
+  UIDCheckByteError = 0x23
+  InvalidDeviceState = 0x25
+  OperationNotAllowed = 0x26
+  CommandNotAcceptable = 0x27
+  Released = 0x29
+  CardExchanged = 0x2A
+  CardDisappeared = 0x2B
+  Nfcid3Mismatch = 0x2C
+  OverCurrent = 0x2D
+  MissingDEP = 0x2E
+  SelftestFail = 0xF0
+  InvalidAckFrame = 0xF1
+  WrongConfig = 0xF2
+  WrongCommand = 0xF3
+  SAMerror = 0xF4
+  FrameCheckFailed = 0xF5
+  InvalidResponse = 0xF6
+  NotImplemented = 0xF7
+  Unknown = 0xFF
+}
+class Rc522Error_16 {
+  Ok = 0
+  Timeout
+  FifoOverflow
+  CrcError
+  ParityError
+  Collision
+  AuthError
+  FrameError
+  ProtocolError
+  NotImplemented
+  Unknown
+}
+class ApduResponse_17 {
+  + etl::vector~uint8_t, 258~ data
+  + uint8_t sw1
+  + uint8_t sw2
+  + ApduResponse() : sw1(0), sw2(0)
+  + ApduResponse(const etl::vector~uint8_t, 258~ &responseData, uint8_t status1, uint8_t status2) : data(responseData), sw1(status1), sw2(status2)
+  + bool isSuccess() const
+  + uint16_t getStatusWord() const
+}
+class IApduTransceiver_18 {
+  + virtual ~IApduTransceiver() = default
+  + virtual void setWire(IWire& wire) = 0
+  + virtual etl::expected~etl::vector~uint8_t, buffer::APDU_DATA_MAX~, error::Error~ transceive( const etl::ivector~uint8_t~ &apdu) = 0
+}
+class CardInfo_19 {
+  + etl::vector~uint8_t, 10~ uid
+  + uint16_t atqa
+  + uint8_t sak
+  + etl::vector~uint8_t, 32~ ats
+  + CardType type
+  + CardType detectType()
+  + etl::string~255~ toString() const
+}
+class CardManager_20 {
+  - IApduTransceiver& transceiver
+  - ICardDetector& detector
+  - ReaderCapabilities capabilities
+  - NativeWire nativeWire
+  - IsoWire isoWire
+  - IWire* activeWire
+  - WireKind activeWireKind
+  - etl::optional~CardInfo~ currentCardInfo
+  - etl::optional~CardSession~ activeSession
+  + CardManager( IApduTransceiver& transceiver, ICardDetector& detector, const ReaderCapabilities& capabilities)
+  + void setWire(WireKind wire)
+  + WireKind getWireKind() const
+  + etl::expected~CardInfo, error::Error~ detectCard()
+  + bool isCardPresent()
+  + etl::expected~CardSession*, error::Error~ createSession()
+  + etl::optional~CardSession*~ getActiveSession()
+  + void clearSession()
+  + size_t getMaxApduSize() const
+  + const ReaderCapabilities& getCapabilities() const
+}
+class CardSession_21 {
+  - CardInfo info
+  - CardVariant card
+  - ContextVariant context
+  + template~typename T~ T* getCardAs()
+  + template~typename T~ const T* getCardAs() const
+  + template~typename T~ T* getContextAs()
+  + template~typename T~ const T* getContextAs() const
+  + DesfireCard* getDesfireCard()
+  + MifareClassicCard* getMifareClassicCard()
+  + UltralightCard* getUltralightCard()
+  + DesfireContext* getDesfireContext()
+  + MifareClassicContext* getClassicContext()
+  + UltralightContext* getUltralightContext()
+  + void reset()
+  + CardType getCardType() const
+  + const CardInfo& getCardInfo() const
+  + static etl::expected~CardSession, error::Error~ create( IApduTransceiver& transceiver, const CardInfo& info, IWire& wire)
+  - explicit CardSession(const CardInfo& info)
+}
+class CardType_22 {
+  Unknown = 0
+  MifareDesfire
+  MifareUltralight
+  MifareClassic
+  Ntag213_215_216
+  FeliCa
+  ISO14443_4_Generic
+}
+class ICardDetector_23 {
+  + virtual ~ICardDetector() = default
+  + virtual etl::expected~CardInfo, error::Error~ detectCard() = 0
+  + virtual bool isCardPresent() = 0
+}
+class ReaderCapabilities_24 {
+  + size_t maxApduSize
+  + bool supportsIso14443_4
+  + bool supportsMifareClassic
+  + bool supportsFeliCa
+  + bool supportsNfcDep
+  + static ReaderCapabilities pn532()
+  + static ReaderCapabilities rc522()
+}
+class AuthenticateCommandOptions_25 {
+  + DesfireAuthMode mode
+  + uint8_t keyNo
+  + etl::vector~uint8_t, 24~ key
+}
+class AuthenticateCommand_26 {
+  - AuthenticateCommandOptions options
+  - Stage stage
+  - etl::vector~uint8_t, 16~ encryptedChallenge
+  - etl::vector~uint8_t, 32~ encryptedResponse
+  - etl::vector~uint8_t, 16~ rndA
+  - etl::vector~uint8_t, 16~ rndB
+  - etl::vector~uint8_t, 8~ currentIv
+  + explicit AuthenticateCommand(const AuthenticateCommandOptions& options)
+  + etl::string_view name() const override
+  + etl::expected~DesfireRequest, error::Error~ buildRequest(const DesfireContext& context) override
+  + etl::expected~DesfireResult, error::Error~ parseResponse( const etl::ivector~uint8_t~& response, DesfireContext& context) override
+  + bool isComplete() const override
+  + void reset() override
+  - void generateAuthResponse()
+  - bool verifyAuthConfirmation(const etl::ivector~uint8_t~& response)
+  - void decryptChallenge()
+  - void encrypt(const etl::ivector~uint8_t~& plaintext, etl::vector~uint8_t, 32~& ciphertext)
+  - void decrypt(const etl::ivector~uint8_t~& ciphertext, etl::vector~uint8_t, 32~& plaintext)
+}
+class Stage__AuthenticateCommand__27 {
+  Initial
+  ChallengeSent
+  ResponseSent
+  Complete
+}
+class ChangeKeyCommandOptions_28 {
+  + uint8_t keyNo
+  + DesfireKeyType newKeyType
+  + etl::vector~uint8_t, 24~ newKey
+  + uint8_t newKeyVersion
+  + etl::optional~etl::vector~uint8_t, 24~~ oldKey
+}
+class ChangeKeyCommand_29 {
+  - ChangeKeyCommandOptions options
+  - Stage stage
+  + explicit ChangeKeyCommand(const ChangeKeyCommandOptions& options)
+  + etl::string_view name() const override
+  + etl::expected~DesfireRequest, error::Error~ buildRequest(const DesfireContext& context) override
+  + etl::expected~DesfireResult, error::Error~ parseResponse( const etl::ivector~uint8_t~& response, DesfireContext& context) override
+  + bool isComplete() const override
+  + void reset() override
+  - etl::vector~uint8_t, 48~ buildKeyCryptogram(const DesfireContext& context)
+  - size_t getKeySize() const
+  - etl::pair~etl::vector~uint8_t, 24~, etl::vector~uint8_t, 24~~ deriveSessionKeys( const etl::vector~uint8_t, 24~& masterKey, DesfireKeyType keyType)
+}
+class Stage__ChangeKeyCommand__30 {
+  Initial
+  Complete
+}
+class SelectApplicationCommand_31 {
+  - etl::array~uint8_t, 3~ aid
+  - bool complete
+  + explicit SelectApplicationCommand(const etl::array~uint8_t, 3~& aid)
+  + etl::string_view name() const override
+  + etl::expected~DesfireRequest, error::Error~ buildRequest(const DesfireContext& context) override
+  + etl::expected~DesfireResult, error::Error~ parseResponse( const etl::ivector~uint8_t~& response, DesfireContext& context) override
+  + bool isComplete() const override
+  + void reset() override
+}
+class DesfireAuthMode_32 {
+  LEGACY = 0x0A
+  ISO = 0x1A
+  AES = 0xAA
+}
+class DesfireCard_33 {
+  - IApduTransceiver& transceiver
+  - DesfireContext context
+  - IWire* wire
+  - PlainPipe* plainPipe
+  - MacPipe* macPipe
+  - EncPipe* encPipe
+  + DesfireCard(IApduTransceiver& transceiver, IWire& wire)
+  + etl::expected~void, error::Error~ executeCommand(IDesfireCommand& command)
+  + etl::expected~void, error::Error~ selectApplication(const etl::array~uint8_t, 3~& aid)
+  + etl::expected~void, error::Error~ authenticate( uint8_t keyNo, const etl::vector~uint8_t, 24~& key, DesfireAuthMode mode)
+  + etl::expected~etl::vector~uint8_t, 10~, error::Error~ getRealCardUid()
+  + etl::expected~etl::vector~uint8_t, 261~, error::Error~ wrapRequest(const DesfireRequest& request)
+  + etl::expected~DesfireResult, error::Error~ unwrapResponse(const etl::ivector~uint8_t~& response)
+}
+class DesfireContext_34 {
+  + bool authenticated = false
+  + CommMode commMode = CommMode::Plain
+  + etl::vector~uint8_t, 24~ sessionKeyEnc
+  + etl::vector~uint8_t, 24~ sessionKeyMac
+  + etl::vector~uint8_t, 16~ iv
+  + uint8_t keyNo = 0
+  + etl::vector~uint8_t, 3~ selectedAid
+}
+class CommMode_35 {
+  Plain
+  MACed
+  Enciphered
+}
+class DesfireKeyType_36 {
+  AES
+  DES
+  DES3_2K
+  DES3_3K
+  UNKNOWN
+}
+class DesfireRequest_37 {
+  + uint8_t commandCode
+  + etl::vector~uint8_t, 252~ data
+  + size_t expectedResponseLength
+}
+class DesfireResult_38 {
+  + uint8_t statusCode
+  + etl::vector~uint8_t, 256~ data
+  + bool isSuccess() const
+  + bool isAdditionalFrame() const
+}
+class EncPipe_39 {
+  + etl::vector~uint8_t, 261~ wrap(const etl::ivector~uint8_t~& pdu) override
+  + etl::expected~etl::vector~uint8_t, 256~, error::Error~ unwrap(const etl::ivector~uint8_t~& apdu) override
+}
+class IDesfireCommand_40 {
+  + virtual ~IDesfireCommand() = default
+  + virtual etl::string_view name() const = 0
+  + virtual etl::expected~DesfireRequest, error::Error~ buildRequest(const DesfireContext& context) = 0
+  + virtual etl::expected~DesfireResult, error::Error~ parseResponse( const etl::ivector~uint8_t~& response, DesfireContext& context) = 0
+  + virtual bool isComplete() const = 0
+  + virtual void reset() = 0
+}
+class ISecurePipe_41 {
+  + virtual ~ISecurePipe() = default
+  + virtual etl::vector~uint8_t, 261~ wrap(const etl::ivector~uint8_t~& pdu) = 0
+  + virtual etl::expected~etl::vector~uint8_t, 256~, error::Error~ unwrap(const etl::ivector~uint8_t~& apdu) = 0
+}
+class MacPipe_42 {
+  + etl::vector~uint8_t, 261~ wrap(const etl::ivector~uint8_t~& pdu) override
+  + etl::expected~etl::vector~uint8_t, 256~, error::Error~ unwrap(const etl::ivector~uint8_t~& apdu) override
+}
+class PlainPipe_43 {
+  + etl::vector~uint8_t, 261~ wrap(const etl::ivector~uint8_t~& pdu) override
+  + etl::expected~etl::vector~uint8_t, 256~, error::Error~ unwrap(const etl::ivector~uint8_t~& apdu) override
+}
+class MifareClassicCard_44 {
+  + uint8_t placeholder
+}
+class MifareClassicContext_45 {
+  + uint8_t placeholder
+}
+class UltralightCard_46 {
+  + uint8_t placeholder
+}
+class UltralightContext_47 {
+  + uint8_t placeholder
+}
+class IsoWire_48 {
+  + IsoWire() = default
+  + etl::vector~uint8_t, buffer::APDU_COMMAND_MAX~ wrap(const etl::ivector~uint8_t~& pdu) override
+  + etl::expected~etl::vector~uint8_t, buffer::APDU_DATA_MAX~, error::Error~ unwrap(const etl::ivector~uint8_t~& apdu) override
+}
+class IWire_49 {
+  + virtual ~IWire() = default
+  + virtual etl::vector~uint8_t, buffer::APDU_COMMAND_MAX~ wrap(const etl::ivector~uint8_t~& pdu) = 0
+  + virtual etl::expected~etl::vector~uint8_t, buffer::APDU_DATA_MAX~, error::Error~ unwrap(const etl::ivector~uint8_t~& apdu) = 0
+}
+class NativeWire_50 {
+  + NativeWire() = default
+  + etl::vector~uint8_t, buffer::APDU_COMMAND_MAX~ wrap(const etl::ivector~uint8_t~& pdu) override
+  + etl::expected~etl::vector~uint8_t, buffer::APDU_DATA_MAX~, error::Error~ unwrap(const etl::ivector~uint8_t~& apdu) override
+}
+class WireKind_51 {
+  Native
+  Iso
+}
+class CommandRequest_52 {
+  + static constexpr size_t MaxPayloadSize = 300
+  - uint8_t commandCode
+  - etl::vector~uint8_t, MaxPayloadSize~ payload
+  - uint32_t responseTimeoutMs
+  - bool expectsData
+  + etl::string~256~ toString() const
+  + size_t size() const
+  + bool empty() const
+  + uint32_t timeoutMs() const
+  + const etl::ivector~uint8_t~& data() const
+  + uint8_t getCommandCode() const
+  + bool expectsDataFrame() const
+  - CommandRequest(uint8_t cmd, const etl::ivector~uint8_t~& payload, uint32_t timeout = 1000, bool expectsData = true)
+}
+class CommandResponse_53 {
+  + static constexpr size_t MaxPayloadSize = 300
+  - uint8_t cmd
+  - etl::vector~uint8_t, MaxPayloadSize~ payload
+  + etl::string~256~ toString() const
+  + size_t size() const
+  + bool empty() const
+  + const etl::ivector~uint8_t~& data() const
+  + uint8_t getCommandCode() const
+  - CommandResponse(uint8_t cmd, const etl::ivector~uint8_t~& payload)
+}
+class FirmwareInfo_54 {
+  + uint8_t ic
+  + uint8_t ver
+  + uint8_t rev
+  + uint8_t support
+  + etl::string~255~ toString() const
+}
+class GetFirmwareVersion_55 {
+  - FirmwareInfo cachedInfo
+  + GetFirmwareVersion() = default
+  + etl::string_view name() const override
+  + CommandRequest buildRequest() override
+  + etl::expected~CommandResponse, error::Error~ parseResponse(const Pn532ResponseFrame& frame) override
+  + bool expectsDataFrame() const override
+  + const FirmwareInfo& getFirmwareInfo() const
+}
+class GeneralStatus_56 {
+  + uint8_t err
+  + uint8_t field
+  + uint8_t nbTg
+  + etl::array~uint8_t, 4~ tg1
+  + etl::array~uint8_t, 4~ tg2
+  + uint8_t samStatus
+  + etl::string~255~ toString() const
+}
+class GetGeneralStatus_57 {
+  - GeneralStatus cachedStatus
+  + GetGeneralStatus() = default
+  + etl::string_view name() const override
+  + CommandRequest buildRequest() override
+  + etl::expected~CommandResponse, error::Error~ parseResponse(const Pn532ResponseFrame& frame) override
+  + bool expectsDataFrame() const override
+  + const GeneralStatus& getGeneralStatus() const
+}
+class InDataExchangeOptions_58 {
+  + uint8_t targetNumber
+  + etl::vector~uint8_t, 255~ payload
+  + uint32_t responseTimeoutMs
+  + InDataExchangeOptions() : targetNumber(0x01), responseTimeoutMs(1000)
+}
+class InDataExchange_59 {
+  - InDataExchangeOptions options
+  - uint8_t cachedStatusByte
+  - etl::vector~uint8_t, 255~ cachedResponse
+  + explicit InDataExchange(const InDataExchangeOptions& opts)
+  + etl::string_view name() const override
+  + CommandRequest buildRequest() override
+  + etl::expected~CommandResponse, error::Error~ parseResponse(const Pn532ResponseFrame& frame) override
+  + bool expectsDataFrame() const override
+  + uint8_t getStatusByte() const
+  + Pn532Error getStatus() const
+  + bool isSuccess() const
+  + const etl::ivector~uint8_t~& getResponseData() const
+}
+class TargetInfo_60 {
+  + etl::vector~uint8_t, 10~ uid
+  + uint16_t atqa
+  + uint8_t sak
+  + etl::vector~uint8_t, 32~ ats
+  + TargetInfo() : atqa(0), sak(0)
+}
+class InListPassiveTargetOptions_61 {
+  + uint8_t maxTargets = 1
+  + CardTargetType target = CardTargetType::TypeA_106kbps
+  + uint32_t responseTimeoutMs = 5000
+}
+class InListPassiveTarget_62 {
+  - InListPassiveTargetOptions options
+  - etl::vector~TargetInfo, 2~ detectedTargets
+  + explicit InListPassiveTarget(const InListPassiveTargetOptions& opts)
+  + etl::string_view name() const override
+  + CommandRequest buildRequest() override
+  + etl::expected~CommandResponse, error::Error~ parseResponse(const Pn532ResponseFrame& frame) override
+  + bool expectsDataFrame() const override
+  + const etl::ivector~TargetInfo~& getDetectedTargets() const
+  - bool parseTarget(const Pn532ResponseFrame& frame, size_t& index)
+  - bool parseTypeATarget(const Pn532ResponseFrame& frame, size_t& index, TargetInfo& targetInfo)
+  - bool parseUid(const Pn532ResponseFrame& frame, size_t& index, TargetInfo& targetInfo)
+  - void parseATS(const Pn532ResponseFrame& frame, size_t& index, TargetInfo& targetInfo)
+  - bool parseOtherTarget(const Pn532ResponseFrame& frame, size_t& index, TargetInfo& targetInfo)
+}
+class CardTargetType_63 {
+  TypeA_106kbps = 0x00
+  FeliCa_212kbps = 0x01
+  FeliCa_424kbps = 0x02
+  TypeB_106kbps = 0x03
+  Jewel_106kbps = 0x04
+}
+class SelfTestOptions_64 {
+  + TestType test = TestType::CommunicationLine
+  + etl::vector~uint8_t, 255~ parameters = ()
+  + bool verifyEcho = false
+  + uint32_t responseTimeoutMs = 1000
+}
+class PerformSelfTest_65 {
+  - SelfTestOptions options
+  + explicit PerformSelfTest(const SelfTestOptions& opts)
+  + etl::string_view name() const override
+  + CommandRequest buildRequest() override
+  + etl::expected~CommandResponse, error::Error~ parseResponse(const Pn532ResponseFrame& frame) override
+  + bool expectsDataFrame() const override
+  + static uint8_t makeAntennaThreshold( uint8_t highThresholdCode, uint8_t lowThresholdCode, bool useUpperComparator, bool useLowerComparator)
+  - static uint32_t defaultTimeoutFor(TestType test)
+}
+class TestType_66 {
+  CommunicationLine = 0x00
+  RomChecksum = 0x01
+  RamIntegrity = 0x02
+  PollingToTarget = 0x04
+  EchoBack = 0x05
+  CardPresence = 0x06
+  AntennaContinuity = 0x07
+}
+class RFConfigurationOptions_67 {
+  + RFConfigItem item = RFConfigItem::MaxRetries
+  + etl::vector~uint8_t, 16~ configData
+}
+class RFConfiguration_68 {
+  - RFConfigurationOptions options
+  + explicit RFConfiguration(const RFConfigurationOptions& opts)
+  + etl::string_view name() const override
+  + CommandRequest buildRequest() override
+  + etl::expected~CommandResponse, error::Error~ parseResponse(const Pn532ResponseFrame& frame) override
+  + bool expectsDataFrame() const override
+}
+class RFConfigItem_69 {
+  RFField = 0x01
+  VariousTimings = 0x02
+  MaxRetries = 0x05
+  AnalogSettings106kA = 0x0A
+  AnalogSettings212_424k = 0x0B
+}
+class SAMConfigurationOptions_70 {
+  + SamMode mode = SamMode::Normal
+  + uint8_t timeout = 0x00
+  + bool useIRQ = false
+}
+class SAMConfiguration_71 {
+  - SAMConfigurationOptions options
+  + explicit SAMConfiguration(const SAMConfigurationOptions& opts)
+  + etl::string_view name() const override
+  + CommandRequest buildRequest() override
+  + etl::expected~CommandResponse, error::Error~ parseResponse(const Pn532ResponseFrame& frame) override
+  + bool expectsDataFrame() const override
+}
+class SamMode_72 {
+  Normal = 0x01
+  VirtualCard = 0x02
+  WiredCard = 0x03
+  DualCard = 0x04
+}
+class SetSerialBaudRateOptions_73 {
+  + Pn532Baudrate baudRate = Pn532Baudrate::Baud115200
+}
+class SetSerialBaudRate_74 {
+  - SetSerialBaudRateOptions options
+  + explicit SetSerialBaudRate(const SetSerialBaudRateOptions& opts)
+  + etl::string_view name() const override
+  + CommandRequest buildRequest() override
+  + etl::expected~CommandResponse, error::Error~ parseResponse(const Pn532ResponseFrame& frame) override
+  + bool expectsDataFrame() const override
+}
+class Pn532Baudrate_75 {
+  Baud9600 = 0x00
+  Baud19200 = 0x01
+  Baud38400 = 0x02
+  Baud57600 = 0x03
+  Baud115200 = 0x04
+  Baud230400 = 0x05
+  Baud460800 = 0x06
+  Baud921600 = 0x07
+  Baud1288000 = 0x08
+}
+class IPn532Command_76 {
+  + virtual ~IPn532Command() = default
+  + virtual etl::string_view name() const = 0
+  + virtual CommandRequest buildRequest() = 0
+  + virtual etl::expected~CommandResponse, error::Error~ parseResponse(const Pn532ResponseFrame& frame) = 0
+  + virtual bool expectsDataFrame() const = 0
+  # static CommandResponse createCommandResponse(uint8_t cmd, const etl::ivector~uint8_t~& payload)
+}
+class Pn532ApduAdapter_77 {
+  - Pn532Driver &driver
+  - IWire* activeWire
+  + explicit Pn532ApduAdapter(Pn532Driver &driver)
+  + virtual ~Pn532ApduAdapter() = default
+  + void setWire(IWire& wire) override
+  + etl::expected~etl::vector~uint8_t, buffer::APDU_DATA_MAX~, error::Error~ transceive( const etl::ivector~uint8_t~ &apdu) override
+  + etl::expected~CardInfo, error::Error~ detectCard() override
+  + bool isCardPresent() override
+}
+class Pn532Response_78 {
+  + uint8_t command
+  + etl::vector~uint8_t, 256~ data
+}
+class Pn532Driver_79 {
+  - comms::IHardwareBus &bus
+  - static constexpr uint32_t DEFAULT_TIMEOUT_MS = 500
+  - static constexpr etl::array~uint8_t, 6~ ACK_FRAME = (0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00)
+  + explicit Pn532Driver(comms::IHardwareBus &bus)
+  + void init()
+  + etl::expected~CommandResponse, Error~ executeCommand(IPn532Command &command)
+  + etl::expected~FirmwareInfo, Error~ getFirmwareVersion()
+  + etl::expected~void, Error~ performSelftest()
+  + etl::expected~GeneralStatus, Error~ getGeneralStatus()
+  + etl::expected~void, Error~ setSamConfiguration(uint8_t mode)
+  + etl::expected~void, Error~ setRfField(const bool state)
+  + etl::expected~void, Error~ setMaxRetries(const uint8_t maxRetries)
+  + etl::expected~void, Error~ setSerialBaudrate(Pn532Baudrate baudrate)
+  + etl::expected~void, Error~ writeRegister(const uint16_t reg, const uint8_t val)
+  + etl::expected~uint8_t, Error~ readRegister(const uint16_t reg)
+  + etl::expected~void, Error~ writeGPIO(uint8_t newGpioState)
+  + etl::expected~uint8_t, Error~ readGPIO()
+  + static uint32_t calculateChecksum(const etl::ivector~uint8_t~ &data)
+  - etl::expected~Pn532ResponseFrame, Error~ transceive(const CommandRequest & request)
+  - etl::expected~void, Error~ sendCommand(const etl::ivector~uint8_t~ &data)
+  - etl::expected~Pn532Response, Error~ getResponse(uint8_t onCommand, uint32_t timeoutMs)
+  - etl::expected~void, Error~ sendAndAcknowledgeCommand(uint8_t command)
+  - etl::expected~void, Error~ wakeUp()
+  - bool waitForChip(const int timeout)
+  - static bool checkAck(const etl::ivector~uint8_t~ &buffer)
+  - static etl::expected~Pn532ResponseFrame, Error~ parseResponseFrame( const etl::ivector~uint8_t~ &frame, uint8_t sentCommandCode)
+}
+class Pn532RequestFrame_80 {
+  - static constexpr uint8_t PREAMBLE = 0x00
+  - static constexpr uint8_t START_CODE_1 = 0x00
+  - static constexpr uint8_t START_CODE_2 = 0xFF
+  - static constexpr uint8_t TFI_HOST_TO_PN532 = 0xD4
+  - static constexpr uint8_t POSTAMBLE = 0x00
+  + static etl::expected~etl::vector~uint8_t, nfc::buffer::PN532_FRAME_MAX~, error::Error~ build(const CommandRequest& request)
+  + static etl::vector~uint8_t, 6~ buildAck()
+  + static etl::vector~uint8_t, 6~ buildNack()
+  - static uint8_t calculateChecksum(const etl::ivector~uint8_t~& data)
+  - static uint8_t calculateLengthChecksum(uint8_t length)
+}
+class Pn532ResponseFrame_81 {
+  + static constexpr size_t MaxPayloadSize = 255
+  - uint8_t commandCode
+  - etl::vector~uint8_t, MaxPayloadSize~ payload
+  + etl::string~256~ toString() const
+  + size_t size() const
+  + bool empty() const
+  + const etl::ivector~uint8_t~& data() const
+  + uint8_t getCommandCode() const
+  - Pn532ResponseFrame(uint8_t cmd, const etl::ivector~uint8_t~& payload)
+}
+class Rc522ApduAdapter_82 {
+  - Rc522Driver &driver
+  + explicit Rc522ApduAdapter(Rc522Driver &driver)
+  + virtual ~Rc522ApduAdapter() = default
+  + void setWire(IWire& wire) override
+  + etl::expected~etl::vector~uint8_t, buffer::APDU_DATA_MAX~, error::Error~ transceive( const etl::ivector~uint8_t~ &apdu) override
+  + etl::expected~CardInfo, error::Error~ detectCard() override
+  + bool isCardPresent() override
+}
+class Rc522Driver_83 {
+  - comms::IHardwareBus& bus
+  + explicit Rc522Driver(comms::IHardwareBus& bus)
+  + ~Rc522Driver() = default
+  + etl::expected~void, error::Error~ init()
+}
+class DesFireCrypto_84 {
+  + static void desEncrypt( const uint8_t* plaintext, const uint8_t* key, uint8_t* ciphertext)
+  + static void desDecrypt( const uint8_t* ciphertext, const uint8_t* key, uint8_t* plaintext)
+  + static void des3Encrypt( const uint8_t* plaintext, const uint8_t* key, uint8_t* ciphertext)
+  + static void des3Decrypt( const uint8_t* ciphertext, const uint8_t* key, uint8_t* plaintext)
+  + static void des3CbcEncrypt( const uint8_t* plaintext, size_t plaintextLen, const uint8_t* key, const uint8_t* iv, uint8_t* ciphertext)
+  + static void des3CbcDecrypt( const uint8_t* ciphertext, size_t ciphertextLen, const uint8_t* key, const uint8_t* iv, uint8_t* plaintext)
+  + static void generateSessionKey( const uint8_t* rndA, const uint8_t* rndB, uint8_t* sessionKey)
+  + static void clearParityBits(uint8_t* key, size_t length)
+}
+class Logger_85 {
+  + static constexpr const char* COLOR_RESET = '\033[0m'
+  + static constexpr const char* COLOR_RED = '\033[31m'
+  + static constexpr const char* COLOR_YELLOW = '\033[33m'
+  + static constexpr const char* COLOR_GREEN = '\033[32m'
+  + static constexpr const char* COLOR_CYAN = '\033[36m'
+  + static constexpr const char* COLOR_GRAY = '\033[90m'
+  + static void log(const char* level, const char* file, int line, const char* fmt, ...)
+  + static void logHex(const char* level, const char* file, int line, const char* name, const void* data, size_t len)
+}
+AuthenticateCommandOptions_25 *-- DesfireAuthMode_32
+AuthenticateCommand_26 *-- AuthenticateCommandOptions_25
+IDesfireCommand_40 <|-- AuthenticateCommand_26
+AuthenticateCommand_26 *-- Stage__AuthenticateCommand__27
+CardInfo_19 *-- CardType_22
+CardManager_20 *-- CardInfo_19
+CardManager_20 *-- CardSession_21
+CardManager_20 o-- IApduTransceiver_18
+CardManager_20 o-- ICardDetector_23
+CardManager_20 o-- IWire_49
+CardManager_20 *-- IsoWire_48
+CardManager_20 *-- NativeWire_50
+CardManager_20 *-- ReaderCapabilities_24
+CardManager_20 *-- WireKind_51
+CardSession_21 *-- CardInfo_19
+ChangeKeyCommandOptions_28 *-- DesfireKeyType_36
+ChangeKeyCommand_29 *-- ChangeKeyCommandOptions_28
+IDesfireCommand_40 <|-- ChangeKeyCommand_29
+ChangeKeyCommand_29 *-- Stage__ChangeKeyCommand__30
+DesfireCard_33 *-- DesfireContext_34
+DesfireCard_33 o-- EncPipe_39
+DesfireCard_33 o-- IApduTransceiver_18
+DesfireCard_33 o-- IWire_49
+DesfireCard_33 o-- MacPipe_42
+DesfireCard_33 o-- PlainPipe_43
+DesfireContext_34 *-- CommMode_35
+ISecurePipe_41 <|-- EncPipe_39
+Error_11 *-- ErrorLayer_12
+GetFirmwareVersion_55 *-- FirmwareInfo_54
+IPn532Command_76 <|-- GetFirmwareVersion_55
+GetGeneralStatus_57 *-- GeneralStatus_56
+IPn532Command_76 <|-- GetGeneralStatus_57
+IHardwareBus_2 <|-- ISerialBus_3
+IPn532Command_76 <|-- InDataExchange_59
+InDataExchange_59 *-- InDataExchangeOptions_58
+InListPassiveTargetOptions_61 *-- CardTargetType_63
+IPn532Command_76 <|-- InListPassiveTarget_62
+InListPassiveTarget_62 *-- InListPassiveTargetOptions_61
+InListPassiveTarget_62 *-- TargetInfo_60
+IWire_49 <|-- IsoWire_48
+ISecurePipe_41 <|-- MacPipe_42
+IWire_49 <|-- NativeWire_50
+IPn532Command_76 <|-- PerformSelfTest_65
+PerformSelfTest_65 *-- SelfTestOptions_64
+ISecurePipe_41 <|-- PlainPipe_43
+IApduTransceiver_18 <|-- Pn532ApduAdapter_77
+ICardDetector_23 <|-- Pn532ApduAdapter_77
+Pn532ApduAdapter_77 o-- IWire_49
+Pn532ApduAdapter_77 o-- Pn532Driver_79
+Pn532Driver_79 o-- IHardwareBus_2
+RFConfigurationOptions_67 *-- RFConfigItem_69
+IPn532Command_76 <|-- RFConfiguration_68
+RFConfiguration_68 *-- RFConfigurationOptions_67
+IApduTransceiver_18 <|-- Rc522ApduAdapter_82
+ICardDetector_23 <|-- Rc522ApduAdapter_82
+Rc522ApduAdapter_82 o-- Rc522Driver_83
+Rc522Driver_83 o-- IHardwareBus_2
+SAMConfigurationOptions_70 *-- SamMode_72
+IPn532Command_76 <|-- SAMConfiguration_71
+SAMConfiguration_71 *-- SAMConfigurationOptions_70
+IDesfireCommand_40 <|-- SelectApplicationCommand_31
+SelfTestOptions_64 *-- TestType_66
+ISerialBus_3 <|-- SerialBusWin_7
+SetSerialBaudRateOptions_73 *-- Pn532Baudrate_75
+IPn532Command_76 <|-- SetSerialBaudRate_74
+SetSerialBaudRate_74 *-- SetSerialBaudRateOptions_73
+

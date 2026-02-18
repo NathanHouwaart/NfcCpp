@@ -27,6 +27,17 @@ namespace nfc
     };
 
     /**
+     * @brief Active authenticated session flavor.
+     */
+    enum class SessionAuthScheme : uint8_t
+    {
+        None = 0x00,
+        Legacy = 0x0A,
+        Iso = 0x1A,
+        Aes = 0xAA
+    };
+
+    /**
      * @brief DESFire session context
      * 
      * Stores session state including authentication status and session keys
@@ -35,10 +46,12 @@ namespace nfc
     {
         bool authenticated = false;
         CommMode commMode = CommMode::Plain;
+        SessionAuthScheme authScheme = SessionAuthScheme::None;
         
         etl::vector<uint8_t, 24> sessionKeyEnc;  // Encryption session key
         etl::vector<uint8_t, 24> sessionKeyMac;  // MAC session key
         etl::vector<uint8_t, 16> iv;             // Initialization vector
+        etl::vector<uint8_t, 16> sessionEncRndB; // Raw encrypted RndB from last successful authenticate
         
         uint8_t keyNo = 0;                        // Current authenticated key number
         etl::vector<uint8_t, 3> selectedAid;     // Selected application ID

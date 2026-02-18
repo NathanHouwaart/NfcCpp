@@ -13,22 +13,32 @@
 
 #include "../IDesfireCommand.h"
 #include "../DesfireKeyType.h"
+#include "../DesfireAuthMode.h"
 #include <etl/vector.h>
 #include <etl/optional.h>
-#include <etl/utility.h>
 
 namespace nfc
 {
+    enum class ChangeKeyLegacyIvMode : uint8_t
+    {
+        Zero,               // Classic legacy SEND_MODE with zero seed IV
+        SessionEncryptedRndB // Seed SEND_MODE with first 8 bytes of encrypted RndB from auth
+    };
+
     /**
      * @brief Change key command options
      */
     struct ChangeKeyCommandOptions
     {
         uint8_t keyNo;
+        DesfireAuthMode authMode = DesfireAuthMode::ISO;
+        DesfireKeyType sessionKeyType = DesfireKeyType::UNKNOWN;
         DesfireKeyType newKeyType;
+        DesfireKeyType oldKeyType = DesfireKeyType::UNKNOWN;
         etl::vector<uint8_t, 24> newKey;
         uint8_t newKeyVersion;
         etl::optional<etl::vector<uint8_t, 24>> oldKey;
+        ChangeKeyLegacyIvMode legacyIvMode = ChangeKeyLegacyIvMode::Zero;
     };
 
     /**
@@ -95,34 +105,92 @@ namespace nfc
         void reset() override;
 
     private:
+        enum class SessionCipher : uint8_t
+        {
+            DES,
+            DES3_2K,
+            DES3_3K,
+            AES,
+            UNKNOWN
+        };
+
         /**
          * @brief Build key cryptogram
          * 
          * @param context DESFire context
-         * @return etl::vector<uint8_t, 48> Key cryptogram
+         * @return etl::expected<etl::vector<uint8_t, 48>, error::Error> Key cryptogram or error
          */
-        etl::vector<uint8_t, 48> buildKeyCryptogram(const DesfireContext& context);
+        etl::expected<etl::vector<uint8_t, 48>, error::Error> buildKeyCryptogram(const DesfireContext& context);
 
         /**
          * @brief Get key size for key type
          * 
          * @return size_t Key size in bytes
          */
-        size_t getKeySize() const;
+        size_t getKeySize(DesfireKeyType keyType) const;
 
         /**
-         * @brief Derive session keys from master key
+         * @brief Normalize key material based on key type
          * 
-         * @param masterKey Master key
-         * @param keyType Key type
-         * @return etl::pair<etl::vector<uint8_t, 24>, etl::vector<uint8_t, 24>> Encryption and MAC keys
+         * @param keyData Key bytes
+         * @return etl::expected<etl::vector<uint8_t, 24>, error::Error> Normalized key material or error
          */
-        etl::pair<etl::vector<uint8_t, 24>, etl::vector<uint8_t, 24>> deriveSessionKeys(
-            const etl::vector<uint8_t, 24>& masterKey,
-            DesfireKeyType keyType);
+        etl::expected<etl::vector<uint8_t, 24>, error::Error> normalizeKeyMaterial(
+            const etl::ivector<uint8_t>& keyData,
+            DesfireKeyType keyType) const;
+
+        /**
+         * @brief Determine session cipher used to encrypt the cryptogram
+         * 
+         * @param context DESFire context
+         * @return SessionCipher Session cipher
+         */
+        SessionCipher resolveSessionCipher(const DesfireContext& context) const;
+
+        /**
+         * @brief Compute DESFire CRC16
+         * 
+         * @param data Input data
+         * @return uint16_t CRC16 value
+         */
+        uint16_t calculateCrc16(const etl::ivector<uint8_t>& data) const;
+
+        /**
+         * @brief Compute DESFire CRC32 (inverted standard CRC32)
+         * 
+         * @param data Input data
+         * @return uint32_t CRC32 value
+         */
+        uint32_t calculateCrc32Desfire(const etl::ivector<uint8_t>& data) const;
+
+        /**
+         * @brief Encrypt key cryptogram for transmission
+         * 
+         * @param paddedCryptogram Padded plaintext cryptogram
+         * @param context DESFire context
+         * @param cipher Session cipher
+         * @return etl::expected<etl::vector<uint8_t, 48>, error::Error> Encrypted cryptogram or error
+         */
+        etl::expected<etl::vector<uint8_t, 48>, error::Error> encryptCryptogram(
+            const etl::ivector<uint8_t>& paddedCryptogram,
+            const DesfireContext& context,
+            SessionCipher cipher);
+
+        /**
+         * @brief Check if legacy SEND_MODE cryptogram encryption should be used
+         * 
+         * @param cipher Session cipher
+         * @return true Use legacy SEND_MODE decrypt pipeline
+         * @return false Use normal CBC encryption
+         */
+        bool useLegacySendMode(SessionCipher cipher) const;
 
         ChangeKeyCommandOptions options;
         Stage stage;
+        etl::vector<uint8_t, 16> pendingIv;
+        bool updateContextIv;
+        bool sameKeyChange;
+        uint8_t effectiveKeyNo;
     };
 
 } // namespace nfc

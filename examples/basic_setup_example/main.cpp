@@ -44,6 +44,8 @@ int main()
 
     serial.init();
     pn532.init();
+    pn532.setSamConfiguration(0x01); // Normal mode, no timeout, use IRQ
+    pn532.setMaxRetries(1); // Infinite retries for card detection
 
     // Detect card
     auto cardInfo    = cardManager.detectCard();

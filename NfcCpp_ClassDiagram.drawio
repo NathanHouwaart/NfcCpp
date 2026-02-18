@@ -1,0 +1,1476 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.2.8 Chrome/140.0.7339.240 Electron/38.4.0 Safari/537.36" version="28.2.8" pages="16">
+  <diagram id="overview_e3e67251" name="00_Overview">
+    <mxGraphModel dx="1403" dy="572" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1900" pageHeight="1500" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ov_m1" value="&lt;b&gt;Comms&lt;/b&gt;&lt;br/&gt;types: 2" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=1.5;fillColor=#dae8fc;" parent="1" vertex="1">
+          <mxGeometry x="60" y="60" width="430" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ov_m2" value="&lt;b&gt;Comms/Serial&lt;/b&gt;&lt;br/&gt;types: 5" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=1.5;fillColor=#dae8fc;" parent="1" vertex="1">
+          <mxGeometry x="560" y="60" width="430" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ov_m3" value="&lt;b&gt;Error&lt;/b&gt;&lt;br/&gt;types: 9" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=1.5;fillColor=#dae8fc;" parent="1" vertex="1">
+          <mxGeometry x="1060" y="60" width="430" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ov_m4" value="&lt;b&gt;Nfc/Apdu&lt;/b&gt;&lt;br/&gt;types: 2" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=1.5;fillColor=#dae8fc;" parent="1" vertex="1">
+          <mxGeometry x="60" y="260" width="430" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ov_m5" value="&lt;b&gt;Nfc/Card&lt;/b&gt;&lt;br/&gt;types: 6" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=1.5;fillColor=#dae8fc;" parent="1" vertex="1">
+          <mxGeometry x="560" y="260" width="430" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ov_m6" value="&lt;b&gt;Nfc/Desfire&lt;/b&gt;&lt;br/&gt;types: 12" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=1.5;fillColor=#dae8fc;" parent="1" vertex="1">
+          <mxGeometry x="1060" y="260" width="430" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ov_m7" value="&lt;b&gt;Nfc/Desfire/Commands&lt;/b&gt;&lt;br/&gt;types: 7" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=1.5;fillColor=#dae8fc;" parent="1" vertex="1">
+          <mxGeometry x="60" y="460" width="430" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ov_m8" value="&lt;b&gt;Nfc/MifareClassic&lt;/b&gt;&lt;br/&gt;types: 2" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=1.5;fillColor=#dae8fc;" parent="1" vertex="1">
+          <mxGeometry x="560" y="460" width="430" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ov_m9" value="&lt;b&gt;Nfc/Ultralight&lt;/b&gt;&lt;br/&gt;types: 2" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=1.5;fillColor=#dae8fc;" parent="1" vertex="1">
+          <mxGeometry x="1060" y="460" width="430" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ov_m10" value="&lt;b&gt;Nfc/Wire&lt;/b&gt;&lt;br/&gt;types: 4" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=1.5;fillColor=#dae8fc;" parent="1" vertex="1">
+          <mxGeometry x="60" y="660" width="430" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ov_m11" value="&lt;b&gt;Pn532&lt;/b&gt;&lt;br/&gt;types: 8" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=1.5;fillColor=#dae8fc;" parent="1" vertex="1">
+          <mxGeometry x="560" y="660" width="430" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ov_m12" value="&lt;b&gt;Pn532/Commands&lt;/b&gt;&lt;br/&gt;types: 22" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=1.5;fillColor=#dae8fc;" parent="1" vertex="1">
+          <mxGeometry x="1060" y="660" width="430" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ov_m13" value="&lt;b&gt;Rc522&lt;/b&gt;&lt;br/&gt;types: 2" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=1.5;fillColor=#dae8fc;" parent="1" vertex="1">
+          <mxGeometry x="60" y="860" width="430" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ov_m14" value="&lt;b&gt;Utils&lt;/b&gt;&lt;br/&gt;types: 2" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=1.5;fillColor=#dae8fc;" parent="1" vertex="1">
+          <mxGeometry x="560" y="860" width="430" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ov_note" value="Overview uses scattered modules and routed lanes. Open module pages for full class-level details." style="shape=note;whiteSpace=wrap;html=1;size=14;" parent="1" vertex="1">
+          <mxGeometry x="60" y="1080" width="1600" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="ov_e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=blockThin;endFill=0;strokeColor=#7c3aed;exitX=0;exitY=0.38;entryX=1;entryY=0.38;" parent="1" source="ov_m2" target="ov_m1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="497" y="125" />
+              <mxPoint x="497" y="125" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ov_e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=blockThin;endFill=0;strokeColor=#7c3aed;exitX=0;exitY=0.38;entryX=1;entryY=0.38;" parent="1" source="ov_m5" target="ov_m4" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="497" y="325" />
+              <mxPoint x="497" y="325" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ov_e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=blockThin;endFill=0;strokeColor=#7c3aed;exitX=0;exitY=0.38;entryX=1;entryY=0.38;" parent="1" source="ov_m5" target="ov_m10" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="497" y="325" />
+              <mxPoint x="497" y="725" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ov_e4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=blockThin;endFill=0;strokeColor=#7c3aed;exitX=0;exitY=0.38;entryX=1;entryY=0.38;" parent="1" source="ov_m6" target="ov_m4" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="747" y="325" />
+              <mxPoint x="747" y="325" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ov_e5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=blockThin;endFill=0;strokeColor=#7c3aed;exitX=0;exitY=0.38;entryX=1;entryY=0.38;" parent="1" source="ov_m6" target="ov_m10" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1060" y="325" />
+              <mxPoint x="747" y="325" />
+              <mxPoint x="747" y="720" />
+              <mxPoint x="490" y="720" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ov_e6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=blockThin;endFill=0;strokeColor=#7c3aed;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" parent="1" source="ov_m7" target="ov_m6" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="747" y="525" />
+              <mxPoint x="747" y="325" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ov_e7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=blockThin;endFill=0;strokeColor=#7c3aed;exitX=0;exitY=0.38;entryX=1;entryY=0.38;" parent="1" source="ov_m11" target="ov_m1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="560" y="730" />
+              <mxPoint x="497" y="730" />
+              <mxPoint x="497" y="125" />
+              <mxPoint x="490" y="125" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ov_e8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=blockThin;endFill=0;strokeColor=#7c3aed;exitX=0;exitY=0.38;entryX=1;entryY=0.38;" parent="1" source="ov_m11" target="ov_m4" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="560" y="740" />
+              <mxPoint x="497" y="740" />
+              <mxPoint x="497" y="325" />
+              <mxPoint x="490" y="325" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ov_e9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=blockThin;endFill=0;strokeColor=#7c3aed;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" parent="1" source="ov_m11" target="ov_m5" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="747" y="725" />
+              <mxPoint x="747" y="325" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ov_e10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=blockThin;endFill=0;strokeColor=#7c3aed;exitX=0;exitY=0.38;entryX=1;entryY=0.38;" parent="1" source="ov_m11" target="ov_m10" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="490" y="709" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ov_e11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=blockThin;endFill=0;strokeColor=#7c3aed;exitX=0;exitY=0.38;entryX=1;entryY=0.38;" parent="1" source="ov_m12" target="ov_m11" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="997" y="725" />
+              <mxPoint x="997" y="725" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ov_e12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=blockThin;endFill=0;strokeColor=#7c3aed;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" parent="1" source="ov_m13" target="ov_m1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="247" y="925" />
+              <mxPoint x="247" y="125" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ov_e13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=blockThin;endFill=0;strokeColor=#7c3aed;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" parent="1" source="ov_m13" target="ov_m4" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="247" y="925" />
+              <mxPoint x="247" y="325" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ov_e14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=blockThin;endFill=0;strokeColor=#7c3aed;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" parent="1" source="ov_m13" target="ov_m5" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="497" y="925" />
+              <mxPoint x="497" y="325" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="d_76c22a3a" name="Comms">
+    <mxGraphModel dx="1920" dy="1080" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2690" pageHeight="2200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n2" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;IHardwareBus&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Comms/IHardwareBus.hpp&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;- bool openFlag = false&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ virtual ~IHardwareBus() = default&lt;br/&gt;+ virtual etl::expected&lt;void, error::Error&gt; init() = 0&lt;br/&gt;+ virtual etl::expected&lt;void, error::Error&gt; open() = 0&lt;br/&gt;+ virtual void close() = 0&lt;br/&gt;+ virtual etl::expected&lt;void, error::Error&gt; write(const etl::ivector&lt;uint8_t&gt;&amp; data) = 0&lt;br/&gt;+ virtual etl::expected&lt;size_t, error::Error&gt; read(etl::ivector&lt;uint8_t&gt;&amp; buffer, size_t length) = 0&lt;br/&gt;+ virtual etl::expected&lt;void, error::Error&gt; flush() = 0&lt;br/&gt;+ virtual size_t available() const = 0&lt;br/&gt;+ virtual etl::expected&lt;void, error::Error&gt; setProperty(BusProperty property, uint32_t value) = 0&lt;br/&gt;+ virtual etl::expected&lt;uint32_t, error::Error&gt; getProperty(BusProperty property) const = 0&lt;br/&gt;+ bool isOpen() const&lt;br/&gt;# void setIsOpen(bool flag)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="80" width="520" height="272" as="geometry" />
+        </mxCell>
+        <mxCell id="n1" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;BusProperty&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Comms/BusPoperties.hpp&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ BaudRate&lt;br/&gt;+ Parity&lt;br/&gt;+ StopBits&lt;br/&gt;+ FlowControl&lt;br/&gt;+ Timeout&lt;br/&gt;+ SpiMode&lt;br/&gt;+ BitsPerWord&lt;br/&gt;+ SpiSpeed&lt;br/&gt;+ I2cAddress&lt;br/&gt;+ BufferSize&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="80" width="520" height="244" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n3" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;ISerialBus&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="80" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n79" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;Pn532Driver&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="220" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n83" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;Rc522Driver&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="360" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="note_Comms" value="Legend:&lt;br/&gt;Blue hollow triangle = inheritance&lt;br/&gt;Green diamond = composition&lt;br/&gt;Gray dashed = association&lt;br/&gt;&lt;br/&gt;Cells are spread out and edges are routed with separate lanes to reduce overlap." style="shape=note;whiteSpace=wrap;html=1;size=14;" vertex="1" parent="1">
+          <mxGeometry x="60" y="540" width="1500" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="Comms_e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n3" target="n2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="348" y="130" />
+              <mxPoint x="348" y="216" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Comms_e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=open;dashed=1;strokeColor=#5f6368;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n79" target="n2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="348" y="270" />
+              <mxPoint x="348" y="216" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Comms_e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=open;dashed=1;strokeColor=#5f6368;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n83" target="n2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="348" y="410" />
+              <mxPoint x="348" y="216" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="d_ac1193c9" name="Comms/Serial">
+    <mxGraphModel dx="1920" dy="1080" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2690" pageHeight="2200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n3" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;ISerialBus&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Comms/Serial/ISerialBus.hpp&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ virtual ~ISerialBus() = default&lt;br/&gt;+ virtual etl::expected&lt;void, Error&gt; setBaudRate(uint32_t baudrate) = 0&lt;br/&gt;+ virtual etl::expected&lt;void, Error&gt; setParity(Parity parity) = 0&lt;br/&gt;+ virtual etl::expected&lt;void, Error&gt; setStopBits(StopBits stopBits) = 0&lt;br/&gt;+ virtual etl::expected&lt;void, Error&gt; setFlowControl(FlowControl flowControl) = 0&lt;br/&gt;+ virtual etl::expected&lt;void, Error&gt; setTimeout(uint32_t timeout_ms) = 0" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="80" width="520" height="188" as="geometry" />
+        </mxCell>
+        <mxCell id="n7" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;SerialBusWin&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Comms/Serial/SerialBusWin.hpp&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;- HANDLE serialHandler&lt;br/&gt;- DCB dcbHandler&lt;br/&gt;- COMMTIMEOUTS serialTimeouts&lt;br/&gt;- etl::string&lt;256&gt; portName&lt;br/&gt;- uint32_t baudRate&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ SerialBusWin(const etl::string&lt;256&gt; &amp;portname, uint32_t baudrate)&lt;br/&gt;+ ~SerialBusWin() override&lt;br/&gt;+ etl::expected&lt;void, Error&gt; init() override&lt;br/&gt;+ etl::expected&lt;void, Error&gt; open() override&lt;br/&gt;+ void close() override&lt;br/&gt;+ etl::expected&lt;void, Error&gt; write(const etl::ivector&lt;uint8_t&gt; &amp;data) override&lt;br/&gt;+ etl::expected&lt;size_t, Error&gt; read(etl::ivector&lt;uint8_t&gt; &amp;buffer, size_t length) override&lt;br/&gt;+ etl::expected&lt;void, Error&gt; flush() override&lt;br/&gt;+ size_t available() const override&lt;br/&gt;+ etl::expected&lt;void, Error&gt; setBaudRate(uint32_t baudrate) override&lt;br/&gt;+ etl::expected&lt;void, Error&gt; setParity(Parity parity) override&lt;br/&gt;+ etl::expected&lt;void, Error&gt; setStopBits(StopBits stopBits) override&lt;br/&gt;+ etl::expected&lt;void, Error&gt; setFlowControl(FlowControl flowControl) override&lt;br/&gt;+ etl::expected&lt;void, Error&gt; setTimeout(uint32_t timeoutMs) override&lt;br/&gt;+ etl::expected&lt;void, Error&gt; setProperty(BusProperty property, uint32_t value) override&lt;br/&gt;+ etl::expected&lt;uint32_t, Error&gt; getProperty(BusProperty property) const override" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="80" width="520" height="384" as="geometry" />
+        </mxCell>
+        <mxCell id="n6" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;FlowControl&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Comms/Serial/ISerialBus.hpp&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ None&lt;br/&gt;+ Hardware&lt;br/&gt;+ Software&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="460" y="338" width="520" height="146" as="geometry" />
+        </mxCell>
+        <mxCell id="n4" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;Parity&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Comms/Serial/ISerialBus.hpp&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ None&lt;br/&gt;+ Even&lt;br/&gt;+ Odd&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="534" width="520" height="146" as="geometry" />
+        </mxCell>
+        <mxCell id="n5" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;StopBits&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Comms/Serial/ISerialBus.hpp&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ One&lt;br/&gt;+ Two&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="460" y="554" width="520" height="132" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n2" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;IHardwareBus&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="1770" y="80" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="note_Comms_Serial" value="Legend:&lt;br/&gt;Blue hollow triangle = inheritance&lt;br/&gt;Green diamond = composition&lt;br/&gt;Gray dashed = association&lt;br/&gt;&lt;br/&gt;Cells are spread out and edges are routed with separate lanes to reduce overlap." style="shape=note;whiteSpace=wrap;html=1;size=14;" vertex="1" parent="1">
+          <mxGeometry x="60" y="726" width="1500" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="Comms_Serial_e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n3" target="stub_n2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1303" y="174" />
+              <mxPoint x="1303" y="130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Comms_Serial_e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=0;exitY=0.38;entryX=1;entryY=0.38;" edge="1" parent="1" source="n7" target="n3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="983" y="272" />
+              <mxPoint x="983" y="174" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="d_49b954b9" name="Error">
+    <mxGraphModel dx="1920" dy="1080" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3360" pageHeight="2200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n11" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;Error&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Error/Error.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;- ErrorLayer layer&lt;br/&gt;- ErrorVariant errorCode&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ Error(ErrorLayer layer, ErrorVariant errorCode) : layer(layer), errorCode(errorCode)&lt;br/&gt;+ static Error fromHardware(HardwareError err)&lt;br/&gt;+ static Error fromPn532(Pn532Error err)&lt;br/&gt;+ static Error fromLink(LinkError err)&lt;br/&gt;+ static Error fromRc522(Rc522Error err)&lt;br/&gt;+ static Error fromCardManager(CardManagerError err)&lt;br/&gt;+ static Error fromApdu(ApduError err)&lt;br/&gt;+ static Error fromDesfire(DesfireError err)&lt;br/&gt;+ ErrorLayer getLayer() const&lt;br/&gt;+ template&lt;typename T&gt; bool is() const&lt;br/&gt;+ template&lt;typename T&gt; T get() const&lt;br/&gt;+ etl::string_view layerName(ErrorLayer layer) const&lt;br/&gt;+ etl::string_view nameOf(HardwareError err) const&lt;br/&gt;+ etl::string_view nameOf(LinkError err) const&lt;br/&gt;+ etl::string_view nameOf(Pn532Error err) const&lt;br/&gt;+ etl::string_view nameOf(Rc522Error err) const&lt;br/&gt;+ etl::string_view nameOf(CardManagerError err) const&lt;br/&gt;+ etl::string_view nameOf(ApduError err) const&lt;br/&gt;+ etl::string_view nameOf(DesfireError err) const&lt;br/&gt;+ etl::string&lt;160&gt; toString() const" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="80" width="520" height="398" as="geometry" />
+        </mxCell>
+        <mxCell id="n8" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;ApduError&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Error/ApduError.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ Ok&lt;br/&gt;+ WrongLength&lt;br/&gt;+ SecurityStatusNotSatisfied&lt;br/&gt;+ ConditionsNotSatisfied&lt;br/&gt;+ FileNotFound&lt;br/&gt;+ WrongP1P2&lt;br/&gt;+ Unknown&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="80" width="520" height="202" as="geometry" />
+        </mxCell>
+        <mxCell id="n9" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;CardManagerError&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Error/CardManagerError.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ Ok = 0&lt;br/&gt;+ NoCardPresent&lt;br/&gt;+ MultipleCards&lt;br/&gt;+ UnsupportedCardType&lt;br/&gt;+ CardMute&lt;br/&gt;+ AuthenticationRequired&lt;br/&gt;+ OperationFailed&lt;br/&gt;+ InvalidParameter&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="1800" y="80" width="520" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="n10" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;DesfireError&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Error/DesfireError.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ Ok = 0x00&lt;br/&gt;+ NoChanges = 0x0C&lt;br/&gt;+ OutOfEeprom = 0x0E&lt;br/&gt;+ IllegalCommand = 0x1C&lt;br/&gt;+ IntegrityError = 0x1E&lt;br/&gt;+ NoSuchKey = 0x40&lt;br/&gt;+ LengthError = 0x7E&lt;br/&gt;+ PermissionDenied = 0x9D&lt;br/&gt;+ ParameterError = 0x9E&lt;br/&gt;+ ApplicationNotFound = 0xA0&lt;br/&gt;+ ApplIntegrityError = 0xA1&lt;br/&gt;+ AuthenticationError = 0xAE&lt;br/&gt;+ AdditionalFrame = 0xAF&lt;br/&gt;+ BoundaryError = 0xBE&lt;br/&gt;+ PiccIntegrityError = 0xC1&lt;br/&gt;+ CommandAborted = 0xCA&lt;br/&gt;+ PiccDisabled = 0xCD&lt;br/&gt;+ CountError = 0xCE&lt;br/&gt;+ DuplicateError = 0xDE&lt;br/&gt;+ EepromError = 0xEE&lt;br/&gt;+ FileNotFound = 0xF0&lt;br/&gt;+ FileIntegrityError = 0xF1&lt;br/&gt;+ AuthenticationFailed = 0xFD&lt;br/&gt;+ InvalidState = 0xFE&lt;br/&gt;+ InvalidResponse = 0xFF&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="352" width="520" height="454" as="geometry" />
+        </mxCell>
+        <mxCell id="n12" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;ErrorLayer&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Error/Error.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ Hardware&lt;br/&gt;+ Link&lt;br/&gt;+ Pn532&lt;br/&gt;+ Rc522&lt;br/&gt;+ CardManager&lt;br/&gt;+ Apdu&lt;br/&gt;+ Desfire&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="1800" y="366" width="520" height="202" as="geometry" />
+        </mxCell>
+        <mxCell id="n13" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;HardwareError&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Error/HardwareError.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ Ok = 0&lt;br/&gt;+ Timeout&lt;br/&gt;+ Nack&lt;br/&gt;+ BusError&lt;br/&gt;+ BufferOverflow&lt;br/&gt;+ DeviceNotFound&lt;br/&gt;+ WriteFailed&lt;br/&gt;+ ReadFailed&lt;br/&gt;+ InvalidConfiguration&lt;br/&gt;+ NotSupported&lt;br/&gt;+ Unknown&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="460" y="548" width="520" height="258" as="geometry" />
+        </mxCell>
+        <mxCell id="n14" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;LinkError&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Error/LinkError.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ Ok = 0x00&lt;br/&gt;+ Timeout = 0x01&lt;br/&gt;+ CrcError = 0x02&lt;br/&gt;+ ParityError = 0x03&lt;br/&gt;+ Collision = 0x06&lt;br/&gt;+ BufferInsufficient = 0x07&lt;br/&gt;+ RfError = 0x0B&lt;br/&gt;+ AuthenticationError = 0x14&lt;br/&gt;+ CardDisappeared = 0x2B&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="1800" y="638" width="520" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="n15" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;Pn532Error&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Error/Pn532Error.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ Ok = 0x00&lt;br/&gt;+ Timeout = 0x01&lt;br/&gt;+ CRCError = 0x02&lt;br/&gt;+ ParityError = 0x03&lt;br/&gt;+ BitCountError = 0x04&lt;br/&gt;+ MifareFramingError = 0x05&lt;br/&gt;+ CollisionError = 0x06&lt;br/&gt;+ BufferSizeInsufficient = 0x07&lt;br/&gt;+ RFBufferOverflow = 0x09&lt;br/&gt;+ RFFieldTimeout = 0x0A&lt;br/&gt;+ RFProtocolError = 0x0B&lt;br/&gt;+ TemperatureError = 0x0D&lt;br/&gt;+ InternalBufferOverflow = 0x0E&lt;br/&gt;+ InvalidParameter = 0x10&lt;br/&gt;+ CommandNotSupported = 0x12&lt;br/&gt;+ DataFormatError = 0x13&lt;br/&gt;+ MifareAutError = 0x14&lt;br/&gt;+ UIDCheckByteError = 0x23&lt;br/&gt;+ InvalidDeviceState = 0x25&lt;br/&gt;+ OperationNotAllowed = 0x26&lt;br/&gt;+ CommandNotAcceptable = 0x27&lt;br/&gt;+ Released = 0x29&lt;br/&gt;+ CardExchanged = 0x2A&lt;br/&gt;+ CardDisappeared = 0x2B&lt;br/&gt;+ Nfcid3Mismatch = 0x2C&lt;br/&gt;+ OverCurrent = 0x2D&lt;br/&gt;+ MissingDEP = 0x2E&lt;br/&gt;+ SelftestFail = 0xF0&lt;br/&gt;+ InvalidAckFrame = 0xF1&lt;br/&gt;+ WrongConfig = 0xF2&lt;br/&gt;+ WrongCommand = 0xF3&lt;br/&gt;+ SAMerror = 0xF4&lt;br/&gt;+ FrameCheckFailed = 0xF5&lt;br/&gt;+ InvalidResponse = 0xF6&lt;br/&gt;+ NotImplemented = 0xF7&lt;br/&gt;+ Unknown = 0xFF&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="460" y="876" width="520" height="608" as="geometry" />
+        </mxCell>
+        <mxCell id="n16" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;Rc522Error&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Error/Rc522Error.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ Ok = 0&lt;br/&gt;+ Timeout&lt;br/&gt;+ FifoOverflow&lt;br/&gt;+ CrcError&lt;br/&gt;+ ParityError&lt;br/&gt;+ Collision&lt;br/&gt;+ AuthError&lt;br/&gt;+ FrameError&lt;br/&gt;+ ProtocolError&lt;br/&gt;+ NotImplemented&lt;br/&gt;+ Unknown&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="876" width="520" height="258" as="geometry" />
+        </mxCell>
+        <mxCell id="note_Error" value="Legend:&lt;br/&gt;Blue hollow triangle = inheritance&lt;br/&gt;Green diamond = composition&lt;br/&gt;Gray dashed = association&lt;br/&gt;&lt;br/&gt;Cells are spread out and edges are routed with separate lanes to reduce overlap." style="shape=note;whiteSpace=wrap;html=1;size=14;" vertex="1" parent="1">
+          <mxGeometry x="60" y="1524" width="1500" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="Error_e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n11" target="n12">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1318" y="279" />
+              <mxPoint x="1318" y="467" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="d_be354bef" name="Nfc/Apdu">
+    <mxGraphModel dx="1920" dy="1080" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2690" pageHeight="2200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n17" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;ApduResponse&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Apdu/ApduResponse.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ etl::vector&lt;uint8_t, 258&gt; data&lt;br/&gt;+ uint8_t sw1&lt;br/&gt;+ uint8_t sw2&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ ApduResponse() : sw1(0), sw2(0)&lt;br/&gt;+ ApduResponse(const etl::vector&lt;uint8_t, 258&gt; &amp;responseData, uint8_t status1, uint8_t status2) : data(responseData), sw1(status1), sw2(status2)&lt;br/&gt;+ bool isSuccess() const&lt;br/&gt;+ uint16_t getStatusWord() const" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="80" width="520" height="188" as="geometry" />
+        </mxCell>
+        <mxCell id="n18" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;IApduTransceiver&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Apdu/IApduTransceiver.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ virtual ~IApduTransceiver() = default&lt;br/&gt;+ virtual void setWire(IWire&amp; wire) = 0&lt;br/&gt;+ virtual etl::expected&lt;etl::vector&lt;uint8_t, buffer::APDU_DATA_MAX&gt;, error::Error&gt; transceive( const etl::ivector&lt;uint8_t&gt; &amp;apdu) = 0" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="80" width="520" height="146" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n20" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;CardManager&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="80" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n33" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;DesfireCard&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="220" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n77" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;Pn532ApduAdapter&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="360" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n82" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;Rc522ApduAdapter&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="500" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="note_Nfc_Apdu" value="Legend:&lt;br/&gt;Blue hollow triangle = inheritance&lt;br/&gt;Green diamond = composition&lt;br/&gt;Gray dashed = association&lt;br/&gt;&lt;br/&gt;Cells are spread out and edges are routed with separate lanes to reduce overlap." style="shape=note;whiteSpace=wrap;html=1;size=14;" vertex="1" parent="1">
+          <mxGeometry x="60" y="680" width="1500" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="Nfc_Apdu_e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=open;dashed=1;strokeColor=#5f6368;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n20" target="n18">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="683" y="130" />
+              <mxPoint x="683" y="153" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Apdu_e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=open;dashed=1;strokeColor=#5f6368;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n33" target="n18">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="683" y="270" />
+              <mxPoint x="683" y="153" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Apdu_e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n77" target="n18">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="683" y="410" />
+              <mxPoint x="683" y="153" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Apdu_e4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n82" target="n18">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="683" y="550" />
+              <mxPoint x="683" y="153" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="d_795260b8" name="Nfc/Card">
+    <mxGraphModel dx="1920" dy="1080" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2690" pageHeight="2200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n20" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;CardManager&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Card/CardManager.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;- IApduTransceiver&amp; transceiver&lt;br/&gt;- ICardDetector&amp; detector&lt;br/&gt;- ReaderCapabilities capabilities&lt;br/&gt;- NativeWire nativeWire&lt;br/&gt;- IsoWire isoWire&lt;br/&gt;- IWire* activeWire&lt;br/&gt;- WireKind activeWireKind&lt;br/&gt;- etl::optional&lt;CardInfo&gt; currentCardInfo&lt;br/&gt;- etl::optional&lt;CardSession&gt; activeSession&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ CardManager( IApduTransceiver&amp; transceiver, ICardDetector&amp; detector, const ReaderCapabilities&amp; capabilities)&lt;br/&gt;+ void setWire(WireKind wire)&lt;br/&gt;+ WireKind getWireKind() const&lt;br/&gt;+ etl::expected&lt;CardInfo, error::Error&gt; detectCard()&lt;br/&gt;+ bool isCardPresent()&lt;br/&gt;+ etl::expected&lt;CardSession*, error::Error&gt; createSession()&lt;br/&gt;+ etl::optional&lt;CardSession*&gt; getActiveSession()&lt;br/&gt;+ void clearSession()&lt;br/&gt;+ size_t getMaxApduSize() const&lt;br/&gt;+ const ReaderCapabilities&amp; getCapabilities() const" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="80" width="520" height="356" as="geometry" />
+        </mxCell>
+        <mxCell id="n21" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;CardSession&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Card/CardSession.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;- CardInfo info&lt;br/&gt;- CardVariant card&lt;br/&gt;- ContextVariant context&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ template&lt;typename T&gt; T* getCardAs()&lt;br/&gt;+ template&lt;typename T&gt; const T* getCardAs() const&lt;br/&gt;+ template&lt;typename T&gt; T* getContextAs()&lt;br/&gt;+ template&lt;typename T&gt; const T* getContextAs() const&lt;br/&gt;+ DesfireCard* getDesfireCard()&lt;br/&gt;+ MifareClassicCard* getMifareClassicCard()&lt;br/&gt;+ UltralightCard* getUltralightCard()&lt;br/&gt;+ DesfireContext* getDesfireContext()&lt;br/&gt;+ MifareClassicContext* getClassicContext()&lt;br/&gt;+ UltralightContext* getUltralightContext()&lt;br/&gt;+ void reset()&lt;br/&gt;+ CardType getCardType() const&lt;br/&gt;+ const CardInfo&amp; getCardInfo() const&lt;br/&gt;+ static etl::expected&lt;CardSession, error::Error&gt; create( IApduTransceiver&amp; transceiver, const CardInfo&amp; info, IWire&amp; wire)&lt;br/&gt;- explicit CardSession(const CardInfo&amp; info)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="80" width="520" height="342" as="geometry" />
+        </mxCell>
+        <mxCell id="n23" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;ICardDetector&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Card/ICardDetector.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ virtual ~ICardDetector() = default&lt;br/&gt;+ virtual etl::expected&lt;CardInfo, error::Error&gt; detectCard() = 0&lt;br/&gt;+ virtual bool isCardPresent() = 0" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="492" width="520" height="146" as="geometry" />
+        </mxCell>
+        <mxCell id="n22" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;CardType&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Card/CardType.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ Unknown = 0&lt;br/&gt;+ MifareDesfire&lt;br/&gt;+ MifareUltralight&lt;br/&gt;+ MifareClassic&lt;br/&gt;+ Ntag213_215_216&lt;br/&gt;+ FeliCa&lt;br/&gt;+ ISO14443_4_Generic&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="460" y="506" width="520" height="202" as="geometry" />
+        </mxCell>
+        <mxCell id="n19" value="&lt;&lt;struct&gt;&gt;&lt;br/&gt;&lt;b&gt;CardInfo&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Card/CardInfo.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ etl::vector&lt;uint8_t, 10&gt; uid&lt;br/&gt;+ uint16_t atqa&lt;br/&gt;+ uint8_t sak&lt;br/&gt;+ etl::vector&lt;uint8_t, 32&gt; ats&lt;br/&gt;+ CardType type&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ CardType detectType()&lt;br/&gt;+ etl::string&lt;255&gt; toString() const" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="708" width="520" height="188" as="geometry" />
+        </mxCell>
+        <mxCell id="n24" value="&lt;&lt;struct&gt;&gt;&lt;br/&gt;&lt;b&gt;ReaderCapabilities&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Card/ReaderCapabilities.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ size_t maxApduSize&lt;br/&gt;+ bool supportsIso14443_4&lt;br/&gt;+ bool supportsMifareClassic&lt;br/&gt;+ bool supportsFeliCa&lt;br/&gt;+ bool supportsNfcDep&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ static ReaderCapabilities pn532()&lt;br/&gt;+ static ReaderCapabilities rc522()" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="778" width="520" height="188" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n77" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;Pn532ApduAdapter&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="80" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n82" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;Rc522ApduAdapter&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="220" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n18" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;IApduTransceiver&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="1770" y="80" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n48" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;IWire&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="1770" y="220" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n49" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;IsoWire&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="1770" y="360" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n50" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;NativeWire&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="1770" y="500" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n51" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;WireKind&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="1770" y="640" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="note_Nfc_Card" value="Legend:&lt;br/&gt;Blue hollow triangle = inheritance&lt;br/&gt;Green diamond = composition&lt;br/&gt;Gray dashed = association&lt;br/&gt;&lt;br/&gt;Cells are spread out and edges are routed with separate lanes to reduce overlap." style="shape=note;whiteSpace=wrap;html=1;size=14;" vertex="1" parent="1">
+          <mxGeometry x="60" y="1006" width="1500" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="Nfc_Card_e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=0;exitY=0.38;entryX=1;entryY=0.38;" edge="1" parent="1" source="n19" target="n22">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="983" y="802" />
+              <mxPoint x="983" y="607" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Card_e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=open;dashed=1;strokeColor=#5f6368;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n20" target="stub_n18">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1303" y="258" />
+              <mxPoint x="1303" y="130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Card_e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n20" target="n19">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="983" y="258" />
+              <mxPoint x="983" y="802" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Card_e4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n20" target="n21">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="983" y="258" />
+              <mxPoint x="983" y="251" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Card_e5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=open;dashed=1;strokeColor=#5f6368;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n20" target="n23">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="983" y="258" />
+              <mxPoint x="983" y="565" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Card_e6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n20" target="n24">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1730" y="258" />
+              <mxPoint x="1730" y="872" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Card_e7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=open;dashed=1;strokeColor=#5f6368;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n20" target="stub_n48">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1303" y="258" />
+              <mxPoint x="1303" y="270" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Card_e8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n20" target="stub_n49">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1303" y="258" />
+              <mxPoint x="1303" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Card_e9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n20" target="stub_n50">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1303" y="258" />
+              <mxPoint x="1303" y="550" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Card_e10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n20" target="stub_n51">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1303" y="258" />
+              <mxPoint x="1303" y="690" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Card_e11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n21" target="n19">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1730" y="251" />
+              <mxPoint x="1730" y="802" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Card_e12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n77" target="n23">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="683" y="130" />
+              <mxPoint x="683" y="565" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Card_e13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n82" target="n23">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="683" y="270" />
+              <mxPoint x="683" y="565" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="d_0886c050" name="Nfc/Desfire">
+    <mxGraphModel dx="1920" dy="1080" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3360" pageHeight="2200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n33" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;DesfireCard&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Desfire/DesfireCard.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;- IApduTransceiver&amp; transceiver&lt;br/&gt;- DesfireContext context&lt;br/&gt;- IWire* wire&lt;br/&gt;- PlainPipe* plainPipe&lt;br/&gt;- MacPipe* macPipe&lt;br/&gt;- EncPipe* encPipe&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ DesfireCard(IApduTransceiver&amp; transceiver, IWire&amp; wire)&lt;br/&gt;+ etl::expected&lt;void, error::Error&gt; executeCommand(IDesfireCommand&amp; command)&lt;br/&gt;+ etl::expected&lt;void, error::Error&gt; selectApplication(const etl::array&lt;uint8_t, 3&gt;&amp; aid)&lt;br/&gt;+ etl::expected&lt;void, error::Error&gt; authenticate( uint8_t keyNo, const etl::vector&lt;uint8_t, 24&gt;&amp; key, DesfireAuthMode mode)&lt;br/&gt;+ etl::expected&lt;etl::vector&lt;uint8_t, 10&gt;, error::Error&gt; getRealCardUid()&lt;br/&gt;+ etl::expected&lt;etl::vector&lt;uint8_t, 261&gt;, error::Error&gt; wrapRequest(const DesfireRequest&amp; request)&lt;br/&gt;+ etl::expected&lt;DesfireResult, error::Error&gt; unwrapResponse(const etl::ivector&lt;uint8_t&gt;&amp; response)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="80" width="520" height="272" as="geometry" />
+        </mxCell>
+        <mxCell id="n39" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;EncPipe&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Desfire/EncPipe.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ etl::vector&lt;uint8_t, 261&gt; wrap(const etl::ivector&lt;uint8_t&gt;&amp; pdu) override&lt;br/&gt;+ etl::expected&lt;etl::vector&lt;uint8_t, 256&gt;, error::Error&gt; unwrap(const etl::ivector&lt;uint8_t&gt;&amp; apdu) override" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="80" width="520" height="132" as="geometry" />
+        </mxCell>
+        <mxCell id="n40" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;IDesfireCommand&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Desfire/IDesfireCommand.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ virtual ~IDesfireCommand() = default&lt;br/&gt;+ virtual etl::string_view name() const = 0&lt;br/&gt;+ virtual etl::expected&lt;DesfireRequest, error::Error&gt; buildRequest(const DesfireContext&amp; context) = 0&lt;br/&gt;+ virtual etl::expected&lt;DesfireResult, error::Error&gt; parseResponse( const etl::ivector&lt;uint8_t&gt;&amp; response, DesfireContext&amp; context) = 0&lt;br/&gt;+ virtual bool isComplete() const = 0&lt;br/&gt;+ virtual void reset() = 0" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1800" y="80" width="520" height="188" as="geometry" />
+        </mxCell>
+        <mxCell id="n41" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;ISecurePipe&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Desfire/ISecurePipe.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ virtual ~ISecurePipe() = default&lt;br/&gt;+ virtual etl::vector&lt;uint8_t, 261&gt; wrap(const etl::ivector&lt;uint8_t&gt;&amp; pdu) = 0&lt;br/&gt;+ virtual etl::expected&lt;etl::vector&lt;uint8_t, 256&gt;, error::Error&gt; unwrap(const etl::ivector&lt;uint8_t&gt;&amp; apdu) = 0" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="282" width="520" height="146" as="geometry" />
+        </mxCell>
+        <mxCell id="n42" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;MacPipe&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Desfire/MacPipe.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ etl::vector&lt;uint8_t, 261&gt; wrap(const etl::ivector&lt;uint8_t&gt;&amp; pdu) override&lt;br/&gt;+ etl::expected&lt;etl::vector&lt;uint8_t, 256&gt;, error::Error&gt; unwrap(const etl::ivector&lt;uint8_t&gt;&amp; apdu) override" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1800" y="338" width="520" height="132" as="geometry" />
+        </mxCell>
+        <mxCell id="n43" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;PlainPipe&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Desfire/PlainPipe.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ etl::vector&lt;uint8_t, 261&gt; wrap(const etl::ivector&lt;uint8_t&gt;&amp; pdu) override&lt;br/&gt;+ etl::expected&lt;etl::vector&lt;uint8_t, 256&gt;, error::Error&gt; unwrap(const etl::ivector&lt;uint8_t&gt;&amp; apdu) override" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="422" width="520" height="132" as="geometry" />
+        </mxCell>
+        <mxCell id="n35" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;CommMode&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Desfire/DesfireContext.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ Plain&lt;br/&gt;+ MACed&lt;br/&gt;+ Enciphered&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="498" width="520" height="146" as="geometry" />
+        </mxCell>
+        <mxCell id="n32" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;DesfireAuthMode&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Desfire/DesfireAuthMode.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ LEGACY = 0x0A&lt;br/&gt;+ ISO = 0x1A&lt;br/&gt;+ AES = 0xAA&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="1800" y="540" width="520" height="146" as="geometry" />
+        </mxCell>
+        <mxCell id="n36" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;DesfireKeyType&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Desfire/DesfireKeyType.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ AES&lt;br/&gt;+ DES&lt;br/&gt;+ DES3_2K&lt;br/&gt;+ DES3_3K&lt;br/&gt;+ UNKNOWN&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="460" y="624" width="520" height="174" as="geometry" />
+        </mxCell>
+        <mxCell id="n34" value="&lt;&lt;struct&gt;&gt;&lt;br/&gt;&lt;b&gt;DesfireContext&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Desfire/DesfireContext.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ bool authenticated = false&lt;br/&gt;+ CommMode commMode = CommMode::Plain&lt;br/&gt;+ etl::vector&lt;uint8_t, 24&gt; sessionKeyEnc&lt;br/&gt;+ etl::vector&lt;uint8_t, 24&gt; sessionKeyMac&lt;br/&gt;+ etl::vector&lt;uint8_t, 16&gt; iv&lt;br/&gt;+ uint8_t keyNo = 0&lt;br/&gt;+ etl::vector&lt;uint8_t, 3&gt; selectedAid&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="714" width="520" height="202" as="geometry" />
+        </mxCell>
+        <mxCell id="n37" value="&lt;&lt;struct&gt;&gt;&lt;br/&gt;&lt;b&gt;DesfireRequest&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Desfire/DesfireRequest.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ uint8_t commandCode&lt;br/&gt;+ etl::vector&lt;uint8_t, 252&gt; data&lt;br/&gt;+ size_t expectedResponseLength&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1800" y="756" width="520" height="146" as="geometry" />
+        </mxCell>
+        <mxCell id="n38" value="&lt;&lt;struct&gt;&gt;&lt;br/&gt;&lt;b&gt;DesfireResult&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Desfire/DesfireResult.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ uint8_t statusCode&lt;br/&gt;+ etl::vector&lt;uint8_t, 256&gt; data&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ bool isSuccess() const&lt;br/&gt;+ bool isAdditionalFrame() const" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="868" width="520" height="146" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n26" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;AuthenticateCommand&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="80" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n25" value="&lt;&lt;struct&gt;&gt;&lt;br/&gt;&lt;b&gt;AuthenticateCommandOptions&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="220" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n29" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;ChangeKeyCommand&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="360" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n28" value="&lt;&lt;struct&gt;&gt;&lt;br/&gt;&lt;b&gt;ChangeKeyCommandOptions&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="500" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n31" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;SelectApplicationCommand&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="640" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n18" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;IApduTransceiver&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="2440" y="80" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n48" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;IWire&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="2440" y="220" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="note_Nfc_Desfire" value="Legend:&lt;br/&gt;Blue hollow triangle = inheritance&lt;br/&gt;Green diamond = composition&lt;br/&gt;Gray dashed = association&lt;br/&gt;&lt;br/&gt;Cells are spread out and edges are routed with separate lanes to reduce overlap." style="shape=note;whiteSpace=wrap;html=1;size=14;" vertex="1" parent="1">
+          <mxGeometry x="60" y="1054" width="1500" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="Nfc_Desfire_e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n25" target="n32">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1018" y="270" />
+              <mxPoint x="1018" y="613" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Desfire_e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n26" target="n40">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1018" y="130" />
+              <mxPoint x="1018" y="174" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Desfire_e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n28" target="n36">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="348" y="550" />
+              <mxPoint x="348" y="711" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Desfire_e4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n29" target="n40">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1018" y="410" />
+              <mxPoint x="1018" y="174" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Desfire_e5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n31" target="n40">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1018" y="690" />
+              <mxPoint x="1018" y="174" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Desfire_e6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=open;dashed=1;strokeColor=#5f6368;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n33" target="stub_n18">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1638" y="216" />
+              <mxPoint x="1638" y="130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Desfire_e7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n33" target="n34">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="983" y="216" />
+              <mxPoint x="983" y="815" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Desfire_e8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=open;dashed=1;strokeColor=#5f6368;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n33" target="n39">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="983" y="216" />
+              <mxPoint x="983" y="146" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Desfire_e9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=open;dashed=1;strokeColor=#5f6368;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n33" target="n42">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1318" y="216" />
+              <mxPoint x="1318" y="404" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Desfire_e10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=open;dashed=1;strokeColor=#5f6368;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n33" target="n43">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2400" y="216" />
+              <mxPoint x="2400" y="488" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Desfire_e11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=open;dashed=1;strokeColor=#5f6368;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n33" target="stub_n48">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1638" y="216" />
+              <mxPoint x="1638" y="270" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Desfire_e12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n34" target="n35">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2400" y="815" />
+              <mxPoint x="2400" y="571" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Desfire_e13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n39" target="n41">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2442" y="146" />
+              <mxPoint x="2442" y="355" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Desfire_e14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=0;exitY=0.38;entryX=1;entryY=0.38;" edge="1" parent="1" source="n42" target="n41">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1653" y="404" />
+              <mxPoint x="1653" y="355" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Desfire_e15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n43" target="n41">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="983" y="488" />
+              <mxPoint x="983" y="355" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="d_80ae789c" name="Nfc/Desfire/Commands">
+    <mxGraphModel dx="1920" dy="1080" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2690" pageHeight="2200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n26" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;AuthenticateCommand&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Desfire/Commands/AuthenticateCommand.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;- AuthenticateCommandOptions options&lt;br/&gt;- Stage stage&lt;br/&gt;- etl::vector&lt;uint8_t, 16&gt; encryptedChallenge&lt;br/&gt;- etl::vector&lt;uint8_t, 32&gt; encryptedResponse&lt;br/&gt;- etl::vector&lt;uint8_t, 16&gt; rndA&lt;br/&gt;- etl::vector&lt;uint8_t, 16&gt; rndB&lt;br/&gt;- etl::vector&lt;uint8_t, 8&gt; currentIv&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ explicit AuthenticateCommand(const AuthenticateCommandOptions&amp; options)&lt;br/&gt;+ etl::string_view name() const override&lt;br/&gt;+ etl::expected&lt;DesfireRequest, error::Error&gt; buildRequest(const DesfireContext&amp; context) override&lt;br/&gt;+ etl::expected&lt;DesfireResult, error::Error&gt; parseResponse( const etl::ivector&lt;uint8_t&gt;&amp; response, DesfireContext&amp; context) override&lt;br/&gt;+ bool isComplete() const override&lt;br/&gt;+ void reset() override&lt;br/&gt;- void generateAuthResponse()&lt;br/&gt;- bool verifyAuthConfirmation(const etl::ivector&lt;uint8_t&gt;&amp; response)&lt;br/&gt;- void decryptChallenge()&lt;br/&gt;- void encrypt(const etl::ivector&lt;uint8_t&gt;&amp; plaintext, etl::vector&lt;uint8_t, 32&gt;&amp; ciphertext)&lt;br/&gt;- void decrypt(const etl::ivector&lt;uint8_t&gt;&amp; ciphertext, etl::vector&lt;uint8_t, 32&gt;&amp; plaintext)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="80" width="520" height="342" as="geometry" />
+        </mxCell>
+        <mxCell id="n29" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;ChangeKeyCommand&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Desfire/Commands/ChangeKeyCommand.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;- ChangeKeyCommandOptions options&lt;br/&gt;- Stage stage&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ explicit ChangeKeyCommand(const ChangeKeyCommandOptions&amp; options)&lt;br/&gt;+ etl::string_view name() const override&lt;br/&gt;+ etl::expected&lt;DesfireRequest, error::Error&gt; buildRequest(const DesfireContext&amp; context) override&lt;br/&gt;+ etl::expected&lt;DesfireResult, error::Error&gt; parseResponse( const etl::ivector&lt;uint8_t&gt;&amp; response, DesfireContext&amp; context) override&lt;br/&gt;+ bool isComplete() const override&lt;br/&gt;+ void reset() override&lt;br/&gt;- etl::vector&lt;uint8_t, 48&gt; buildKeyCryptogram(const DesfireContext&amp; context)&lt;br/&gt;- size_t getKeySize() const&lt;br/&gt;- etl::pair&lt;etl::vector&lt;uint8_t, 24&gt;, etl::vector&lt;uint8_t, 24&gt;&gt; deriveSessionKeys( const etl::vector&lt;uint8_t, 24&gt;&amp; masterKey, DesfireKeyType keyType)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="80" width="520" height="244" as="geometry" />
+        </mxCell>
+        <mxCell id="n31" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;SelectApplicationCommand&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Desfire/Commands/SelectApplicationCommand.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;- etl::array&lt;uint8_t, 3&gt; aid&lt;br/&gt;- bool complete&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ explicit SelectApplicationCommand(const etl::array&lt;uint8_t, 3&gt;&amp; aid)&lt;br/&gt;+ etl::string_view name() const override&lt;br/&gt;+ etl::expected&lt;DesfireRequest, error::Error&gt; buildRequest(const DesfireContext&amp; context) override&lt;br/&gt;+ etl::expected&lt;DesfireResult, error::Error&gt; parseResponse( const etl::ivector&lt;uint8_t&gt;&amp; response, DesfireContext&amp; context) override&lt;br/&gt;+ bool isComplete() const override&lt;br/&gt;+ void reset() override" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="394" width="520" height="202" as="geometry" />
+        </mxCell>
+        <mxCell id="n27" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;Stage [AuthenticateCommand]&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Desfire/Commands/AuthenticateCommand.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ Initial&lt;br/&gt;+ ChallengeSent&lt;br/&gt;+ ResponseSent&lt;br/&gt;+ Complete&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="460" y="492" width="520" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="n30" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;Stage [ChangeKeyCommand]&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Desfire/Commands/ChangeKeyCommand.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ Initial&lt;br/&gt;+ Complete&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="666" width="520" height="132" as="geometry" />
+        </mxCell>
+        <mxCell id="n25" value="&lt;&lt;struct&gt;&gt;&lt;br/&gt;&lt;b&gt;AuthenticateCommandOptions&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Desfire/Commands/AuthenticateCommand.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ DesfireAuthMode mode&lt;br/&gt;+ uint8_t keyNo&lt;br/&gt;+ etl::vector&lt;uint8_t, 24&gt; key&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="722" width="520" height="146" as="geometry" />
+        </mxCell>
+        <mxCell id="n28" value="&lt;&lt;struct&gt;&gt;&lt;br/&gt;&lt;b&gt;ChangeKeyCommandOptions&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Desfire/Commands/ChangeKeyCommand.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ uint8_t keyNo&lt;br/&gt;+ DesfireKeyType newKeyType&lt;br/&gt;+ etl::vector&lt;uint8_t, 24&gt; newKey&lt;br/&gt;+ uint8_t newKeyVersion&lt;br/&gt;+ etl::optional&lt;etl::vector&lt;uint8_t, 24&gt;&gt; oldKey&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="868" width="520" height="174" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n32" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;DesfireAuthMode&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="1770" y="80" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n36" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;DesfireKeyType&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="1770" y="220" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n40" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;IDesfireCommand&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="1770" y="360" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="note_Nfc_Desfire_Commands" value="Legend:&lt;br/&gt;Blue hollow triangle = inheritance&lt;br/&gt;Green diamond = composition&lt;br/&gt;Gray dashed = association&lt;br/&gt;&lt;br/&gt;Cells are spread out and edges are routed with separate lanes to reduce overlap." style="shape=note;whiteSpace=wrap;html=1;size=14;" vertex="1" parent="1">
+          <mxGeometry x="60" y="1082" width="1500" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="Nfc_Desfire_Commands_e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n25" target="stub_n32">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1303" y="795" />
+              <mxPoint x="1303" y="130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Desfire_Commands_e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n26" target="n25">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1730" y="251" />
+              <mxPoint x="1730" y="795" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Desfire_Commands_e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n26" target="n27">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1772" y="251" />
+              <mxPoint x="1772" y="572" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Desfire_Commands_e4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n26" target="stub_n40">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1303" y="251" />
+              <mxPoint x="1303" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Desfire_Commands_e5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n28" target="stub_n36">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1638" y="955" />
+              <mxPoint x="1638" y="270" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Desfire_Commands_e6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n29" target="n28">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1730" y="202" />
+              <mxPoint x="1730" y="955" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Desfire_Commands_e7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n29" target="n30">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1772" y="202" />
+              <mxPoint x="1772" y="732" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Desfire_Commands_e8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n29" target="stub_n40">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1638" y="202" />
+              <mxPoint x="1638" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Desfire_Commands_e9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n31" target="stub_n40">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1638" y="495" />
+              <mxPoint x="1638" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="d_aac5d427" name="Nfc/MifareClassic">
+    <mxGraphModel dx="1920" dy="1080" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2690" pageHeight="2200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n44" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;MifareClassicCard&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/MifareClassic/MifareClassicCard.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ uint8_t placeholder&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="80" width="520" height="118" as="geometry" />
+        </mxCell>
+        <mxCell id="n45" value="&lt;&lt;struct&gt;&gt;&lt;br/&gt;&lt;b&gt;MifareClassicContext&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/MifareClassic/MifareClassicContext.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ uint8_t placeholder&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="80" width="520" height="118" as="geometry" />
+        </mxCell>
+        <mxCell id="note_Nfc_MifareClassic" value="Legend:&lt;br/&gt;Blue hollow triangle = inheritance&lt;br/&gt;Green diamond = composition&lt;br/&gt;Gray dashed = association&lt;br/&gt;&lt;br/&gt;Cells are spread out and edges are routed with separate lanes to reduce overlap." style="shape=note;whiteSpace=wrap;html=1;size=14;" vertex="1" parent="1">
+          <mxGeometry x="60" y="238" width="1500" height="170" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="d_1e21c0a8" name="Nfc/Ultralight">
+    <mxGraphModel dx="1920" dy="1080" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2690" pageHeight="2200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n46" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;UltralightCard&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Ultralight/UltralightCard.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ uint8_t placeholder&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="80" width="520" height="118" as="geometry" />
+        </mxCell>
+        <mxCell id="n47" value="&lt;&lt;struct&gt;&gt;&lt;br/&gt;&lt;b&gt;UltralightContext&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Ultralight/UltralightContext.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ uint8_t placeholder&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="80" width="520" height="118" as="geometry" />
+        </mxCell>
+        <mxCell id="note_Nfc_Ultralight" value="Legend:&lt;br/&gt;Blue hollow triangle = inheritance&lt;br/&gt;Green diamond = composition&lt;br/&gt;Gray dashed = association&lt;br/&gt;&lt;br/&gt;Cells are spread out and edges are routed with separate lanes to reduce overlap." style="shape=note;whiteSpace=wrap;html=1;size=14;" vertex="1" parent="1">
+          <mxGeometry x="60" y="238" width="1500" height="170" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="d_a2f12bc7" name="Nfc/Wire">
+    <mxGraphModel dx="1920" dy="1080" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2690" pageHeight="2200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n48" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;IWire&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Wire/IWire.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ virtual ~IWire() = default&lt;br/&gt;+ virtual etl::vector&lt;uint8_t, buffer::APDU_COMMAND_MAX&gt; wrap(const etl::ivector&lt;uint8_t&gt;&amp; pdu) = 0&lt;br/&gt;+ virtual etl::expected&lt;etl::vector&lt;uint8_t, buffer::APDU_DATA_MAX&gt;, error::Error&gt; unwrap(const etl::ivector&lt;uint8_t&gt;&amp; apdu) = 0" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="80" width="520" height="146" as="geometry" />
+        </mxCell>
+        <mxCell id="n49" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;IsoWire&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Wire/IsoWire.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ IsoWire() = default&lt;br/&gt;+ etl::vector&lt;uint8_t, buffer::APDU_COMMAND_MAX&gt; wrap(const etl::ivector&lt;uint8_t&gt;&amp; pdu) override&lt;br/&gt;+ etl::expected&lt;etl::vector&lt;uint8_t, buffer::APDU_DATA_MAX&gt;, error::Error&gt; unwrap(const etl::ivector&lt;uint8_t&gt;&amp; apdu) override" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="80" width="520" height="146" as="geometry" />
+        </mxCell>
+        <mxCell id="n50" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;NativeWire&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Wire/NativeWire.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ NativeWire() = default&lt;br/&gt;+ etl::vector&lt;uint8_t, buffer::APDU_COMMAND_MAX&gt; wrap(const etl::ivector&lt;uint8_t&gt;&amp; pdu) override&lt;br/&gt;+ etl::expected&lt;etl::vector&lt;uint8_t, buffer::APDU_DATA_MAX&gt;, error::Error&gt; unwrap(const etl::ivector&lt;uint8_t&gt;&amp; apdu) override" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="296" width="520" height="146" as="geometry" />
+        </mxCell>
+        <mxCell id="n51" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;WireKind&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Nfc/Wire/WireKind.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ Native&lt;br/&gt;+ Iso&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="296" width="520" height="132" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n20" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;CardManager&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="80" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n33" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;DesfireCard&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="220" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n77" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;Pn532ApduAdapter&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="360" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="note_Nfc_Wire" value="Legend:&lt;br/&gt;Blue hollow triangle = inheritance&lt;br/&gt;Green diamond = composition&lt;br/&gt;Gray dashed = association&lt;br/&gt;&lt;br/&gt;Cells are spread out and edges are routed with separate lanes to reduce overlap." style="shape=note;whiteSpace=wrap;html=1;size=14;" vertex="1" parent="1">
+          <mxGeometry x="60" y="540" width="1500" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="Nfc_Wire_e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=open;dashed=1;strokeColor=#5f6368;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n20" target="n48">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="348" y="130" />
+              <mxPoint x="348" y="153" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Wire_e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n20" target="n49">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="683" y="130" />
+              <mxPoint x="683" y="153" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Wire_e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n20" target="n50">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="348" y="130" />
+              <mxPoint x="348" y="369" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Wire_e4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n20" target="n51">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="683" y="130" />
+              <mxPoint x="683" y="362" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Wire_e5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=open;dashed=1;strokeColor=#5f6368;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n33" target="n48">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="348" y="270" />
+              <mxPoint x="348" y="153" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Wire_e6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=0;exitY=0.38;entryX=1;entryY=0.38;" edge="1" parent="1" source="n49" target="n48">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="983" y="153" />
+              <mxPoint x="983" y="153" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Wire_e7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n50" target="n48">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1730" y="369" />
+              <mxPoint x="1730" y="153" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nfc_Wire_e8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=open;dashed=1;strokeColor=#5f6368;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n77" target="n48">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="348" y="410" />
+              <mxPoint x="348" y="153" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="d_97478ed8" name="Pn532">
+    <mxGraphModel dx="1920" dy="1080" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2690" pageHeight="2200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n52" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;CommandRequest&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/CommandRequest.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ static constexpr size_t MaxPayloadSize = 300&lt;br/&gt;- uint8_t commandCode&lt;br/&gt;- etl::vector&lt;uint8_t, MaxPayloadSize&gt; payload&lt;br/&gt;- uint32_t responseTimeoutMs&lt;br/&gt;- bool expectsData&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ etl::string&lt;256&gt; toString() const&lt;br/&gt;+ size_t size() const&lt;br/&gt;+ bool empty() const&lt;br/&gt;+ uint32_t timeoutMs() const&lt;br/&gt;+ const etl::ivector&lt;uint8_t&gt;&amp; data() const&lt;br/&gt;+ uint8_t getCommandCode() const&lt;br/&gt;+ bool expectsDataFrame() const&lt;br/&gt;- CommandRequest(uint8_t cmd, const etl::ivector&lt;uint8_t&gt;&amp; payload, uint32_t timeout = 1000, bool expectsData = true)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="80" width="520" height="272" as="geometry" />
+        </mxCell>
+        <mxCell id="n53" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;CommandResponse&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/CommandResponse.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ static constexpr size_t MaxPayloadSize = 300&lt;br/&gt;- uint8_t cmd&lt;br/&gt;- etl::vector&lt;uint8_t, MaxPayloadSize&gt; payload&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ etl::string&lt;256&gt; toString() const&lt;br/&gt;+ size_t size() const&lt;br/&gt;+ bool empty() const&lt;br/&gt;+ const etl::ivector&lt;uint8_t&gt;&amp; data() const&lt;br/&gt;+ uint8_t getCommandCode() const&lt;br/&gt;- CommandResponse(uint8_t cmd, const etl::ivector&lt;uint8_t&gt;&amp; payload)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="80" width="520" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="n76" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;IPn532Command&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/IPn532Command.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ virtual ~IPn532Command() = default&lt;br/&gt;+ virtual etl::string_view name() const = 0&lt;br/&gt;+ virtual CommandRequest buildRequest() = 0&lt;br/&gt;+ virtual etl::expected&lt;CommandResponse, error::Error&gt; parseResponse(const Pn532ResponseFrame&amp; frame) = 0&lt;br/&gt;+ virtual bool expectsDataFrame() const = 0&lt;br/&gt;# static CommandResponse createCommandResponse(uint8_t cmd, const etl::ivector&lt;uint8_t&gt;&amp; payload)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="366" width="520" height="188" as="geometry" />
+        </mxCell>
+        <mxCell id="n77" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;Pn532ApduAdapter&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Pn532ApduAdapter.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;- Pn532Driver &amp;driver&lt;br/&gt;- IWire* activeWire&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ explicit Pn532ApduAdapter(Pn532Driver &amp;driver)&lt;br/&gt;+ virtual ~Pn532ApduAdapter() = default&lt;br/&gt;+ void setWire(IWire&amp; wire) override&lt;br/&gt;+ etl::expected&lt;etl::vector&lt;uint8_t, buffer::APDU_DATA_MAX&gt;, error::Error&gt; transceive( const etl::ivector&lt;uint8_t&gt; &amp;apdu) override&lt;br/&gt;+ etl::expected&lt;CardInfo, error::Error&gt; detectCard() override&lt;br/&gt;+ bool isCardPresent() override" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="422" width="520" height="202" as="geometry" />
+        </mxCell>
+        <mxCell id="n79" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;Pn532Driver&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Pn532Driver.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;- comms::IHardwareBus &amp;bus&lt;br/&gt;- static constexpr uint32_t DEFAULT_TIMEOUT_MS = 500&lt;br/&gt;- static constexpr etl::array&lt;uint8_t, 6&gt; ACK_FRAME = {0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00}&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ explicit Pn532Driver(comms::IHardwareBus &amp;bus)&lt;br/&gt;+ void init()&lt;br/&gt;+ etl::expected&lt;CommandResponse, Error&gt; executeCommand(IPn532Command &amp;command)&lt;br/&gt;+ etl::expected&lt;FirmwareInfo, Error&gt; getFirmwareVersion()&lt;br/&gt;+ etl::expected&lt;void, Error&gt; performSelftest()&lt;br/&gt;+ etl::expected&lt;GeneralStatus, Error&gt; getGeneralStatus()&lt;br/&gt;+ etl::expected&lt;void, Error&gt; setSamConfiguration(uint8_t mode)&lt;br/&gt;+ etl::expected&lt;void, Error&gt; setRfField(const bool state)&lt;br/&gt;+ etl::expected&lt;void, Error&gt; setMaxRetries(const uint8_t maxRetries)&lt;br/&gt;+ etl::expected&lt;void, Error&gt; setSerialBaudrate(Pn532Baudrate baudrate)&lt;br/&gt;+ etl::expected&lt;void, Error&gt; writeRegister(const uint16_t reg, const uint8_t val)&lt;br/&gt;+ etl::expected&lt;uint8_t, Error&gt; readRegister(const uint16_t reg)&lt;br/&gt;+ etl::expected&lt;void, Error&gt; writeGPIO(uint8_t newGpioState)&lt;br/&gt;+ etl::expected&lt;uint8_t, Error&gt; readGPIO()&lt;br/&gt;+ static uint32_t calculateChecksum(const etl::ivector&lt;uint8_t&gt; &amp;data)&lt;br/&gt;- etl::expected&lt;Pn532ResponseFrame, Error&gt; transceive(const CommandRequest &amp; request)&lt;br/&gt;- etl::expected&lt;void, Error&gt; sendCommand(const etl::ivector&lt;uint8_t&gt; &amp;data)&lt;br/&gt;- etl::expected&lt;Pn532Response, Error&gt; getResponse(uint8_t onCommand, uint32_t timeoutMs)&lt;br/&gt;- etl::expected&lt;void, Error&gt; sendAndAcknowledgeCommand(uint8_t command)&lt;br/&gt;- etl::expected&lt;void, Error&gt; wakeUp()&lt;br/&gt;- bool waitForChip(const int timeout)&lt;br/&gt;- static bool checkAck(const etl::ivector&lt;uint8_t&gt; &amp;buffer)&lt;br/&gt;- static etl::expected&lt;Pn532ResponseFrame, Error&gt; parseResponseFrame( const etl::ivector&lt;uint8_t&gt; &amp;frame, uint8_t sentCommandCode)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="624" width="520" height="454" as="geometry" />
+        </mxCell>
+        <mxCell id="n80" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;Pn532RequestFrame&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Pn532RequestFrame.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;- static constexpr uint8_t PREAMBLE = 0x00&lt;br/&gt;- static constexpr uint8_t START_CODE_1 = 0x00&lt;br/&gt;- static constexpr uint8_t START_CODE_2 = 0xFF&lt;br/&gt;- static constexpr uint8_t TFI_HOST_TO_PN532 = 0xD4&lt;br/&gt;- static constexpr uint8_t POSTAMBLE = 0x00&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ static etl::expected&lt;etl::vector&lt;uint8_t, nfc::buffer::PN532_FRAME_MAX&gt;, error::Error&gt; build(const CommandRequest&amp; request)&lt;br/&gt;+ static etl::vector&lt;uint8_t, 6&gt; buildAck()&lt;br/&gt;+ static etl::vector&lt;uint8_t, 6&gt; buildNack()&lt;br/&gt;- static uint8_t calculateChecksum(const etl::ivector&lt;uint8_t&gt;&amp; data)&lt;br/&gt;- static uint8_t calculateLengthChecksum(uint8_t length)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="694" width="520" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="n81" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;Pn532ResponseFrame&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Pn532ResponseFrame.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ static constexpr size_t MaxPayloadSize = 255&lt;br/&gt;- uint8_t commandCode&lt;br/&gt;- etl::vector&lt;uint8_t, MaxPayloadSize&gt; payload&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ etl::string&lt;256&gt; toString() const&lt;br/&gt;+ size_t size() const&lt;br/&gt;+ bool empty() const&lt;br/&gt;+ const etl::ivector&lt;uint8_t&gt;&amp; data() const&lt;br/&gt;+ uint8_t getCommandCode() const&lt;br/&gt;- Pn532ResponseFrame(uint8_t cmd, const etl::ivector&lt;uint8_t&gt;&amp; payload)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="994" width="520" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="n78" value="&lt;&lt;struct&gt;&gt;&lt;br/&gt;&lt;b&gt;Pn532Response&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Pn532Driver.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ uint8_t command&lt;br/&gt;+ etl::vector&lt;uint8_t, 256&gt; data&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="1148" width="520" height="132" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n55" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;GetFirmwareVersion&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="80" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n57" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;GetGeneralStatus&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="220" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n59" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;InDataExchange&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="360" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n62" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;InListPassiveTarget&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="500" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n65" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;PerformSelfTest&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="640" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n68" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;RFConfiguration&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="780" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n71" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;SAMConfiguration&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="920" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n74" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;SetSerialBaudRate&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="60" y="1060" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n2" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;IHardwareBus&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="1770" y="80" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n18" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;IApduTransceiver&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="1770" y="220" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n23" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;ICardDetector&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="1770" y="360" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n48" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;IWire&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="1770" y="500" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="note_Pn532" value="Legend:&lt;br/&gt;Blue hollow triangle = inheritance&lt;br/&gt;Green diamond = composition&lt;br/&gt;Gray dashed = association&lt;br/&gt;&lt;br/&gt;Cells are spread out and edges are routed with separate lanes to reduce overlap." style="shape=note;whiteSpace=wrap;html=1;size=14;" vertex="1" parent="1">
+          <mxGeometry x="60" y="1320" width="1500" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="Pn532_e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n55" target="n76">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="683" y="130" />
+              <mxPoint x="683" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n57" target="n76">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="683" y="270" />
+              <mxPoint x="683" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n59" target="n76">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="683" y="410" />
+              <mxPoint x="683" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_e4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n62" target="n76">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="683" y="550" />
+              <mxPoint x="683" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_e5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n65" target="n76">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="683" y="690" />
+              <mxPoint x="683" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_e6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n68" target="n76">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="683" y="830" />
+              <mxPoint x="683" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_e7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n71" target="n76">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="683" y="970" />
+              <mxPoint x="683" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_e8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="stub_n74" target="n76">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="683" y="1110" />
+              <mxPoint x="683" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_e9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n77" target="stub_n18">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1303" y="523" />
+              <mxPoint x="1303" y="270" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_e10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n77" target="stub_n23">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1303" y="523" />
+              <mxPoint x="1303" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_e11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=open;dashed=1;strokeColor=#5f6368;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n77" target="stub_n48">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1303" y="523" />
+              <mxPoint x="1303" y="550" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_e12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=open;dashed=1;strokeColor=#5f6368;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n77" target="n79">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="983" y="523" />
+              <mxPoint x="983" y="851" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_e13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=open;dashed=1;strokeColor=#5f6368;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n79" target="stub_n2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1638" y="851" />
+              <mxPoint x="1638" y="130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="d_2817cddb" name="Pn532/Commands">
+    <mxGraphModel dx="1920" dy="1080" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3360" pageHeight="2256" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n55" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;GetFirmwareVersion&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Commands/GetFirmwareVersion.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;- FirmwareInfo cachedInfo&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ GetFirmwareVersion() = default&lt;br/&gt;+ etl::string_view name() const override&lt;br/&gt;+ CommandRequest buildRequest() override&lt;br/&gt;+ etl::expected&lt;CommandResponse, error::Error&gt; parseResponse(const Pn532ResponseFrame&amp; frame) override&lt;br/&gt;+ bool expectsDataFrame() const override&lt;br/&gt;+ const FirmwareInfo&amp; getFirmwareInfo() const" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="80" width="520" height="188" as="geometry" />
+        </mxCell>
+        <mxCell id="n57" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;GetGeneralStatus&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Commands/GetGeneralStatus.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;- GeneralStatus cachedStatus&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ GetGeneralStatus() = default&lt;br/&gt;+ etl::string_view name() const override&lt;br/&gt;+ CommandRequest buildRequest() override&lt;br/&gt;+ etl::expected&lt;CommandResponse, error::Error&gt; parseResponse(const Pn532ResponseFrame&amp; frame) override&lt;br/&gt;+ bool expectsDataFrame() const override&lt;br/&gt;+ const GeneralStatus&amp; getGeneralStatus() const" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="80" width="520" height="188" as="geometry" />
+        </mxCell>
+        <mxCell id="n59" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;InDataExchange&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Commands/InDataExchange.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;- InDataExchangeOptions options&lt;br/&gt;- uint8_t cachedStatusByte&lt;br/&gt;- etl::vector&lt;uint8_t, 255&gt; cachedResponse&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ explicit InDataExchange(const InDataExchangeOptions&amp; opts)&lt;br/&gt;+ etl::string_view name() const override&lt;br/&gt;+ CommandRequest buildRequest() override&lt;br/&gt;+ etl::expected&lt;CommandResponse, error::Error&gt; parseResponse(const Pn532ResponseFrame&amp; frame) override&lt;br/&gt;+ bool expectsDataFrame() const override&lt;br/&gt;+ uint8_t getStatusByte() const&lt;br/&gt;+ Pn532Error getStatus() const&lt;br/&gt;+ bool isSuccess() const&lt;br/&gt;+ const etl::ivector&lt;uint8_t&gt;&amp; getResponseData() const" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1800" y="80" width="520" height="258" as="geometry" />
+        </mxCell>
+        <mxCell id="n62" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;InListPassiveTarget&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Commands/InListPassiveTarget.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;- InListPassiveTargetOptions options&lt;br/&gt;- etl::vector&lt;TargetInfo, 2&gt; detectedTargets&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ explicit InListPassiveTarget(const InListPassiveTargetOptions&amp; opts)&lt;br/&gt;+ etl::string_view name() const override&lt;br/&gt;+ CommandRequest buildRequest() override&lt;br/&gt;+ etl::expected&lt;CommandResponse, error::Error&gt; parseResponse(const Pn532ResponseFrame&amp; frame) override&lt;br/&gt;+ bool expectsDataFrame() const override&lt;br/&gt;+ const etl::ivector&lt;TargetInfo&gt;&amp; getDetectedTargets() const&lt;br/&gt;- bool parseTarget(const Pn532ResponseFrame&amp; frame, size_t&amp; index)&lt;br/&gt;- bool parseTypeATarget(const Pn532ResponseFrame&amp; frame, size_t&amp; index, TargetInfo&amp; targetInfo)&lt;br/&gt;- bool parseUid(const Pn532ResponseFrame&amp; frame, size_t&amp; index, TargetInfo&amp; targetInfo)&lt;br/&gt;- void parseATS(const Pn532ResponseFrame&amp; frame, size_t&amp; index, TargetInfo&amp; targetInfo)&lt;br/&gt;- bool parseOtherTarget(const Pn532ResponseFrame&amp; frame, size_t&amp; index, TargetInfo&amp; targetInfo)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="338" width="520" height="272" as="geometry" />
+        </mxCell>
+        <mxCell id="n65" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;PerformSelfTest&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Commands/PerformSelfTest.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;- SelfTestOptions options&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ explicit PerformSelfTest(const SelfTestOptions&amp; opts)&lt;br/&gt;+ etl::string_view name() const override&lt;br/&gt;+ CommandRequest buildRequest() override&lt;br/&gt;+ etl::expected&lt;CommandResponse, error::Error&gt; parseResponse(const Pn532ResponseFrame&amp; frame) override&lt;br/&gt;+ bool expectsDataFrame() const override&lt;br/&gt;+ static uint8_t makeAntennaThreshold( uint8_t highThresholdCode, uint8_t lowThresholdCode, bool useUpperComparator, bool useLowerComparator)&lt;br/&gt;- static uint32_t defaultTimeoutFor(TestType test)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="338" width="520" height="202" as="geometry" />
+        </mxCell>
+        <mxCell id="n68" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;RFConfiguration&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Commands/RFConfiguration.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;- RFConfigurationOptions options&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ explicit RFConfiguration(const RFConfigurationOptions&amp; opts)&lt;br/&gt;+ etl::string_view name() const override&lt;br/&gt;+ CommandRequest buildRequest() override&lt;br/&gt;+ etl::expected&lt;CommandResponse, error::Error&gt; parseResponse(const Pn532ResponseFrame&amp; frame) override&lt;br/&gt;+ bool expectsDataFrame() const override" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1800" y="408" width="520" height="174" as="geometry" />
+        </mxCell>
+        <mxCell id="n71" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;SAMConfiguration&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Commands/SAMConfiguration.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;- SAMConfigurationOptions options&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ explicit SAMConfiguration(const SAMConfigurationOptions&amp; opts)&lt;br/&gt;+ etl::string_view name() const override&lt;br/&gt;+ CommandRequest buildRequest() override&lt;br/&gt;+ etl::expected&lt;CommandResponse, error::Error&gt; parseResponse(const Pn532ResponseFrame&amp; frame) override&lt;br/&gt;+ bool expectsDataFrame() const override" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="610" width="520" height="174" as="geometry" />
+        </mxCell>
+        <mxCell id="n74" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;SetSerialBaudRate&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Commands/SetSerialBaudRate.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;- SetSerialBaudRateOptions options&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ explicit SetSerialBaudRate(const SetSerialBaudRateOptions&amp; opts)&lt;br/&gt;+ etl::string_view name() const override&lt;br/&gt;+ CommandRequest buildRequest() override&lt;br/&gt;+ etl::expected&lt;CommandResponse, error::Error&gt; parseResponse(const Pn532ResponseFrame&amp; frame) override&lt;br/&gt;+ bool expectsDataFrame() const override" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1800" y="652" width="520" height="174" as="geometry" />
+        </mxCell>
+        <mxCell id="n63" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;CardTargetType&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Commands/InListPassiveTarget.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ TypeA_106kbps = 0x00&lt;br/&gt;+ FeliCa_212kbps = 0x01&lt;br/&gt;+ FeliCa_424kbps = 0x02&lt;br/&gt;+ TypeB_106kbps = 0x03&lt;br/&gt;+ Jewel_106kbps = 0x04&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="460" y="680" width="520" height="174" as="geometry" />
+        </mxCell>
+        <mxCell id="n75" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;Pn532Baudrate&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Commands/SetSerialBaudRate.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ Baud9600 = 0x00&lt;br/&gt;+ Baud19200 = 0x01&lt;br/&gt;+ Baud38400 = 0x02&lt;br/&gt;+ Baud57600 = 0x03&lt;br/&gt;+ Baud115200 = 0x04&lt;br/&gt;+ Baud230400 = 0x05&lt;br/&gt;+ Baud460800 = 0x06&lt;br/&gt;+ Baud921600 = 0x07&lt;br/&gt;+ Baud1288000 = 0x08&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="854" width="520" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="n69" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;RFConfigItem&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Commands/RFConfiguration.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ RFField = 0x01&lt;br/&gt;+ VariousTimings = 0x02&lt;br/&gt;+ MaxRetries = 0x05&lt;br/&gt;+ AnalogSettings106kA = 0x0A&lt;br/&gt;+ AnalogSettings212_424k = 0x0B&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="1800" y="896" width="520" height="174" as="geometry" />
+        </mxCell>
+        <mxCell id="n72" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;SamMode&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Commands/SAMConfiguration.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ Normal = 0x01&lt;br/&gt;+ VirtualCard = 0x02&lt;br/&gt;+ WiredCard = 0x03&lt;br/&gt;+ DualCard = 0x04&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="460" y="924" width="520" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="n66" value="&lt;&lt;enum&gt;&gt;&lt;br/&gt;&lt;b&gt;TestType&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Commands/PerformSelfTest.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ CommunicationLine = 0x00&lt;br/&gt;+ RomChecksum = 0x01&lt;br/&gt;+ RamIntegrity = 0x02&lt;br/&gt;+ PollingToTarget = 0x04&lt;br/&gt;+ EchoBack = 0x05&lt;br/&gt;+ CardPresence = 0x06&lt;br/&gt;+ AntennaContinuity = 0x07&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="1800" y="1140" width="520" height="202" as="geometry" />
+        </mxCell>
+        <mxCell id="n54" value="&lt;&lt;struct&gt;&gt;&lt;br/&gt;&lt;b&gt;FirmwareInfo&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Commands/GetFirmwareVersion.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ uint8_t ic&lt;br/&gt;+ uint8_t ver&lt;br/&gt;+ uint8_t rev&lt;br/&gt;+ uint8_t support&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ etl::string&lt;255&gt; toString() const" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="1154" width="520" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="n56" value="&lt;&lt;struct&gt;&gt;&lt;br/&gt;&lt;b&gt;GeneralStatus&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Commands/GetGeneralStatus.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ uint8_t err&lt;br/&gt;+ uint8_t field&lt;br/&gt;+ uint8_t nbTg&lt;br/&gt;+ etl::array&lt;uint8_t, 4&gt; tg1&lt;br/&gt;+ etl::array&lt;uint8_t, 4&gt; tg2&lt;br/&gt;+ uint8_t samStatus&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ etl::string&lt;255&gt; toString() const" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="1154" width="520" height="188" as="geometry" />
+        </mxCell>
+        <mxCell id="n58" value="&lt;&lt;struct&gt;&gt;&lt;br/&gt;&lt;b&gt;InDataExchangeOptions&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Commands/InDataExchange.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ uint8_t targetNumber&lt;br/&gt;+ etl::vector&lt;uint8_t, 255&gt; payload&lt;br/&gt;+ uint32_t responseTimeoutMs&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ InDataExchangeOptions() : targetNumber(0x01), responseTimeoutMs(1000)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="1384" width="520" height="146" as="geometry" />
+        </mxCell>
+        <mxCell id="n61" value="&lt;&lt;struct&gt;&gt;&lt;br/&gt;&lt;b&gt;InListPassiveTargetOptions&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Commands/InListPassiveTarget.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ uint8_t maxTargets = 1&lt;br/&gt;+ CardTargetType target = CardTargetType::TypeA_106kbps&lt;br/&gt;+ uint32_t responseTimeoutMs = 5000&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="1412" width="520" height="146" as="geometry" />
+        </mxCell>
+        <mxCell id="n67" value="&lt;&lt;struct&gt;&gt;&lt;br/&gt;&lt;b&gt;RFConfigurationOptions&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Commands/RFConfiguration.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ RFConfigItem item = RFConfigItem::MaxRetries&lt;br/&gt;+ etl::vector&lt;uint8_t, 16&gt; configData&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1800" y="1412" width="520" height="132" as="geometry" />
+        </mxCell>
+        <mxCell id="n70" value="&lt;&lt;struct&gt;&gt;&lt;br/&gt;&lt;b&gt;SAMConfigurationOptions&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Commands/SAMConfiguration.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ SamMode mode = SamMode::Normal&lt;br/&gt;+ uint8_t timeout = 0x00&lt;br/&gt;+ bool useIRQ = false&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="1600" width="520" height="146" as="geometry" />
+        </mxCell>
+        <mxCell id="n64" value="&lt;&lt;struct&gt;&gt;&lt;br/&gt;&lt;b&gt;SelfTestOptions&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Commands/PerformSelfTest.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ TestType test = TestType::CommunicationLine&lt;br/&gt;+ etl::vector&lt;uint8_t, 255&gt; parameters = {}&lt;br/&gt;+ bool verifyEcho = false&lt;br/&gt;+ uint32_t responseTimeoutMs = 1000&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1800" y="1614" width="520" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="n73" value="&lt;&lt;struct&gt;&gt;&lt;br/&gt;&lt;b&gt;SetSerialBaudRateOptions&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Commands/SetSerialBaudRate.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ Pn532Baudrate baudRate = Pn532Baudrate::Baud115200&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="1628" width="520" height="118" as="geometry" />
+        </mxCell>
+        <mxCell id="n60" value="&lt;&lt;struct&gt;&gt;&lt;br/&gt;&lt;b&gt;TargetInfo&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Pn532/Commands/InListPassiveTarget.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ etl::vector&lt;uint8_t, 10&gt; uid&lt;br/&gt;+ uint16_t atqa&lt;br/&gt;+ uint8_t sak&lt;br/&gt;+ etl::vector&lt;uint8_t, 32&gt; ats&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ TargetInfo() : atqa(0), sak(0)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="1816" width="520" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n76" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;IPn532Command&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="2440" y="80" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="note_Pn532_Commands" value="Legend:&lt;br/&gt;Blue hollow triangle = inheritance&lt;br/&gt;Green diamond = composition&lt;br/&gt;Gray dashed = association&lt;br/&gt;&lt;br/&gt;Cells are spread out and edges are routed with separate lanes to reduce overlap." style="shape=note;whiteSpace=wrap;html=1;size=14;" vertex="1" parent="1">
+          <mxGeometry x="60" y="2016" width="1500" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="Pn532_Commands_e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n55" target="n54">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2400" y="174" />
+              <mxPoint x="2400" y="1234" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_Commands_e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n55" target="stub_n76">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1638" y="174" />
+              <mxPoint x="1638" y="130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_Commands_e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n57" target="n56">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2400" y="174" />
+              <mxPoint x="2400" y="1248" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_Commands_e4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n57" target="stub_n76">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1973" y="174" />
+              <mxPoint x="1973" y="130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_Commands_e5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=0;exitY=0.38;entryX=1;entryY=0.38;" edge="1" parent="1" source="n59" target="n58">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1318" y="209" />
+              <mxPoint x="1318" y="1457" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_Commands_e6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n59" target="stub_n76">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2308" y="209" />
+              <mxPoint x="2308" y="130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_Commands_e7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=0;exitY=0.38;entryX=1;entryY=0.38;" edge="1" parent="1" source="n61" target="n63">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="983" y="1485" />
+              <mxPoint x="983" y="767" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_Commands_e8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n62" target="n60">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2442" y="474" />
+              <mxPoint x="2442" y="1896" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_Commands_e9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n62" target="n61">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="983" y="474" />
+              <mxPoint x="983" y="1485" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_Commands_e10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n62" target="stub_n76">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1638" y="474" />
+              <mxPoint x="1638" y="130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_Commands_e11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n64" target="n66">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2400" y="1694" />
+              <mxPoint x="2400" y="1241" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_Commands_e12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n65" target="n64">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1653" y="439" />
+              <mxPoint x="1653" y="1694" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_Commands_e13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n65" target="stub_n76">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1973" y="439" />
+              <mxPoint x="1973" y="130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_Commands_e14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n67" target="n69">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2442" y="1478" />
+              <mxPoint x="2442" y="983" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_Commands_e15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n68" target="n67">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2484" y="495" />
+              <mxPoint x="2484" y="1478" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_Commands_e16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n68" target="stub_n76">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2308" y="495" />
+              <mxPoint x="2308" y="130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_Commands_e17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n70" target="n72">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2484" y="1673" />
+              <mxPoint x="2484" y="1004" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_Commands_e18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=0;exitY=0.38;entryX=1;entryY=0.38;" edge="1" parent="1" source="n71" target="n70">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="983" y="697" />
+              <mxPoint x="983" y="1673" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_Commands_e19" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n71" target="stub_n76">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1973" y="697" />
+              <mxPoint x="1973" y="130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_Commands_e20" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n73" target="n75">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2442" y="1687" />
+              <mxPoint x="2442" y="969" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_Commands_e21" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;startArrow=diamondThin;startFill=1;endArrow=open;strokeColor=#2f855a;exitX=0;exitY=0.38;entryX=1;entryY=0.38;" edge="1" parent="1" source="n74" target="n73">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1653" y="739" />
+              <mxPoint x="1653" y="1687" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pn532_Commands_e22" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n74" target="stub_n76">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2308" y="739" />
+              <mxPoint x="2308" y="130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="d_17dc50d2" name="Rc522">
+    <mxGraphModel dx="1920" dy="1080" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2690" pageHeight="2200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n82" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;Rc522ApduAdapter&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Rc522/Rc522ApduAdapter.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;- Rc522Driver &amp;driver&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ explicit Rc522ApduAdapter(Rc522Driver &amp;driver)&lt;br/&gt;+ virtual ~Rc522ApduAdapter() = default&lt;br/&gt;+ void setWire(IWire&amp; wire) override&lt;br/&gt;+ etl::expected&lt;etl::vector&lt;uint8_t, buffer::APDU_DATA_MAX&gt;, error::Error&gt; transceive( const etl::ivector&lt;uint8_t&gt; &amp;apdu) override&lt;br/&gt;+ etl::expected&lt;CardInfo, error::Error&gt; detectCard() override&lt;br/&gt;+ bool isCardPresent() override" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="80" width="520" height="188" as="geometry" />
+        </mxCell>
+        <mxCell id="n83" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;Rc522Driver&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Rc522/Rc522Driver.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;- comms::IHardwareBus&amp; bus&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ explicit Rc522Driver(comms::IHardwareBus&amp; bus)&lt;br/&gt;+ ~Rc522Driver() = default&lt;br/&gt;+ etl::expected&lt;void, error::Error&gt; init()" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="80" width="520" height="146" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n2" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;IHardwareBus&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="1770" y="80" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n18" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;IApduTransceiver&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="1770" y="220" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stub_n23" value="&lt;&lt;interface&gt;&gt;&lt;br/&gt;&lt;b&gt;ICardDetector&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;external&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="1770" y="360" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="note_Rc522" value="Legend:&lt;br/&gt;Blue hollow triangle = inheritance&lt;br/&gt;Green diamond = composition&lt;br/&gt;Gray dashed = association&lt;br/&gt;&lt;br/&gt;Cells are spread out and edges are routed with separate lanes to reduce overlap." style="shape=note;whiteSpace=wrap;html=1;size=14;" vertex="1" parent="1">
+          <mxGeometry x="60" y="540" width="1500" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="Rc522_e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n82" target="stub_n18">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1303" y="174" />
+              <mxPoint x="1303" y="270" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rc522_e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;strokeColor=#1f6feb;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n82" target="stub_n23">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1303" y="174" />
+              <mxPoint x="1303" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rc522_e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=open;dashed=1;strokeColor=#5f6368;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n82" target="n83">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="983" y="174" />
+              <mxPoint x="983" y="153" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rc522_e4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=32;html=1;strokeWidth=1.7;endArrow=open;dashed=1;strokeColor=#5f6368;exitX=1;exitY=0.38;entryX=0;entryY=0.38;" edge="1" parent="1" source="n83" target="stub_n2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1638" y="153" />
+              <mxPoint x="1638" y="130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="d_7422651e" name="Utils">
+    <mxGraphModel dx="1920" dy="1080" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2690" pageHeight="2200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n84" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;DesFireCrypto&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Utils/DesfireCrypto.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;(none)&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ static void desEncrypt( const uint8_t* plaintext, const uint8_t* key, uint8_t* ciphertext)&lt;br/&gt;+ static void desDecrypt( const uint8_t* ciphertext, const uint8_t* key, uint8_t* plaintext)&lt;br/&gt;+ static void des3Encrypt( const uint8_t* plaintext, const uint8_t* key, uint8_t* ciphertext)&lt;br/&gt;+ static void des3Decrypt( const uint8_t* ciphertext, const uint8_t* key, uint8_t* plaintext)&lt;br/&gt;+ static void des3CbcEncrypt( const uint8_t* plaintext, size_t plaintextLen, const uint8_t* key, const uint8_t* iv, uint8_t* ciphertext)&lt;br/&gt;+ static void des3CbcDecrypt( const uint8_t* ciphertext, size_t ciphertextLen, const uint8_t* key, const uint8_t* iv, uint8_t* plaintext)&lt;br/&gt;+ static void generateSessionKey( const uint8_t* rndA, const uint8_t* rndB, uint8_t* sessionKey)&lt;br/&gt;+ static void clearParityBits(uint8_t* key, size_t length)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="460" y="80" width="520" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="n85" value="&lt;&lt;class&gt;&gt;&lt;br/&gt;&lt;b&gt;Logger&lt;/b&gt;&lt;br/&gt;&lt;font style=&#39;font-size:10px;color:#666&#39;&gt;Include/Utils/Logging.h&lt;/font&gt;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ static constexpr const char* COLOR_RESET = &quot;\033[0m&quot;&lt;br/&gt;+ static constexpr const char* COLOR_RED = &quot;\033[31m&quot;&lt;br/&gt;+ static constexpr const char* COLOR_YELLOW = &quot;\033[33m&quot;&lt;br/&gt;+ static constexpr const char* COLOR_GREEN = &quot;\033[32m&quot;&lt;br/&gt;+ static constexpr const char* COLOR_CYAN = &quot;\033[36m&quot;&lt;br/&gt;+ static constexpr const char* COLOR_GRAY = &quot;\033[90m&quot;&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;+ static void log(const char* level, const char* file, int line, const char* fmt, ...)&lt;br/&gt;+ static void logHex(const char* level, const char* file, int line, const char* name, const void* data, size_t len)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="80" width="520" height="202" as="geometry" />
+        </mxCell>
+        <mxCell id="note_Utils" value="Legend:&lt;br/&gt;Blue hollow triangle = inheritance&lt;br/&gt;Green diamond = composition&lt;br/&gt;Gray dashed = association&lt;br/&gt;&lt;br/&gt;Cells are spread out and edges are routed with separate lanes to reduce overlap." style="shape=note;whiteSpace=wrap;html=1;size=14;" vertex="1" parent="1">
+          <mxGeometry x="60" y="336" width="1500" height="170" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="src_44286acf" name="99_Src_Inventory">
+    <mxGraphModel dx="1920" dy="1080" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2100" pageHeight="2400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="src_note" value="Src implementations (.cpp):&lt;br/&gt;Src/Comms/Serial/SerialBusWin.cpp&lt;br/&gt;Src/Nfc/Card/CardInfo.cpp&lt;br/&gt;Src/Nfc/Card/CardManager.cpp&lt;br/&gt;Src/Nfc/Card/CardSession.cpp&lt;br/&gt;Src/Nfc/Card/ReaderCapabilities.cpp&lt;br/&gt;Src/Nfc/Desfire/Commands/AuthenticateCommand.cpp&lt;br/&gt;Src/Nfc/Desfire/Commands/ChangeKeyCommand.cpp&lt;br/&gt;Src/Nfc/Desfire/Commands/SelectApplicationCommand.cpp&lt;br/&gt;Src/Nfc/Desfire/DesfireCard.cpp&lt;br/&gt;Src/Nfc/Desfire/EncPipe.cpp&lt;br/&gt;Src/Nfc/Desfire/MacPipe.cpp&lt;br/&gt;Src/Nfc/Desfire/PlainPipe.cpp&lt;br/&gt;Src/Nfc/Wire/IsoWire.cpp&lt;br/&gt;Src/Nfc/Wire/NativeWire.cpp&lt;br/&gt;Src/Pn532/CommandRequest.cpp&lt;br/&gt;Src/Pn532/CommandResponse.cpp&lt;br/&gt;Src/Pn532/Commands/GetFirmwareVersion.cpp&lt;br/&gt;Src/Pn532/Commands/GetGeneralStatus.cpp&lt;br/&gt;Src/Pn532/Commands/InDataExchange.cpp&lt;br/&gt;Src/Pn532/Commands/InListPassiveTarget.cpp&lt;br/&gt;Src/Pn532/Commands/PerformSelfTest.cpp&lt;br/&gt;Src/Pn532/Commands/RFConfiguration.cpp&lt;br/&gt;Src/Pn532/Commands/SAMConfiguration.cpp&lt;br/&gt;Src/Pn532/Commands/SetSerialBaudRate.cpp&lt;br/&gt;Src/Pn532/Pn532ApduAdapter.cpp&lt;br/&gt;Src/Pn532/Pn532Driver.cpp&lt;br/&gt;Src/Pn532/Pn532RequestFrame.cpp&lt;br/&gt;Src/Pn532/Pn532ResponseFrame.cpp&lt;br/&gt;Src/Rc522/Rc522ApduAdapter.cpp&lt;br/&gt;Src/Rc522/Rc522Driver.cpp&lt;br/&gt;Src/Utils/DesfireCrypto.cpp&lt;br/&gt;Src/Utils/TimingEmbedded.cpp" style="shape=note;whiteSpace=wrap;html=1;size=14;" vertex="1" parent="1">
+          <mxGeometry x="60" y="60" width="1800" height="700" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

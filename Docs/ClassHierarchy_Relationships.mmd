@@ -1,0 +1,208 @@
+classDiagram
+direction LR
+class BusProperty_1
+class IHardwareBus_2
+class ISerialBus_3
+class Parity_4
+class StopBits_5
+class FlowControl_6
+class SerialBusWin_7
+class ApduError_8
+class CardManagerError_9
+class DesfireError_10
+class Error_11
+class ErrorLayer_12
+class HardwareError_13
+class LinkError_14
+class Pn532Error_15
+class Rc522Error_16
+class ApduResponse_17
+class IApduTransceiver_18
+class CardInfo_19
+class CardManager_20
+class CardSession_21
+class CardType_22
+class ICardDetector_23
+class ReaderCapabilities_24
+class AuthenticateCommandOptions_25
+class AuthenticateCommand_26
+class Stage__AuthenticateCommand__27
+class ChangeKeyCommandOptions_28
+class ChangeKeyCommand_29
+class Stage__ChangeKeyCommand__30
+class SelectApplicationCommand_31
+class DesfireAuthMode_32
+class DesfireCard_33
+class DesfireContext_34
+class CommMode_35
+class DesfireKeyType_36
+class DesfireRequest_37
+class DesfireResult_38
+class EncPipe_39
+class IDesfireCommand_40
+class ISecurePipe_41
+class MacPipe_42
+class PlainPipe_43
+class MifareClassicCard_44
+class MifareClassicContext_45
+class UltralightCard_46
+class UltralightContext_47
+class IsoWire_48
+class IWire_49
+class NativeWire_50
+class WireKind_51
+class CommandRequest_52
+class CommandResponse_53
+class FirmwareInfo_54
+class GetFirmwareVersion_55
+class GeneralStatus_56
+class GetGeneralStatus_57
+class InDataExchangeOptions_58
+class InDataExchange_59
+class TargetInfo_60
+class InListPassiveTargetOptions_61
+class InListPassiveTarget_62
+class CardTargetType_63
+class SelfTestOptions_64
+class PerformSelfTest_65
+class TestType_66
+class RFConfigurationOptions_67
+class RFConfiguration_68
+class RFConfigItem_69
+class SAMConfigurationOptions_70
+class SAMConfiguration_71
+class SamMode_72
+class SetSerialBaudRateOptions_73
+class SetSerialBaudRate_74
+class Pn532Baudrate_75
+class IPn532Command_76
+class Pn532ApduAdapter_77
+class Pn532Response_78
+class Pn532Driver_79
+class Pn532RequestFrame_80
+class Pn532ResponseFrame_81
+class Rc522ApduAdapter_82
+class Rc522Driver_83
+class DesFireCrypto_84
+class Logger_85
+BusProperty_1 : <<enumeration>>
+IHardwareBus_2 : <<interface>>
+ISerialBus_3 : <<interface>>
+Parity_4 : <<enumeration>>
+StopBits_5 : <<enumeration>>
+FlowControl_6 : <<enumeration>>
+ApduError_8 : <<enumeration>>
+CardManagerError_9 : <<enumeration>>
+DesfireError_10 : <<enumeration>>
+ErrorLayer_12 : <<enumeration>>
+HardwareError_13 : <<enumeration>>
+LinkError_14 : <<enumeration>>
+Pn532Error_15 : <<enumeration>>
+Rc522Error_16 : <<enumeration>>
+IApduTransceiver_18 : <<interface>>
+CardInfo_19 : <<struct>>
+CardType_22 : <<enumeration>>
+ICardDetector_23 : <<interface>>
+ReaderCapabilities_24 : <<struct>>
+AuthenticateCommandOptions_25 : <<struct>>
+Stage__AuthenticateCommand__27 : <<enumeration>>
+ChangeKeyCommandOptions_28 : <<struct>>
+Stage__ChangeKeyCommand__30 : <<enumeration>>
+DesfireAuthMode_32 : <<enumeration>>
+DesfireContext_34 : <<struct>>
+CommMode_35 : <<enumeration>>
+DesfireKeyType_36 : <<enumeration>>
+DesfireRequest_37 : <<struct>>
+DesfireResult_38 : <<struct>>
+IDesfireCommand_40 : <<interface>>
+ISecurePipe_41 : <<interface>>
+MifareClassicContext_45 : <<struct>>
+UltralightContext_47 : <<struct>>
+IsoWire_48 : <<interface>>
+IWire_49 : <<interface>>
+WireKind_51 : <<enumeration>>
+FirmwareInfo_54 : <<struct>>
+GeneralStatus_56 : <<struct>>
+InDataExchangeOptions_58 : <<struct>>
+InDataExchange_59 : <<interface>>
+TargetInfo_60 : <<struct>>
+InListPassiveTargetOptions_61 : <<struct>>
+InListPassiveTarget_62 : <<interface>>
+CardTargetType_63 : <<enumeration>>
+SelfTestOptions_64 : <<struct>>
+TestType_66 : <<enumeration>>
+RFConfigurationOptions_67 : <<struct>>
+RFConfigItem_69 : <<enumeration>>
+SAMConfigurationOptions_70 : <<struct>>
+SamMode_72 : <<enumeration>>
+SetSerialBaudRateOptions_73 : <<struct>>
+Pn532Baudrate_75 : <<enumeration>>
+IPn532Command_76 : <<interface>>
+Pn532Response_78 : <<struct>>
+AuthenticateCommandOptions_25 *-- DesfireAuthMode_32
+AuthenticateCommand_26 *-- AuthenticateCommandOptions_25
+IDesfireCommand_40 <|-- AuthenticateCommand_26
+AuthenticateCommand_26 *-- Stage__AuthenticateCommand__27
+CardInfo_19 *-- CardType_22
+CardManager_20 *-- CardInfo_19
+CardManager_20 *-- CardSession_21
+CardManager_20 o-- IApduTransceiver_18
+CardManager_20 o-- ICardDetector_23
+CardManager_20 o-- IWire_49
+CardManager_20 *-- IsoWire_48
+CardManager_20 *-- NativeWire_50
+CardManager_20 *-- ReaderCapabilities_24
+CardManager_20 *-- WireKind_51
+CardSession_21 *-- CardInfo_19
+ChangeKeyCommandOptions_28 *-- DesfireKeyType_36
+ChangeKeyCommand_29 *-- ChangeKeyCommandOptions_28
+IDesfireCommand_40 <|-- ChangeKeyCommand_29
+ChangeKeyCommand_29 *-- Stage__ChangeKeyCommand__30
+DesfireCard_33 *-- DesfireContext_34
+DesfireCard_33 o-- EncPipe_39
+DesfireCard_33 o-- IApduTransceiver_18
+DesfireCard_33 o-- IWire_49
+DesfireCard_33 o-- MacPipe_42
+DesfireCard_33 o-- PlainPipe_43
+DesfireContext_34 *-- CommMode_35
+ISecurePipe_41 <|-- EncPipe_39
+Error_11 *-- ErrorLayer_12
+GetFirmwareVersion_55 *-- FirmwareInfo_54
+IPn532Command_76 <|-- GetFirmwareVersion_55
+GetGeneralStatus_57 *-- GeneralStatus_56
+IPn532Command_76 <|-- GetGeneralStatus_57
+IHardwareBus_2 <|-- ISerialBus_3
+IPn532Command_76 <|-- InDataExchange_59
+InDataExchange_59 *-- InDataExchangeOptions_58
+InListPassiveTargetOptions_61 *-- CardTargetType_63
+IPn532Command_76 <|-- InListPassiveTarget_62
+InListPassiveTarget_62 *-- InListPassiveTargetOptions_61
+InListPassiveTarget_62 *-- TargetInfo_60
+IWire_49 <|-- IsoWire_48
+ISecurePipe_41 <|-- MacPipe_42
+IWire_49 <|-- NativeWire_50
+IPn532Command_76 <|-- PerformSelfTest_65
+PerformSelfTest_65 *-- SelfTestOptions_64
+ISecurePipe_41 <|-- PlainPipe_43
+IApduTransceiver_18 <|-- Pn532ApduAdapter_77
+ICardDetector_23 <|-- Pn532ApduAdapter_77
+Pn532ApduAdapter_77 o-- IWire_49
+Pn532ApduAdapter_77 o-- Pn532Driver_79
+Pn532Driver_79 o-- IHardwareBus_2
+RFConfigurationOptions_67 *-- RFConfigItem_69
+IPn532Command_76 <|-- RFConfiguration_68
+RFConfiguration_68 *-- RFConfigurationOptions_67
+IApduTransceiver_18 <|-- Rc522ApduAdapter_82
+ICardDetector_23 <|-- Rc522ApduAdapter_82
+Rc522ApduAdapter_82 o-- Rc522Driver_83
+Rc522Driver_83 o-- IHardwareBus_2
+SAMConfigurationOptions_70 *-- SamMode_72
+IPn532Command_76 <|-- SAMConfiguration_71
+SAMConfiguration_71 *-- SAMConfigurationOptions_70
+IDesfireCommand_40 <|-- SelectApplicationCommand_31
+SelfTestOptions_64 *-- TestType_66
+ISerialBus_3 <|-- SerialBusWin_7
+SetSerialBaudRateOptions_73 *-- Pn532Baudrate_75
+IPn532Command_76 <|-- SetSerialBaudRate_74
+SetSerialBaudRate_74 *-- SetSerialBaudRateOptions_73
+

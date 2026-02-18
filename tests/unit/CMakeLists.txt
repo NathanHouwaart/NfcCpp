@@ -81,3 +81,126 @@ target_include_directories(test_timing
 )
 
 add_test(NAME TimingTests COMMAND test_timing)
+
+# DESFire ChangeKey command tests
+add_executable(test_desfire_change_key
+    DesfireChangeKeyCommandTests.cpp
+)
+
+target_link_libraries(test_desfire_change_key
+    PRIVATE
+        NfcCpp::NfcCpp
+        etl::etl
+        gtest
+        gtest_main
+)
+
+target_include_directories(test_desfire_change_key
+    PRIVATE
+        ${CMAKE_SOURCE_DIR}/Include
+)
+
+add_test(NAME DesfireChangeKeyCommandTests COMMAND test_desfire_change_key)
+
+# DESFire Authenticate command tests
+add_executable(test_desfire_authenticate
+    DesfireAuthenticateCommandTests.cpp
+)
+
+target_link_libraries(test_desfire_authenticate
+    PRIVATE
+        NfcCpp::NfcCpp
+        etl::etl
+        tiny-aes
+        gtest
+        gtest_main
+)
+
+target_include_directories(test_desfire_authenticate
+    PRIVATE
+        ${CMAKE_SOURCE_DIR}/Include
+        ${CMAKE_SOURCE_DIR}/external/cppDes/include
+        ${CMAKE_SOURCE_DIR}/external/tiny-aes
+)
+
+add_test(NAME DesfireAuthenticateCommandTests COMMAND test_desfire_authenticate)
+
+# DESFire CreateApplication command tests
+add_executable(test_desfire_create_application
+    DesfireCreateApplicationCommandTests.cpp
+)
+
+target_link_libraries(test_desfire_create_application
+    PRIVATE
+        NfcCpp::NfcCpp
+        etl::etl
+        gtest
+        gtest_main
+)
+
+target_include_directories(test_desfire_create_application
+    PRIVATE
+        ${CMAKE_SOURCE_DIR}/Include
+)
+
+add_test(NAME DesfireCreateApplicationCommandTests COMMAND test_desfire_create_application)
+
+# DESFire DeleteApplication command tests
+add_executable(test_desfire_delete_application
+    DesfireDeleteApplicationCommandTests.cpp
+)
+
+target_link_libraries(test_desfire_delete_application
+    PRIVATE
+        NfcCpp::NfcCpp
+        etl::etl
+        gtest
+        gtest_main
+)
+
+target_include_directories(test_desfire_delete_application
+    PRIVATE
+        ${CMAKE_SOURCE_DIR}/Include
+)
+
+add_test(NAME DesfireDeleteApplicationCommandTests COMMAND test_desfire_delete_application)
+
+# DESFire GetFileIDs command tests
+add_executable(test_desfire_get_file_ids
+    DesfireGetFileIdsCommandTests.cpp
+)
+
+target_link_libraries(test_desfire_get_file_ids
+    PRIVATE
+        NfcCpp::NfcCpp
+        etl::etl
+        gtest
+        gtest_main
+)
+
+target_include_directories(test_desfire_get_file_ids
+    PRIVATE
+        ${CMAKE_SOURCE_DIR}/Include
+)
+
+add_test(NAME DesfireGetFileIdsCommandTests COMMAND test_desfire_get_file_ids)
+
+# DESFire ReadData + WriteData command tests
+add_executable(test_desfire_read_write_data
+    DesfireReadWriteDataCommandTests.cpp
+)
+
+target_link_libraries(test_desfire_read_write_data
+    PRIVATE
+        NfcCpp::NfcCpp
+        etl::etl
+        gtest
+        gtest_main
+)
+
+target_include_directories(test_desfire_read_write_data
+    PRIVATE
+        ${CMAKE_SOURCE_DIR}/Include
+)
+
+add_test(NAME DesfireReadWriteDataCommandTests COMMAND test_desfire_read_write_data)

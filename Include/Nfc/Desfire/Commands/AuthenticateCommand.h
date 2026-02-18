@@ -95,6 +95,39 @@ namespace nfc
 
     private:
         /**
+         * @brief Determine if authentication keying should use DES-style session key derivation.
+         *
+         * DESFire treats 16-byte keys with K1==K2 (ignoring LSB parity/version bits) as
+         * single-DES for session-key derivation.
+         *
+         * @return true Derive 8-byte DES-style session key
+         * @return false Derive 16-byte 2K3DES-style session key
+         */
+        bool usesSingleDesSessionKey() const;
+
+        /**
+         * @brief Determine if authentication uses ISO 3K3DES framing (24-byte key, 16-byte randoms)
+         *
+         * @return true 3K3DES ISO authentication flow
+         * @return false Other authentication flows
+         */
+        bool usesThreeKey3DesSessionKey() const;
+
+        /**
+         * @brief Get challenge/random size for current authentication mode
+         *
+         * @return size_t 8 bytes for Legacy/ISO 2K, 16 bytes for AES/ISO 3K
+         */
+        size_t randomSize() const;
+
+        /**
+         * @brief Get CBC block size for current cipher
+         *
+         * @return size_t 8 bytes for DES/3DES, 16 bytes for AES
+         */
+        size_t blockSize() const;
+
+        /**
          * @brief Generate authentication response
          */
         void generateAuthResponse();
@@ -135,7 +168,7 @@ namespace nfc
         etl::vector<uint8_t, 32> encryptedResponse;
         etl::vector<uint8_t, 16> rndA;
         etl::vector<uint8_t, 16> rndB;
-        etl::vector<uint8_t, 8> currentIv;  // Current IV for CBC operations
+        etl::vector<uint8_t, 16> currentIv;  // Current IV for CBC operations (8 for DES, 16 for AES)
     };
 
 } // namespace nfc

@@ -15,6 +15,9 @@ dist-ssr
 *.local
 build
 build_tests
+WorkingOtherLibs
+*.bkp
+_tmp
 
 # Editor directories and files
 .vscode/*

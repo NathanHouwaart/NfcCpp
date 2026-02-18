@@ -11,7 +11,8 @@ target_include_directories(basic_setup_example
 
 )
 
-target_link_libraries(basic_setup_example PRIVATE
+target_link_libraries(basic_setup_example 
+PRIVATE
     NfcCpp
     etl::etl
 )

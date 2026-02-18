@@ -1,0 +1,29 @@
+GetVersion              -
+GetApplicationIDs       -
+GetKeySettings          -
+GetKeyVersion           -
+GetCardUID (real UID command, secure-session aware) -
+FreeMemory              -
+ChangeKeySettings       - 
+SetConfiguration        -
+FormatPICC              -
+GetFileIDs              -
+GetFileSettings         -
+CreateStdDataFile       -
+CreateBackupDataFile    -
+CreateValueFile         -
+CreateLinearRecordFile  -
+CreateCyclicRecordFile  -
+DeleteFile              -
+ChangeFileSettings      -
+ReadData                -
+WriteData               -
+GetValue                -
+Credit                  -
+Debit                   -
+LimitedCredit           -
+ReadRecords             -
+WriteRecord             -
+ClearRecordFile         -
+CommitTransaction       -  
+AbortTransaction        

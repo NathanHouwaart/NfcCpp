@@ -81,11 +81,13 @@ etl::expected<DesfireResult, error::Error> SelectApplicationCommand::parseRespon
         // Clear authentication state when changing applications
         context.authenticated = false;
         context.commMode = CommMode::Plain;
+        context.authScheme = SessionAuthScheme::None;
         context.keyNo = 0;
         context.sessionKeyEnc.clear();
         context.sessionKeyMac.clear();
         context.iv.clear();
         context.iv.resize(8, 0);
+        context.sessionEncRndB.clear();
     }
     
     complete = true;

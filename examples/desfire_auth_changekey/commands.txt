@@ -1,0 +1,37 @@
+$exe   = ".\build\examples\Debug\desfire_auth_changekey_example.exe"
+$com   = "COM5"
+$aid   = "000000"
+
+# Active key set (currently all 11 values)
+$des = "11 11 11 11 11 11 11 11"
+$k2  = "11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11"
+$k3  = "11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11"
+$aes = "11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11"
+
+# DES -> 2K3DES
+& $exe $com --aid $aid --auth-mode legacy --auth-key-no 0 --change-key-no 0 --auth-key-hex $des --new-key-type 2k3des --new-key-hex $k2 --new-key-version 0 --confirm-change
+# DES -> 3K3DES
+& $exe $com --aid $aid --auth-mode legacy --auth-key-no 0 --change-key-no 0 --auth-key-hex $des --new-key-type 3k3des --new-key-hex $k3 --new-key-version 0 --confirm-change
+# DES -> AES
+& $exe $com --aid $aid --auth-mode legacy --auth-key-no 0 --change-key-no 0 --auth-key-hex $des --new-key-type aes --new-key-hex $aes --new-key-version 0 --confirm-change
+
+# 2K3DES -> DES (use ISO auth mode)
+& $exe $com --aid $aid --auth-mode iso --auth-key-no 0 --change-key-no 0 --auth-key-hex $k2 --new-key-type des --new-key-hex $des --new-key-version 0 --confirm-change
+# 2K3DES -> 3K3DES (use ISO auth mode)
+& $exe $com --aid $aid --auth-mode iso --auth-key-no 0 --change-key-no 0 --auth-key-hex $k2 --new-key-type 3k3des --new-key-hex $k3 --new-key-version 0 --confirm-change
+# 2K3DES -> AES (use ISO auth mode)
+& $exe $com --aid $aid --auth-mode iso --auth-key-no 0 --change-key-no 0 --auth-key-hex $k2 --new-key-type aes --new-key-hex $aes --new-key-version 0 --confirm-change
+
+# 3K3DES -> DES
+& $exe $com --aid $aid --auth-mode iso --auth-key-no 0 --change-key-no 0 --auth-key-hex $k3 --new-key-type des --new-key-hex $des --new-key-version 0 --confirm-change
+# 3K3DES -> 2K3DES
+& $exe $com --aid $aid --auth-mode iso --auth-key-no 0 --change-key-no 0 --auth-key-hex $k3 --new-key-type 2k3des --new-key-hex $k2 --new-key-version 0 --confirm-change
+# 3K3DES -> AES
+& $exe $com --aid $aid --auth-mode iso --auth-key-no 0 --change-key-no 0 --auth-key-hex $k3 --new-key-type aes --new-key-hex $aes --new-key-version 0 --confirm-change
+
+# AES -> DES
+& $exe $com --aid $aid --auth-mode aes --auth-key-no 0 --change-key-no 0 --auth-key-hex $aes --new-key-type des --new-key-hex $des --new-key-version 0 --confirm-change
+# AES -> 2K3DES
+& $exe $com --aid $aid --auth-mode aes --auth-key-no 0 --change-key-no 0 --auth-key-hex $aes --new-key-type 2k3des --new-key-hex $k2 --new-key-version 0 --confirm-change
+# AES -> 3K3DES
+& $exe $com --aid $aid --auth-mode aes --auth-key-no 0 --change-key-no 0 --auth-key-hex $aes --new-key-type 3k3des --new-key-hex $k3 --new-key-version 0 --confirm-change

@@ -1,0 +1,432 @@
+/**
+ * @file main.cpp
+ * @brief DESFire GetFileSettings example
+ *
+ * Flow:
+ *   1) Select application
+ *   2) Optional authenticate
+ *   3) Execute GetFileSettings(fileNo)
+ */
+
+#include <cctype>
+#include <cstdint>
+#include <cstdlib>
+#include <iomanip>
+#include <iostream>
+#include <sstream>
+#include <stdexcept>
+#include <string>
+#include <vector>
+#include <etl/string.h>
+#include <etl/vector.h>
+#include "Comms/Serial/SerialBusWin.hpp"
+#include "Pn532/Pn532Driver.h"
+#include "Pn532/Pn532ApduAdapter.h"
+#include "Nfc/Card/CardManager.h"
+#include "Nfc/Card/ReaderCapabilities.h"
+#include "Nfc/Desfire/DesfireAuthMode.h"
+#include "Nfc/Desfire/DesfireCard.h"
+
+using namespace comms::serial;
+using namespace pn532;
+using namespace nfc;
+
+namespace
+{
+    struct Args
+    {
+        std::string comPort;
+        int baudRate = 115200;
+        std::vector<uint8_t> aid = {0x00, 0x00, 0x00};
+        uint8_t fileNo = 0x00;
+        bool authenticate = false;
+        DesfireAuthMode authMode = DesfireAuthMode::ISO;
+        uint8_t authKeyNo = 0x00;
+        std::vector<uint8_t> authKey;
+    };
+
+    uint8_t parseByte(const std::string& value)
+    {
+        const int parsed = std::stoi(value, nullptr, 0);
+        if (parsed < 0 || parsed > 255)
+        {
+            throw std::runtime_error("Value out of byte range: " + value);
+        }
+        return static_cast<uint8_t>(parsed);
+    }
+
+    std::vector<uint8_t> parseHex(std::string text)
+    {
+        std::vector<uint8_t> out;
+        std::string filtered;
+        filtered.reserve(text.size());
+
+        for (char c : text)
+        {
+            if (std::isxdigit(static_cast<unsigned char>(c)))
+            {
+                filtered.push_back(c);
+            }
+        }
+
+        if ((filtered.size() % 2U) != 0U)
+        {
+            throw std::runtime_error("Hex string has odd number of digits");
+        }
+
+        for (size_t i = 0; i < filtered.size(); i += 2U)
+        {
+            const std::string byteText = filtered.substr(i, 2);
+            out.push_back(static_cast<uint8_t>(std::stoul(byteText, nullptr, 16)));
+        }
+
+        return out;
+    }
+
+    std::string toHex(const std::vector<uint8_t>& data)
+    {
+        std::ostringstream oss;
+        oss << std::hex << std::uppercase << std::setfill('0');
+        for (size_t i = 0; i < data.size(); ++i)
+        {
+            if (i > 0)
+            {
+                oss << ' ';
+            }
+            oss << std::setw(2) << static_cast<int>(data[i]);
+        }
+        return oss.str();
+    }
+
+    DesfireAuthMode parseAuthMode(const std::string& text)
+    {
+        if (text == "legacy")
+        {
+            return DesfireAuthMode::LEGACY;
+        }
+        if (text == "iso")
+        {
+            return DesfireAuthMode::ISO;
+        }
+        if (text == "aes")
+        {
+            return DesfireAuthMode::AES;
+        }
+        if (text == "des")
+        {
+            return DesfireAuthMode::LEGACY;
+        }
+        if (text == "2k3des" || text == "3k3des")
+        {
+            return DesfireAuthMode::ISO;
+        }
+        throw std::runtime_error("Invalid auth mode: " + text);
+    }
+
+    bool isAuthKeyLengthValid(DesfireAuthMode mode, size_t keyLen)
+    {
+        if (mode == DesfireAuthMode::AES)
+        {
+            return keyLen == 16;
+        }
+        if (mode == DesfireAuthMode::ISO)
+        {
+            return keyLen == 8 || keyLen == 16 || keyLen == 24;
+        }
+        return keyLen == 8 || keyLen == 16;
+    }
+
+    const char* fileTypeToText(uint8_t fileType)
+    {
+        switch (fileType)
+        {
+            case 0x00:
+                return "StandardData";
+            case 0x01:
+                return "BackupData";
+            case 0x02:
+                return "Value";
+            case 0x03:
+                return "LinearRecord";
+            case 0x04:
+                return "CyclicRecord";
+            default:
+                return "Unknown";
+        }
+    }
+
+    const char* commModeToText(uint8_t comm)
+    {
+        switch (comm)
+        {
+            case 0x00:
+                return "Plain";
+            case 0x01:
+                return "MACed";
+            case 0x03:
+                return "Enciphered";
+            default:
+                return "Unknown";
+        }
+    }
+
+    std::string accessToText(uint8_t access)
+    {
+        if (access <= 0x0DU)
+        {
+            return std::string("key") + std::to_string(static_cast<int>(access));
+        }
+        if (access == 0x0EU)
+        {
+            return "free";
+        }
+        if (access == 0x0FU)
+        {
+            return "never";
+        }
+        return "invalid";
+    }
+
+    void printUsage(const char* exeName)
+    {
+        std::cout << "Usage:\n";
+        std::cout << "  " << exeName << " <COM_PORT> [options]\n\n";
+        std::cout << "Options:\n";
+        std::cout << "  --baud <n>                        Default: 115200\n";
+        std::cout << "  --aid <hex6>                      Default: 000000\n";
+        std::cout << "  --file-no <n>                     Default: 0\n";
+        std::cout << "  --authenticate                    Authenticate before file settings query\n";
+        std::cout << "  --auth-mode <legacy|iso|aes|des|2k3des|3k3des> Default: iso\n";
+        std::cout << "  --auth-key-no <n>                 Default: 0\n";
+        std::cout << "  --auth-key-hex <hex>              Required when --authenticate is used\n";
+    }
+
+    Args parseArgs(int argc, char* argv[])
+    {
+        if (argc < 2)
+        {
+            throw std::runtime_error("Missing COM port");
+        }
+
+        Args args;
+        args.comPort = argv[1];
+
+        for (int i = 2; i < argc; ++i)
+        {
+            const std::string opt = argv[i];
+
+            auto requireValue = [&](const char* optionName) -> std::string
+            {
+                if (i + 1 >= argc)
+                {
+                    throw std::runtime_error(std::string("Missing value for ") + optionName);
+                }
+                return argv[++i];
+            };
+
+            if (opt == "--baud")
+            {
+                args.baudRate = std::stoi(requireValue("--baud"));
+            }
+            else if (opt == "--aid")
+            {
+                args.aid = parseHex(requireValue("--aid"));
+            }
+            else if (opt == "--file-no")
+            {
+                args.fileNo = parseByte(requireValue("--file-no"));
+            }
+            else if (opt == "--authenticate")
+            {
+                args.authenticate = true;
+            }
+            else if (opt == "--auth-mode")
+            {
+                args.authMode = parseAuthMode(requireValue("--auth-mode"));
+            }
+            else if (opt == "--auth-key-no")
+            {
+                args.authKeyNo = parseByte(requireValue("--auth-key-no"));
+            }
+            else if (opt == "--auth-key-hex")
+            {
+                args.authKey = parseHex(requireValue("--auth-key-hex"));
+            }
+            else
+            {
+                throw std::runtime_error("Unknown argument: " + opt);
+            }
+        }
+
+        if (args.aid.size() != 3U)
+        {
+            throw std::runtime_error("--aid must be exactly 3 bytes");
+        }
+
+        if (args.authenticate)
+        {
+            if (args.authKey.empty())
+            {
+                throw std::runtime_error("--auth-key-hex is required when --authenticate is used");
+            }
+            if (!isAuthKeyLengthValid(args.authMode, args.authKey.size()))
+            {
+                throw std::runtime_error("Invalid --auth-key-hex length for selected --auth-mode");
+            }
+        }
+
+        return args;
+    }
+
+    template <size_t Capacity>
+    etl::vector<uint8_t, Capacity> toEtl(const std::vector<uint8_t>& in)
+    {
+        if (in.size() > Capacity)
+        {
+            throw std::runtime_error("Buffer exceeds ETL capacity");
+        }
+        etl::vector<uint8_t, Capacity> out;
+        for (uint8_t b : in)
+        {
+            out.push_back(b);
+        }
+        return out;
+    }
+}
+
+int main(int argc, char* argv[])
+{
+    try
+    {
+        const Args args = parseArgs(argc, argv);
+
+        std::cout << "DESFire GetFileSettings Example\n";
+        std::cout << "COM: " << args.comPort << " @ " << args.baudRate << "\n";
+        std::cout << "AID: " << toHex(args.aid) << "\n";
+        std::cout << "File no: " << static_cast<int>(args.fileNo) << "\n";
+
+        etl::string<256> portName(args.comPort.c_str());
+        SerialBusWin serial(portName, args.baudRate);
+        auto serialInitResult = serial.init();
+        if (!serialInitResult)
+        {
+            std::cerr << "Serial init failed: " << serialInitResult.error().toString().c_str() << "\n";
+            return 1;
+        }
+
+        Pn532Driver pn532(serial);
+        pn532.init();
+
+        auto samResult = pn532.setSamConfiguration(0x01);
+        if (!samResult)
+        {
+            std::cerr << "SAM config failed: " << samResult.error().toString().c_str() << "\n";
+            return 1;
+        }
+
+        auto retryResult = pn532.setMaxRetries(1);
+        if (!retryResult)
+        {
+            std::cerr << "Set retries failed: " << retryResult.error().toString().c_str() << "\n";
+            return 1;
+        }
+
+        Pn532ApduAdapter adapter(pn532);
+        CardManager cardManager(adapter, adapter, ReaderCapabilities::pn532());
+        cardManager.setWire(WireKind::Iso);
+
+        auto detectResult = cardManager.detectCard();
+        if (!detectResult)
+        {
+            std::cerr << "Card detect failed: " << detectResult.error().toString().c_str() << "\n";
+            return 1;
+        }
+
+        auto sessionResult = cardManager.createSession();
+        if (!sessionResult)
+        {
+            std::cerr << "Session create failed: " << sessionResult.error().toString().c_str() << "\n";
+            return 1;
+        }
+
+        CardSession* session = sessionResult.value();
+        DesfireCard* desfire = session->getCardAs<DesfireCard>();
+        if (!desfire)
+        {
+            std::cerr << "Detected card is not DESFire\n";
+            return 1;
+        }
+
+        const etl::array<uint8_t, 3> aid = {args.aid[0], args.aid[1], args.aid[2]};
+        auto selectResult = desfire->selectApplication(aid);
+        if (!selectResult)
+        {
+            std::cerr << "SelectApplication failed: " << selectResult.error().toString().c_str() << "\n";
+            return 1;
+        }
+        std::cout << "SelectApplication OK\n";
+
+        if (args.authenticate)
+        {
+            const etl::vector<uint8_t, 24> authKey = toEtl<24>(args.authKey);
+            auto authResult = desfire->authenticate(args.authKeyNo, authKey, args.authMode);
+            if (!authResult)
+            {
+                std::cerr << "Authenticate failed: " << authResult.error().toString().c_str() << "\n";
+                return 1;
+            }
+            std::cout << "Authenticate OK\n";
+        }
+
+        auto fileSettingsResult = desfire->getFileSettings(args.fileNo);
+        if (!fileSettingsResult)
+        {
+            std::cerr << "GetFileSettings failed: " << fileSettingsResult.error().toString().c_str() << "\n";
+            return 1;
+        }
+
+        const DesfireFileSettingsInfo& info = fileSettingsResult.value();
+
+        std::cout << "GetFileSettings OK\n";
+        std::cout << "  File type: 0x" << std::hex << std::uppercase
+                  << std::setw(2) << std::setfill('0') << static_cast<int>(info.fileType)
+                  << std::dec << " (" << fileTypeToText(info.fileType) << ")\n";
+        std::cout << "  Comm mode: 0x" << std::hex << std::uppercase
+                  << std::setw(2) << std::setfill('0') << static_cast<int>(info.communicationSettings)
+                  << std::dec << " (" << commModeToText(info.communicationSettings) << ")\n";
+        std::cout << "  Access R:  " << accessToText(info.readAccess) << "\n";
+        std::cout << "  Access W:  " << accessToText(info.writeAccess) << "\n";
+        std::cout << "  Access RW: " << accessToText(info.readWriteAccess) << "\n";
+        std::cout << "  Access C:  " << accessToText(info.changeAccess) << "\n";
+
+        if (info.hasFileSize)
+        {
+            std::cout << "  File size: " << info.fileSize << " bytes\n";
+        }
+
+        if (info.hasValueSettings)
+        {
+            std::cout << "  Value lower limit: " << info.lowerLimit << "\n";
+            std::cout << "  Value upper limit: " << info.upperLimit << "\n";
+            std::cout << "  Limited credit value: " << info.limitedCreditValue << "\n";
+            std::cout << "  Limited credit enabled: " << (info.limitedCreditEnabled ? "yes" : "no") << "\n";
+            std::cout << "  Free get-value enabled: " << (info.freeGetValueEnabled ? "yes" : "no") << "\n";
+        }
+
+        if (info.hasRecordSettings)
+        {
+            std::cout << "  Record size: " << info.recordSize << " bytes\n";
+            std::cout << "  Max records: " << info.maxRecords << "\n";
+            std::cout << "  Current records: " << info.currentRecords << "\n";
+        }
+
+        return 0;
+    }
+    catch (const std::exception& ex)
+    {
+        printUsage(argv[0]);
+        std::cerr << "\nError: " << ex.what() << "\n";
+        return 1;
+    }
+}
+
