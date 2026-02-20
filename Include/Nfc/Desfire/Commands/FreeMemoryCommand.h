@@ -93,12 +93,6 @@ namespace nfc
         const etl::vector<uint8_t, 16>& getRawPayload() const;
 
     private:
-        bool tryDecodeAesAuthenticatedPayload(
-            const etl::ivector<uint8_t>& candidate,
-            uint8_t statusCode,
-            DesfireContext& context,
-            etl::vector<uint8_t, 3>& outPayload);
-
         static uint32_t parseLe24(const etl::ivector<uint8_t>& payload);
 
         Stage stage;

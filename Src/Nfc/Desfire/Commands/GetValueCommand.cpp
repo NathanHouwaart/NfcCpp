@@ -10,7 +10,7 @@
  */
 
 #include "Nfc/Desfire/Commands/GetValueCommand.h"
-#include "Nfc/Desfire/Commands/ValueOperationCryptoUtils.h"
+#include "Nfc/Desfire/SecureMessagingPolicy.h"
 #include "Nfc/Desfire/DesfireContext.h"
 #include "Utils/DesfireCrypto.h"
 #include "Error/DesfireError.h"
@@ -23,54 +23,6 @@ using namespace crypto;
 namespace
 {
     constexpr uint8_t GET_VALUE_COMMAND_CODE = 0x6C;
-
-    bool deriveGetValuePlainRequestIv(const DesfireContext& context, uint8_t fileNo, uint8_t* outIv)
-    {
-        if (!outIv)
-        {
-            return false;
-        }
-
-        etl::vector<uint8_t, 2> message;
-        message.push_back(GET_VALUE_COMMAND_CODE);
-        message.push_back(fileNo);
-
-        etl::vector<uint8_t, 16> derivedIv;
-        if (!valueop_detail::deriveAesPlainRequestIv(context, message, derivedIv, true))
-        {
-            return false;
-        }
-
-        for (size_t i = 0U; i < 16U; ++i)
-        {
-            outIv[i] = derivedIv[i];
-        }
-        return true;
-    }
-
-    bool deriveGetValueTktdesRequestIv(const DesfireContext& context, uint8_t fileNo, uint8_t* outIv)
-    {
-        if (!outIv)
-        {
-            return false;
-        }
-
-        etl::vector<uint8_t, 2> message;
-        message.push_back(GET_VALUE_COMMAND_CODE);
-        message.push_back(fileNo);
-
-        etl::vector<uint8_t, 16> derivedIv;
-        if (!valueop_detail::deriveTktdesPlainRequestIv(context, message, derivedIv, true))
-        {
-            return false;
-        }
-
-        for (size_t i = 0U; i < 8U; ++i)
-        {
-            outIv[i] = derivedIv[i];
-        }
-        return true;
-    }
 }
 
 GetValueCommand::GetValueCommand(uint8_t fileNo)
@@ -78,6 +30,8 @@ GetValueCommand::GetValueCommand(uint8_t fileNo)
     , stage(Stage::Initial)
     , value(0)
     , rawPayload()
+    , requestIv()
+    , hasRequestIv(false)
 {
 }
 
@@ -88,8 +42,6 @@ etl::string_view GetValueCommand::name() const
 
 etl::expected<DesfireRequest, error::Error> GetValueCommand::buildRequest(const DesfireContext& context)
 {
-    (void)context;
-
     if (stage != Stage::Initial)
     {
         return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
@@ -98,6 +50,26 @@ etl::expected<DesfireRequest, error::Error> GetValueCommand::buildRequest(const 
     if (fileNo > 0x1FU)
     {
         return etl::unexpected(error::Error::fromDesfire(error::DesfireError::ParameterError));
+    }
+
+    requestIv.clear();
+    hasRequestIv = false;
+    if (context.authenticated)
+    {
+        etl::vector<uint8_t, 2> message;
+        message.push_back(GET_VALUE_COMMAND_CODE);
+        message.push_back(fileNo);
+
+        auto requestIvResult = SecureMessagingPolicy::derivePlainRequestIv(context, message, true);
+        if (requestIvResult)
+        {
+            const auto& derivedIv = requestIvResult.value();
+            for (size_t i = 0U; i < derivedIv.size(); ++i)
+            {
+                requestIv.push_back(derivedIv[i]);
+            }
+            hasRequestIv = true;
+        }
     }
 
     DesfireRequest request;
@@ -143,6 +115,7 @@ etl::expected<DesfireResult, error::Error> GetValueCommand::parseResponse(
 
     etl::vector<uint8_t, 4> valueBytes;
     bool decoded = false;
+    const bool authenticatedVerificationAvailable = context.authenticated && hasRequestIv;
 
     if (context.authenticated && !context.sessionKeyEnc.empty())
     {
@@ -167,7 +140,22 @@ etl::expected<DesfireResult, error::Error> GetValueCommand::parseResponse(
         }
 
         size_t payloadLength = payload.size();
-        if (payloadLength != 4U)
+        if (authenticatedVerificationAvailable)
+        {
+            auto verifyResult = SecureMessagingPolicy::verifyAuthenticatedPlainPayloadAutoMacAndUpdateContextIv(
+                context,
+                payload,
+                result.statusCode,
+                requestIv,
+                4U);
+            if (!verifyResult)
+            {
+                return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidResponse));
+            }
+
+            payloadLength = 4U;
+        }
+        else if (payloadLength != 4U)
         {
             if (context.authenticated && payloadLength > 4U)
             {
@@ -217,6 +205,8 @@ void GetValueCommand::reset()
     stage = Stage::Initial;
     value = 0;
     rawPayload.clear();
+    requestIv.clear();
+    hasRequestIv = false;
 }
 
 int32_t GetValueCommand::getValue() const
@@ -240,15 +230,15 @@ int32_t GetValueCommand::parseLe32(const etl::ivector<uint8_t>& payload)
 
 GetValueCommand::SessionCipher GetValueCommand::resolveSessionCipher(const DesfireContext& context) const
 {
-    switch (valueop_detail::resolveSessionCipher(context))
+    switch (SecureMessagingPolicy::resolveSessionCipher(context))
     {
-        case valueop_detail::SessionCipher::DES:
+        case SecureMessagingPolicy::SessionCipher::DES:
             return SessionCipher::DES;
-        case valueop_detail::SessionCipher::DES3_2K:
+        case SecureMessagingPolicy::SessionCipher::DES3_2K:
             return SessionCipher::DES3_2K;
-        case valueop_detail::SessionCipher::DES3_3K:
+        case SecureMessagingPolicy::SessionCipher::DES3_3K:
             return SessionCipher::DES3_3K;
-        case valueop_detail::SessionCipher::AES:
+        case SecureMessagingPolicy::SessionCipher::AES:
             return SessionCipher::AES;
         default:
             return SessionCipher::UNKNOWN;
@@ -257,12 +247,12 @@ GetValueCommand::SessionCipher GetValueCommand::resolveSessionCipher(const Desfi
 
 uint16_t GetValueCommand::calculateCrc16(const etl::ivector<uint8_t>& data) const
 {
-    return valueop_detail::calculateCrc16(data);
+    return SecureMessagingPolicy::calculateCrc16(data);
 }
 
 uint32_t GetValueCommand::calculateCrc32Desfire(const etl::ivector<uint8_t>& data) const
 {
-    return valueop_detail::calculateCrc32Desfire(data);
+    return SecureMessagingPolicy::calculateCrc32Desfire(data);
 }
 
 bool GetValueCommand::tryDecodeEncryptedValue(
@@ -283,19 +273,6 @@ bool GetValueCommand::tryDecodeEncryptedValue(
     if (payload.size() < blockSize)
     {
         return false;
-    }
-
-    uint8_t plainRequestIv[16] = {0};
-    bool hasDerivedRequestIv = false;
-    if (cipher == SessionCipher::AES)
-    {
-        hasDerivedRequestIv = deriveGetValuePlainRequestIv(context, fileNo, plainRequestIv);
-    }
-    else if (
-        cipher == SessionCipher::DES3_3K ||
-        (cipher == SessionCipher::DES3_2K && !legacyDesCryptoMode))
-    {
-        hasDerivedRequestIv = deriveGetValueTktdesRequestIv(context, fileNo, plainRequestIv);
     }
 
     const size_t trimCandidates[4] = {0U, 8U, 4U, 2U};
@@ -319,16 +296,20 @@ bool GetValueCommand::tryDecodeEncryptedValue(
             ciphertext.push_back(payload[i]);
         }
 
-        const size_t ivAttemptCount = hasDerivedRequestIv ? 2U : 1U;
+        const size_t ivAttemptCount = hasRequestIv ? 2U : 1U;
         for (size_t ivAttempt = 0U; ivAttempt < ivAttemptCount; ++ivAttempt)
         {
             DesfireContext decodeContext = context;
             if (ivAttempt == 1U)
             {
                 decodeContext.iv.clear();
+                if (requestIv.size() < blockSize)
+                {
+                    continue;
+                }
                 for (size_t i = 0; i < blockSize; ++i)
                 {
-                    decodeContext.iv.push_back(plainRequestIv[i]);
+                    decodeContext.iv.push_back(requestIv[i]);
                 }
             }
 
@@ -409,21 +390,10 @@ bool GetValueCommand::tryDecodeEncryptedValue(
                 outValueBytes.push_back(plaintext[i]);
             }
 
-            if (cipher == SessionCipher::DES || (cipher == SessionCipher::DES3_2K && legacyDesCryptoMode))
+            auto ivUpdateResult = SecureMessagingPolicy::updateContextIvFromEncryptedCiphertext(context, ciphertext);
+            if (!ivUpdateResult)
             {
-                // Legacy DES/2K3DES secure messaging uses command-local chaining.
-                // Keep IV reset between commands.
-                context.iv.clear();
-                context.iv.resize(8U, 0x00U);
-            }
-            else if (context.iv.size() == blockSize && candidateLen >= blockSize)
-            {
-                // Keep CBC IV progression for secure chained sessions.
-                context.iv.clear();
-                for (size_t i = candidateLen - blockSize; i < candidateLen; ++i)
-                {
-                    context.iv.push_back(payload[i]);
-                }
+                return false;
             }
 
             return true;

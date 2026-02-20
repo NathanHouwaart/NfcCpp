@@ -24,9 +24,8 @@ namespace
 CreditCommand::CreditCommand(const CreditCommandOptions& options)
     : options(options)
     , complete(false)
-    , sessionCipher(valueop_detail::SessionCipher::UNKNOWN)
     , updateContextIv(false)
-    , pendingIv()
+    , requestState()
 {
 }
 
@@ -50,9 +49,8 @@ etl::expected<DesfireRequest, error::Error> CreditCommand::buildRequest(const De
         CREDIT_COMMAND_CODE,
         options,
         context,
-        sessionCipher,
         updateContextIv,
-        pendingIv);
+        requestState);
 }
 
 etl::expected<DesfireResult, error::Error> CreditCommand::parseResponse(
@@ -62,9 +60,8 @@ etl::expected<DesfireResult, error::Error> CreditCommand::parseResponse(
     auto parseResult = value_mutation_detail::parseResponse(
         response,
         context,
-        sessionCipher,
         updateContextIv,
-        pendingIv);
+        requestState);
     if (!parseResult)
     {
         return etl::unexpected(parseResult.error());
@@ -82,7 +79,6 @@ bool CreditCommand::isComplete() const
 void CreditCommand::reset()
 {
     complete = false;
-    sessionCipher = valueop_detail::SessionCipher::UNKNOWN;
     updateContextIv = false;
-    pendingIv.clear();
+    requestState.clear();
 }

@@ -10,34 +10,14 @@
  */
 
 #include "Nfc/Desfire/Commands/SetConfigurationCommand.h"
-#include "Nfc/Desfire/Commands/ValueOperationCryptoUtils.h"
 #include "Nfc/Desfire/DesfireContext.h"
-#include "Utils/DesfireCrypto.h"
 #include "Error/DesfireError.h"
-#include <cppdes/des.h>
-#include <cppdes/des3.h>
-#include <cppdes/descbc.h>
-#include <cppdes/des3cbc.h>
-#include <aes.hpp>
 
 using namespace nfc;
-using namespace crypto;
 
 namespace
 {
     constexpr uint8_t SET_CONFIGURATION_COMMAND_CODE = 0x5C;
-
-    bool isAllZero(const etl::ivector<uint8_t>& data)
-    {
-        for (size_t i = 0; i < data.size(); ++i)
-        {
-            if (data[i] != 0x00U)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
 }
 
 SetConfigurationCommand::SetConfigurationCommand(const SetConfigurationCommandOptions& options)
@@ -117,12 +97,22 @@ etl::expected<DesfireResult, error::Error> SetConfigurationCommand::parseRespons
         return etl::unexpected(error::Error::fromDesfire(static_cast<error::DesfireError>(result.statusCode)));
     }
 
-    if (updateContextIv)
+    if (!response.empty())
     {
-        context.iv.clear();
-        for (size_t i = 0; i < pendingIv.size(); ++i)
+        SecureMessagingPolicy::EncryptedPayloadProtection protection;
+        for (size_t i = 0U; i < pendingIv.size(); ++i)
         {
-            context.iv.push_back(pendingIv[i]);
+            protection.requestState.push_back(pendingIv[i]);
+        }
+        protection.updateContextIv = updateContextIv;
+
+        auto ivUpdateResult = SecureMessagingPolicy::updateContextIvForEncryptedCommandResponse(
+            context,
+            response,
+            protection);
+        if (!ivUpdateResult)
+        {
+            return etl::unexpected(ivUpdateResult.error());
         }
     }
 
@@ -145,8 +135,8 @@ void SetConfigurationCommand::reset()
 etl::expected<etl::vector<uint8_t, 64>, error::Error> SetConfigurationCommand::buildEncryptedPayload(
     const DesfireContext& context)
 {
-    const SessionCipher sessionCipher = resolveSessionCipher(context);
-    if (sessionCipher == SessionCipher::UNKNOWN)
+    const SecureMessagingPolicy::SessionCipher sessionCipher = resolveSessionCipher(context);
+    if (sessionCipher == SecureMessagingPolicy::SessionCipher::UNKNOWN)
     {
         return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
     }
@@ -187,256 +177,80 @@ etl::expected<etl::vector<uint8_t, 64>, error::Error> SetConfigurationCommand::b
     }
 
     const uint32_t crc32 = calculateCrc32Desfire(crcInput);
-    valueop_detail::appendLe32(plaintext, crc32);
+    plaintext.push_back(static_cast<uint8_t>(crc32 & 0xFFU));
+    plaintext.push_back(static_cast<uint8_t>((crc32 >> 8U) & 0xFFU));
+    plaintext.push_back(static_cast<uint8_t>((crc32 >> 16U) & 0xFFU));
+    plaintext.push_back(static_cast<uint8_t>((crc32 >> 24U) & 0xFFU));
 
-    const size_t blockSize = (sessionCipher == SessionCipher::AES) ? 16U : 8U;
+    const size_t blockSize = (sessionCipher == SecureMessagingPolicy::SessionCipher::AES) ? 16U : 8U;
     while ((plaintext.size() % blockSize) != 0U)
     {
         plaintext.push_back(0x00U);
     }
 
-    return encryptPayload(plaintext, context, sessionCipher);
-}
-
-etl::expected<etl::vector<uint8_t, 64>, error::Error> SetConfigurationCommand::encryptPayload(
-    const etl::ivector<uint8_t>& plaintext,
-    const DesfireContext& context,
-    SessionCipher cipher)
-{
-    if (plaintext.empty())
+    auto protectionResult = SecureMessagingPolicy::protectEncryptedPayload(
+        context,
+        plaintext,
+        sessionCipher,
+        useLegacySendMode(sessionCipher));
+    if (!protectionResult)
     {
-        return etl::unexpected(error::Error::fromDesfire(error::DesfireError::ParameterError));
+        return etl::unexpected(protectionResult.error());
     }
 
-    const size_t blockSize = (cipher == SessionCipher::AES) ? 16U : 8U;
-    if ((plaintext.size() % blockSize) != 0U)
+    const auto& protection = protectionResult.value();
+    if (protection.encryptedPayload.size() > 64U)
     {
         return etl::unexpected(error::Error::fromDesfire(error::DesfireError::LengthError));
     }
 
     etl::vector<uint8_t, 64> encrypted;
-
-    if (useLegacySendMode(cipher))
+    for (size_t i = 0U; i < protection.encryptedPayload.size(); ++i)
     {
-        etl::vector<uint8_t, 8> previousBlock;
-        previousBlock.resize(8, 0x00);
-
-        if (!context.iv.empty())
-        {
-            if (context.iv.size() != 8U || !isAllZero(context.iv))
-            {
-                return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
-            }
-        }
-
-        for (size_t offset = 0; offset < plaintext.size(); offset += 8U)
-        {
-            uint8_t xoredBlock[8];
-            for (size_t i = 0; i < 8U; ++i)
-            {
-                xoredBlock[i] = static_cast<uint8_t>(plaintext[offset + i] ^ previousBlock[i]);
-            }
-
-            uint8_t transformedBlock[8];
-            if (cipher == SessionCipher::DES)
-            {
-                if (context.sessionKeyEnc.size() < 8U)
-                {
-                    return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
-                }
-                DesFireCrypto::desDecrypt(xoredBlock, context.sessionKeyEnc.data(), transformedBlock);
-            }
-            else if (cipher == SessionCipher::DES3_2K)
-            {
-                if (context.sessionKeyEnc.size() < 16U)
-                {
-                    return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
-                }
-                DesFireCrypto::des3Decrypt(xoredBlock, context.sessionKeyEnc.data(), transformedBlock);
-            }
-            else
-            {
-                return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
-            }
-
-            for (size_t i = 0; i < 8U; ++i)
-            {
-                encrypted.push_back(transformedBlock[i]);
-                previousBlock[i] = transformedBlock[i];
-            }
-        }
-
-        updateContextIv = false;
-        pendingIv.clear();
-        return encrypted;
-    }
-
-    etl::vector<uint8_t, 16> iv;
-    if (context.iv.empty())
-    {
-        iv.resize(blockSize, 0x00);
-    }
-    else
-    {
-        if (context.iv.size() != blockSize)
-        {
-            return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
-        }
-
-        for (size_t i = 0; i < context.iv.size(); ++i)
-        {
-            iv.push_back(context.iv[i]);
-        }
-    }
-
-    if (cipher == SessionCipher::AES)
-    {
-        if (context.sessionKeyEnc.size() != 16U)
-        {
-            return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
-        }
-
-        for (size_t i = 0; i < plaintext.size(); ++i)
-        {
-            encrypted.push_back(plaintext[i]);
-        }
-
-        AES_ctx aesContext;
-        AES_init_ctx_iv(&aesContext, context.sessionKeyEnc.data(), iv.data());
-        AES_CBC_encrypt_buffer(&aesContext, encrypted.data(), encrypted.size());
-    }
-    else if (cipher == SessionCipher::DES)
-    {
-        if (context.sessionKeyEnc.size() < 8U)
-        {
-            return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
-        }
-
-        DESCBC desCbc(bytesToUint64(context.sessionKeyEnc.data()), bytesToUint64(iv.data()));
-        for (size_t offset = 0; offset < plaintext.size(); offset += 8U)
-        {
-            const uint64_t block = bytesToUint64(plaintext.data() + offset);
-            const uint64_t cipherBlock = desCbc.encrypt(block);
-            uint8_t blockBytes[8];
-            uint64ToBytes(cipherBlock, blockBytes);
-            for (size_t i = 0; i < 8U; ++i)
-            {
-                encrypted.push_back(blockBytes[i]);
-            }
-        }
-    }
-    else if (cipher == SessionCipher::DES3_2K)
-    {
-        if (context.sessionKeyEnc.size() < 16U)
-        {
-            return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
-        }
-
-        DES3CBC des3Cbc(
-            bytesToUint64(context.sessionKeyEnc.data()),
-            bytesToUint64(context.sessionKeyEnc.data() + 8U),
-            bytesToUint64(context.sessionKeyEnc.data()),
-            bytesToUint64(iv.data()));
-
-        for (size_t offset = 0; offset < plaintext.size(); offset += 8U)
-        {
-            const uint64_t block = bytesToUint64(plaintext.data() + offset);
-            const uint64_t cipherBlock = des3Cbc.encrypt(block);
-            uint8_t blockBytes[8];
-            uint64ToBytes(cipherBlock, blockBytes);
-            for (size_t i = 0; i < 8U; ++i)
-            {
-                encrypted.push_back(blockBytes[i]);
-            }
-        }
-    }
-    else if (cipher == SessionCipher::DES3_3K)
-    {
-        if (context.sessionKeyEnc.size() < 24U)
-        {
-            return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
-        }
-
-        DES3CBC des3Cbc(
-            bytesToUint64(context.sessionKeyEnc.data()),
-            bytesToUint64(context.sessionKeyEnc.data() + 8U),
-            bytesToUint64(context.sessionKeyEnc.data() + 16U),
-            bytesToUint64(iv.data()));
-
-        for (size_t offset = 0; offset < plaintext.size(); offset += 8U)
-        {
-            const uint64_t block = bytesToUint64(plaintext.data() + offset);
-            const uint64_t cipherBlock = des3Cbc.encrypt(block);
-            uint8_t blockBytes[8];
-            uint64ToBytes(cipherBlock, blockBytes);
-            for (size_t i = 0; i < 8U; ++i)
-            {
-                encrypted.push_back(blockBytes[i]);
-            }
-        }
-    }
-    else
-    {
-        return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
+        encrypted.push_back(protection.encryptedPayload[i]);
     }
 
     pendingIv.clear();
-    for (size_t i = encrypted.size() - blockSize; i < encrypted.size(); ++i)
+    for (size_t i = 0U; i < protection.requestState.size(); ++i)
     {
-        pendingIv.push_back(encrypted[i]);
+        pendingIv.push_back(protection.requestState[i]);
     }
-    updateContextIv = true;
+    updateContextIv = protection.updateContextIv;
+
     return encrypted;
 }
 
-SetConfigurationCommand::SessionCipher SetConfigurationCommand::resolveSessionCipher(const DesfireContext& context) const
+SecureMessagingPolicy::SessionCipher SetConfigurationCommand::resolveSessionCipher(const DesfireContext& context) const
 {
-    SessionCipher requestedCipher = SessionCipher::UNKNOWN;
+    SecureMessagingPolicy::SessionCipher requestedCipher = SecureMessagingPolicy::SessionCipher::UNKNOWN;
     switch (options.sessionKeyType)
     {
         case DesfireKeyType::DES:
-            requestedCipher = SessionCipher::DES;
+            requestedCipher = SecureMessagingPolicy::SessionCipher::DES;
             break;
         case DesfireKeyType::DES3_2K:
-            requestedCipher = SessionCipher::DES3_2K;
+            requestedCipher = SecureMessagingPolicy::SessionCipher::DES3_2K;
             break;
         case DesfireKeyType::DES3_3K:
-            requestedCipher = SessionCipher::DES3_3K;
+            requestedCipher = SecureMessagingPolicy::SessionCipher::DES3_3K;
             break;
         case DesfireKeyType::AES:
-            requestedCipher = SessionCipher::AES;
+            requestedCipher = SecureMessagingPolicy::SessionCipher::AES;
             break;
         default:
             break;
     }
 
-    if (requestedCipher == SessionCipher::UNKNOWN && options.authMode == DesfireAuthMode::AES)
+    if (requestedCipher == SecureMessagingPolicy::SessionCipher::UNKNOWN && options.authMode == DesfireAuthMode::AES)
     {
-        requestedCipher = SessionCipher::AES;
+        requestedCipher = SecureMessagingPolicy::SessionCipher::AES;
     }
 
-    SessionCipher inferredCipher = SessionCipher::UNKNOWN;
-    switch (valueop_detail::resolveSessionCipher(context))
-    {
-        case valueop_detail::SessionCipher::DES:
-            inferredCipher = SessionCipher::DES;
-            break;
-        case valueop_detail::SessionCipher::DES3_2K:
-            inferredCipher = SessionCipher::DES3_2K;
-            break;
-        case valueop_detail::SessionCipher::DES3_3K:
-            inferredCipher = SessionCipher::DES3_3K;
-            break;
-        case valueop_detail::SessionCipher::AES:
-            inferredCipher = SessionCipher::AES;
-            break;
-        default:
-            break;
-    }
+    const auto inferredCipher = SecureMessagingPolicy::resolveSessionCipher(context);
 
-    if (requestedCipher != SessionCipher::UNKNOWN)
+    if (requestedCipher != SecureMessagingPolicy::SessionCipher::UNKNOWN)
     {
-        if (inferredCipher == SessionCipher::UNKNOWN || inferredCipher == requestedCipher)
+        if (inferredCipher == SecureMessagingPolicy::SessionCipher::UNKNOWN || inferredCipher == requestedCipher)
         {
             return requestedCipher;
         }
@@ -447,17 +261,18 @@ SetConfigurationCommand::SessionCipher SetConfigurationCommand::resolveSessionCi
     return inferredCipher;
 }
 
-bool SetConfigurationCommand::useLegacySendMode(SessionCipher cipher) const
+bool SetConfigurationCommand::useLegacySendMode(SecureMessagingPolicy::SessionCipher cipher) const
 {
     if (options.authMode != DesfireAuthMode::LEGACY)
     {
         return false;
     }
 
-    return cipher == SessionCipher::DES || cipher == SessionCipher::DES3_2K;
+    return cipher == SecureMessagingPolicy::SessionCipher::DES ||
+           cipher == SecureMessagingPolicy::SessionCipher::DES3_2K;
 }
 
 uint32_t SetConfigurationCommand::calculateCrc32Desfire(const etl::ivector<uint8_t>& data) const
 {
-    return valueop_detail::calculateCrc32Desfire(data);
+    return SecureMessagingPolicy::calculateCrc32Desfire(data);
 }

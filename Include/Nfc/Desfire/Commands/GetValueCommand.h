@@ -125,6 +125,8 @@ namespace nfc
         Stage stage;
         int32_t value;
         etl::vector<uint8_t, 16> rawPayload;
+        etl::vector<uint8_t, 16> requestIv;
+        bool hasRequestIv;
     };
 
 } // namespace nfc

@@ -10,7 +10,7 @@
  */
 
 #include "Nfc/Desfire/Commands/ReadRecordsCommand.h"
-#include "Nfc/Desfire/Commands/ValueOperationCryptoUtils.h"
+#include "Nfc/Desfire/SecureMessagingPolicy.h"
 #include "Nfc/Desfire/DesfireContext.h"
 #include "Utils/DesfireCrypto.h"
 #include "Error/DesfireError.h"
@@ -63,6 +63,11 @@ etl::expected<DesfireRequest, error::Error> ReadRecordsCommand::buildRequest(con
             requestIv.clear();
             hasRequestIv = false;
 
+            if (context.authenticated && !context.sessionKeyEnc.empty())
+            {
+                sessionCipher = resolveSessionCipher(context);
+            }
+
             if (activeCommunicationSettings == 0x03U)
             {
                 if (!context.authenticated || context.sessionKeyEnc.empty())
@@ -76,21 +81,59 @@ etl::expected<DesfireRequest, error::Error> ReadRecordsCommand::buildRequest(con
                     return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
                 }
 
-                if (sessionCipher == SessionCipher::AES)
-                {
-                    hasRequestIv = deriveAesPlainRequestIv(context, requestIv);
-                }
-                else if (
-                    sessionCipher == SessionCipher::DES3_3K ||
-                    (sessionCipher == SessionCipher::DES3_2K && context.authScheme == SessionAuthScheme::Iso))
+                const bool shouldDeriveRequestIv =
+                    context.authenticated &&
+                    ((sessionCipher == SessionCipher::AES) ||
+                     (sessionCipher == SessionCipher::DES3_3K) ||
+                     (sessionCipher == SessionCipher::DES3_2K && context.authScheme == SessionAuthScheme::Iso));
+
+                if (shouldDeriveRequestIv)
                 {
                     etl::vector<uint8_t, 8> cmacMessage;
                     cmacMessage.push_back(READ_RECORDS_COMMAND_CODE);
                     cmacMessage.push_back(options.fileNo);
-                    valueop_detail::appendLe24(cmacMessage, options.recordOffset);
-                    valueop_detail::appendLe24(cmacMessage, options.recordCount);
-                    hasRequestIv = valueop_detail::deriveTktdesPlainRequestIv(context, cmacMessage, requestIv, true);
+                    appendLe24(cmacMessage, options.recordOffset);
+                    appendLe24(cmacMessage, options.recordCount);
+
+                    auto requestIvResult = SecureMessagingPolicy::derivePlainRequestIv(context, cmacMessage, true);
+                    if (!requestIvResult)
+                    {
+                        return etl::unexpected(requestIvResult.error());
+                    }
+
+                    requestIv.clear();
+                    const auto& derivedIv = requestIvResult.value();
+                    for (size_t i = 0U; i < derivedIv.size(); ++i)
+                    {
+                        requestIv.push_back(derivedIv[i]);
+                    }
+                    hasRequestIv = true;
                 }
+            }
+            else if (context.authenticated &&
+                     ((sessionCipher == SessionCipher::AES) ||
+                      (sessionCipher == SessionCipher::DES3_3K) ||
+                      (sessionCipher == SessionCipher::DES3_2K && context.authScheme == SessionAuthScheme::Iso)))
+            {
+                etl::vector<uint8_t, 8> cmacMessage;
+                cmacMessage.push_back(READ_RECORDS_COMMAND_CODE);
+                cmacMessage.push_back(options.fileNo);
+                appendLe24(cmacMessage, options.recordOffset);
+                appendLe24(cmacMessage, options.recordCount);
+
+                auto requestIvResult = SecureMessagingPolicy::derivePlainRequestIv(context, cmacMessage, true);
+                if (!requestIvResult)
+                {
+                    return etl::unexpected(requestIvResult.error());
+                }
+
+                requestIv.clear();
+                const auto& derivedIv = requestIvResult.value();
+                for (size_t i = 0U; i < derivedIv.size(); ++i)
+                {
+                    requestIv.push_back(derivedIv[i]);
+                }
+                hasRequestIv = true;
             }
 
             request.commandCode = READ_RECORDS_COMMAND_CODE;
@@ -158,6 +201,34 @@ etl::expected<DesfireResult, error::Error> ReadRecordsCommand::parseResponse(
             return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidResponse));
         }
     }
+    else if (context.authenticated && hasRequestIv)
+    {
+        const size_t expected = static_cast<size_t>(options.expectedDataLength);
+        auto verifyResult = SecureMessagingPolicy::verifyAuthenticatedPlainPayloadAutoMacAndUpdateContextIv(
+            context,
+            data,
+            result.statusCode,
+            requestIv,
+            expected);
+        if (!verifyResult)
+        {
+            return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidResponse));
+        }
+
+        if (data.size() != expected)
+        {
+            etl::vector<uint8_t, MAX_READ_RECORDS_BUFFER_SIZE> plainData;
+            for (size_t i = 0U; i < expected; ++i)
+            {
+                if (plainData.full())
+                {
+                    return etl::unexpected(error::Error::fromDesfire(error::DesfireError::LengthError));
+                }
+                plainData.push_back(data[i]);
+            }
+            data = plainData;
+        }
+    }
     else if (!trimAuthenticatedTrailingMac(context))
     {
         return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidResponse));
@@ -189,7 +260,9 @@ const etl::ivector<uint8_t>& ReadRecordsCommand::getData() const
 
 void ReadRecordsCommand::appendLe24(etl::ivector<uint8_t>& target, uint32_t value)
 {
-    valueop_detail::appendLe24(target, value);
+    target.push_back(static_cast<uint8_t>(value & 0xFFU));
+    target.push_back(static_cast<uint8_t>((value >> 8U) & 0xFFU));
+    target.push_back(static_cast<uint8_t>((value >> 16U) & 0xFFU));
 }
 
 bool ReadRecordsCommand::validateOptions() const
@@ -254,29 +327,19 @@ uint8_t ReadRecordsCommand::resolveCommunicationSettings(const DesfireContext& c
 
 ReadRecordsCommand::SessionCipher ReadRecordsCommand::resolveSessionCipher(const DesfireContext& context) const
 {
-    switch (valueop_detail::resolveSessionCipher(context))
+    switch (SecureMessagingPolicy::resolveSessionCipher(context))
     {
-        case valueop_detail::SessionCipher::DES:
+        case SecureMessagingPolicy::SessionCipher::DES:
             return SessionCipher::DES;
-        case valueop_detail::SessionCipher::DES3_2K:
+        case SecureMessagingPolicy::SessionCipher::DES3_2K:
             return SessionCipher::DES3_2K;
-        case valueop_detail::SessionCipher::DES3_3K:
+        case SecureMessagingPolicy::SessionCipher::DES3_3K:
             return SessionCipher::DES3_3K;
-        case valueop_detail::SessionCipher::AES:
+        case SecureMessagingPolicy::SessionCipher::AES:
             return SessionCipher::AES;
         default:
             return SessionCipher::UNKNOWN;
     }
-}
-
-bool ReadRecordsCommand::deriveAesPlainRequestIv(const DesfireContext& context, etl::vector<uint8_t, 16>& outIv) const
-{
-    etl::vector<uint8_t, 8> message;
-    message.push_back(READ_RECORDS_COMMAND_CODE);
-    message.push_back(options.fileNo);
-    valueop_detail::appendLe24(message, options.recordOffset);
-    valueop_detail::appendLe24(message, options.recordCount);
-    return valueop_detail::deriveAesPlainRequestIv(context, message, outIv, true);
 }
 
 bool ReadRecordsCommand::tryDecodeEncryptedRecords(DesfireContext& context)
@@ -375,9 +438,9 @@ bool ReadRecordsCommand::tryDecodeEncryptedRecords(DesfireContext& context)
                     {
                         crcInput.push_back(plaintext[i]);
                     }
-                    const uint32_t expectedNoStatus = valueop_detail::calculateCrc32Desfire(crcInput);
+                    const uint32_t expectedNoStatus = SecureMessagingPolicy::calculateCrc32Desfire(crcInput);
                     crcInput.push_back(0x00U);
-                    const uint32_t expectedWithStatus = valueop_detail::calculateCrc32Desfire(crcInput);
+                    const uint32_t expectedWithStatus = SecureMessagingPolicy::calculateCrc32Desfire(crcInput);
 
                     etl::vector<uint8_t, MAX_READ_RECORDS_SIZE + 16U> crcInputWithHeader;
                     crcInputWithHeader.push_back(READ_RECORDS_COMMAND_CODE);
@@ -388,9 +451,11 @@ bool ReadRecordsCommand::tryDecodeEncryptedRecords(DesfireContext& context)
                     {
                         crcInputWithHeader.push_back(plaintext[i]);
                     }
-                    const uint32_t expectedWithHeaderNoStatus = valueop_detail::calculateCrc32Desfire(crcInputWithHeader);
+                    const uint32_t expectedWithHeaderNoStatus =
+                        SecureMessagingPolicy::calculateCrc32Desfire(crcInputWithHeader);
                     crcInputWithHeader.push_back(0x00U);
-                    const uint32_t expectedWithHeaderStatus = valueop_detail::calculateCrc32Desfire(crcInputWithHeader);
+                    const uint32_t expectedWithHeaderStatus =
+                        SecureMessagingPolicy::calculateCrc32Desfire(crcInputWithHeader);
 
                     crcOk =
                         (received == expectedNoStatus) ||
@@ -409,9 +474,9 @@ bool ReadRecordsCommand::tryDecodeEncryptedRecords(DesfireContext& context)
                     {
                         crcInput.push_back(plaintext[i]);
                     }
-                    const uint16_t expectedNoStatus = valueop_detail::calculateCrc16(crcInput);
+                    const uint16_t expectedNoStatus = SecureMessagingPolicy::calculateCrc16(crcInput);
                     crcInput.push_back(0x00U);
-                    const uint16_t expectedWithStatus = valueop_detail::calculateCrc16(crcInput);
+                    const uint16_t expectedWithStatus = SecureMessagingPolicy::calculateCrc16(crcInput);
                     crcOk = (received == expectedNoStatus) || (received == expectedWithStatus);
                 }
 
@@ -430,21 +495,14 @@ bool ReadRecordsCommand::tryDecodeEncryptedRecords(DesfireContext& context)
                     data.push_back(plaintext[i]);
                 }
 
-                if (
-                    sessionCipher == SessionCipher::DES ||
-                    (sessionCipher == SessionCipher::DES3_2K && context.authScheme == SessionAuthScheme::Legacy))
+                if (candidateLength >= blockSize)
                 {
-                    // Legacy DES/2K3DES secure messaging uses command-local chaining.
-                    // Keep IV reset between commands.
-                    context.iv.clear();
-                    context.iv.resize(8U, 0x00U);
-                }
-                else if (candidateLength >= blockSize)
-                {
-                    context.iv.clear();
-                    for (size_t i = candidateLength - blockSize; i < candidateLength; ++i)
+                    auto ivUpdateResult = SecureMessagingPolicy::updateContextIvFromEncryptedCiphertext(
+                        context,
+                        ciphertext);
+                    if (!ivUpdateResult)
                     {
-                        context.iv.push_back(ciphertext[i]);
+                        return false;
                     }
                 }
 

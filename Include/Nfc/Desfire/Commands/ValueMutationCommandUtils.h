@@ -5,10 +5,10 @@
 
 #pragma once
 
-#include "Nfc/Desfire/Commands/ValueOperationCryptoUtils.h"
 #include "Nfc/Desfire/DesfireContext.h"
 #include "Nfc/Desfire/DesfireRequest.h"
 #include "Nfc/Desfire/DesfireResult.h"
+#include "Nfc/Desfire/SecureMessagingPolicy.h"
 #include "Error/Error.h"
 #include "Error/DesfireError.h"
 #include <etl/expected.h>
@@ -50,7 +50,11 @@ namespace nfc
 
         inline void appendLe32(DesfireRequest& request, int32_t value)
         {
-            valueop_detail::appendLe32(request.data, static_cast<uint32_t>(value));
+            const uint32_t rawValue = static_cast<uint32_t>(value);
+            request.data.push_back(static_cast<uint8_t>(rawValue & 0xFFU));
+            request.data.push_back(static_cast<uint8_t>((rawValue >> 8U) & 0xFFU));
+            request.data.push_back(static_cast<uint8_t>((rawValue >> 16U) & 0xFFU));
+            request.data.push_back(static_cast<uint8_t>((rawValue >> 24U) & 0xFFU));
         }
 
         template <typename TOptions>
@@ -58,9 +62,8 @@ namespace nfc
             uint8_t commandCode,
             const TOptions& options,
             const DesfireContext& context,
-            valueop_detail::SessionCipher& sessionCipher,
             bool& updateContextIv,
-            etl::vector<uint8_t, 16>& pendingIv)
+            etl::vector<uint8_t, 16>& requestState)
         {
             DesfireRequest request;
             request.commandCode = commandCode;
@@ -69,34 +72,27 @@ namespace nfc
             const uint8_t communicationSettings = resolveCommunicationSettings(options, context);
             if (communicationSettings == 0x03U)
             {
-                if (!context.authenticated || context.sessionKeyEnc.empty())
-                {
-                    return etl::unexpected(error::Error::fromDesfire(error::DesfireError::AuthenticationError));
-                }
-
-                sessionCipher = valueop_detail::resolveSessionCipher(context);
-                if (sessionCipher == valueop_detail::SessionCipher::UNKNOWN)
-                {
-                    return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
-                }
-
-                auto encryptedPayloadResult = valueop_detail::buildEncryptedValuePayload(
+                auto protectionResult = SecureMessagingPolicy::protectValueOperationRequest(
+                    context,
                     commandCode,
                     options.fileNo,
-                    options.value,
-                    context,
-                    sessionCipher,
-                    pendingIv);
-                if (!encryptedPayloadResult)
+                    options.value);
+                if (!protectionResult)
                 {
-                    return etl::unexpected(encryptedPayloadResult.error());
+                    return etl::unexpected(protectionResult.error());
                 }
 
                 request.data.push_back(options.fileNo);
-                const auto& payload = encryptedPayloadResult.value();
+                const auto& protection = protectionResult.value();
+                const auto& payload = protection.encryptedPayload;
                 for (size_t i = 0; i < payload.size(); ++i)
                 {
                     request.data.push_back(payload[i]);
+                }
+                requestState.clear();
+                for (size_t i = 0; i < protection.requestState.size(); ++i)
+                {
+                    requestState.push_back(protection.requestState[i]);
                 }
                 updateContextIv = true;
             }
@@ -107,9 +103,8 @@ namespace nfc
                     return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
                 }
 
-                sessionCipher = valueop_detail::SessionCipher::UNKNOWN;
                 updateContextIv = false;
-                pendingIv.clear();
+                requestState.clear();
 
                 request.data.push_back(options.fileNo);
                 appendLe32(request, options.value);
@@ -122,9 +117,8 @@ namespace nfc
         inline etl::expected<DesfireResult, error::Error> parseResponse(
             const etl::ivector<uint8_t>& response,
             DesfireContext& context,
-            valueop_detail::SessionCipher sessionCipher,
             bool updateContextIv,
-            const etl::ivector<uint8_t>& pendingIv)
+            const etl::ivector<uint8_t>& requestState)
         {
             if (response.empty())
             {
@@ -141,52 +135,13 @@ namespace nfc
 
             if (result.isSuccess() && updateContextIv)
             {
-                if (sessionCipher == valueop_detail::SessionCipher::AES)
+                auto ivUpdateResult = SecureMessagingPolicy::updateContextIvForValueOperationResponse(
+                    context,
+                    response,
+                    requestState);
+                if (!ivUpdateResult)
                 {
-                    auto nextIvResult = valueop_detail::deriveAesResponseIvForValueOperation(response, context, pendingIv);
-                    if (!nextIvResult)
-                    {
-                        return etl::unexpected(nextIvResult.error());
-                    }
-
-                    valueop_detail::setContextIv(context, nextIvResult.value());
-                }
-                else if (sessionCipher == valueop_detail::SessionCipher::DES3_3K)
-                {
-                    auto nextIvResult = valueop_detail::deriveTktdesResponseIvForValueOperation(response, context, pendingIv);
-                    if (!nextIvResult)
-                    {
-                        return etl::unexpected(nextIvResult.error());
-                    }
-
-                    valueop_detail::setContextIv(context, nextIvResult.value());
-                }
-                else if (
-                    sessionCipher == valueop_detail::SessionCipher::DES3_2K &&
-                    !valueop_detail::useLegacyDesCryptoMode(context, sessionCipher))
-                {
-                    auto nextIvResult = valueop_detail::deriveTktdesResponseIvForValueOperation(response, context, pendingIv);
-                    if (!nextIvResult)
-                    {
-                        return etl::unexpected(nextIvResult.error());
-                    }
-
-                    valueop_detail::setContextIv(context, nextIvResult.value());
-                }
-                else if (
-                    sessionCipher == valueop_detail::SessionCipher::DES ||
-                    (sessionCipher == valueop_detail::SessionCipher::DES3_2K &&
-                     valueop_detail::useLegacyDesCryptoMode(context, sessionCipher)))
-                {
-                    // Legacy DES/2K3DES secure messaging uses command-local chaining.
-                    // Keep IV reset between commands.
-                    etl::vector<uint8_t, 8> zeroIv;
-                    zeroIv.resize(8U, 0x00U);
-                    valueop_detail::setContextIv(context, zeroIv);
-                }
-                else
-                {
-                    valueop_detail::setContextIv(context, pendingIv);
+                    return etl::unexpected(ivUpdateResult.error());
                 }
             }
 

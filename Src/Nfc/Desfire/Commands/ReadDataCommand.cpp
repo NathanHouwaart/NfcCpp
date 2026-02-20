@@ -10,7 +10,7 @@
  */
 
 #include "Nfc/Desfire/Commands/ReadDataCommand.h"
-#include "Nfc/Desfire/Commands/ValueOperationCryptoUtils.h"
+#include "Nfc/Desfire/SecureMessagingPolicy.h"
 #include "Nfc/Desfire/DesfireContext.h"
 #include "Utils/DesfireCrypto.h"
 #include "Error/DesfireError.h"
@@ -71,6 +71,12 @@ etl::expected<DesfireRequest, error::Error> ReadDataCommand::buildRequest(const 
         sessionCipher = SessionCipher::UNKNOWN;
         requestIv.clear();
         hasRequestIv = false;
+
+        if (context.authenticated && !context.sessionKeyEnc.empty())
+        {
+            sessionCipher = resolveSessionCipher(context);
+        }
+
         if (activeCommunicationSettings == 0x03U)
         {
             if (!context.authenticated || context.sessionKeyEnc.empty())
@@ -116,23 +122,33 @@ etl::expected<DesfireRequest, error::Error> ReadDataCommand::buildRequest(const 
 
     hasRequestIv = false;
     requestIv.clear();
-    if (activeCommunicationSettings == 0x03U)
+    const bool shouldDeriveRequestIv =
+        context.authenticated &&
+        ((sessionCipher == SessionCipher::AES) ||
+         (sessionCipher == SessionCipher::DES3_3K) ||
+         (sessionCipher == SessionCipher::DES3_2K && context.authScheme == SessionAuthScheme::Iso));
+
+    if (shouldDeriveRequestIv)
     {
-        if (sessionCipher == SessionCipher::AES)
+        etl::vector<uint8_t, 8> cmacMessage;
+        cmacMessage.push_back(READ_DATA_COMMAND_CODE);
+        cmacMessage.push_back(options.fileNo);
+        appendLe24(cmacMessage, currentOffset);
+        appendLe24(cmacMessage, chunkLength);
+
+        auto requestIvResult = SecureMessagingPolicy::derivePlainRequestIv(context, cmacMessage, true);
+        if (!requestIvResult)
         {
-            hasRequestIv = deriveAesPlainRequestIv(context, currentOffset, chunkLength, requestIv);
+            return etl::unexpected(requestIvResult.error());
         }
-        else if (
-            sessionCipher == SessionCipher::DES3_3K ||
-            (sessionCipher == SessionCipher::DES3_2K && context.authScheme == SessionAuthScheme::Iso))
+
+        requestIv.clear();
+        const auto& derivedIv = requestIvResult.value();
+        for (size_t i = 0U; i < derivedIv.size(); ++i)
         {
-            etl::vector<uint8_t, 8> cmacMessage;
-            cmacMessage.push_back(READ_DATA_COMMAND_CODE);
-            cmacMessage.push_back(options.fileNo);
-            valueop_detail::appendLe24(cmacMessage, currentOffset);
-            valueop_detail::appendLe24(cmacMessage, chunkLength);
-            hasRequestIv = valueop_detail::deriveTktdesPlainRequestIv(context, cmacMessage, requestIv, true);
+            requestIv.push_back(derivedIv[i]);
         }
+        hasRequestIv = true;
     }
 
     lastRequestedChunkLength = chunkLength;
@@ -193,13 +209,30 @@ etl::expected<DesfireResult, error::Error> ReadDataCommand::parseResponse(
     }
     else
     {
-        chunkDataLength = frameData.size();
-        if (context.authenticated && chunkDataLength > static_cast<size_t>(lastRequestedChunkLength))
+        if (context.authenticated && hasRequestIv)
         {
-            const size_t extraLength = chunkDataLength - static_cast<size_t>(lastRequestedChunkLength);
-            if (extraLength == 8U || extraLength == 4U)
+            auto verifyResult = SecureMessagingPolicy::verifyAuthenticatedPlainPayloadAutoMacAndUpdateContextIv(
+                context,
+                frameData,
+                result.statusCode,
+                requestIv,
+                static_cast<size_t>(lastRequestedChunkLength));
+            if (!verifyResult)
             {
-                chunkDataLength -= extraLength;
+                return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidResponse));
+            }
+            chunkDataLength = static_cast<size_t>(lastRequestedChunkLength);
+        }
+        else
+        {
+            chunkDataLength = frameData.size();
+            if (context.authenticated && chunkDataLength > static_cast<size_t>(lastRequestedChunkLength))
+            {
+                const size_t extraLength = chunkDataLength - static_cast<size_t>(lastRequestedChunkLength);
+                if (extraLength == 8U || extraLength == 4U)
+                {
+                    chunkDataLength -= extraLength;
+                }
             }
         }
     }
@@ -342,33 +375,19 @@ uint8_t ReadDataCommand::resolveCommunicationSettings(const DesfireContext& cont
 
 ReadDataCommand::SessionCipher ReadDataCommand::resolveSessionCipher(const DesfireContext& context) const
 {
-    switch (valueop_detail::resolveSessionCipher(context))
+    switch (SecureMessagingPolicy::resolveSessionCipher(context))
     {
-        case valueop_detail::SessionCipher::DES:
+        case SecureMessagingPolicy::SessionCipher::DES:
             return SessionCipher::DES;
-        case valueop_detail::SessionCipher::DES3_2K:
+        case SecureMessagingPolicy::SessionCipher::DES3_2K:
             return SessionCipher::DES3_2K;
-        case valueop_detail::SessionCipher::DES3_3K:
+        case SecureMessagingPolicy::SessionCipher::DES3_3K:
             return SessionCipher::DES3_3K;
-        case valueop_detail::SessionCipher::AES:
+        case SecureMessagingPolicy::SessionCipher::AES:
             return SessionCipher::AES;
         default:
             return SessionCipher::UNKNOWN;
     }
-}
-
-bool ReadDataCommand::deriveAesPlainRequestIv(
-    const DesfireContext& context,
-    uint32_t chunkOffset,
-    uint32_t chunkLength,
-    etl::vector<uint8_t, 16>& outIv) const
-{
-    etl::vector<uint8_t, 8> message;
-    message.push_back(READ_DATA_COMMAND_CODE);
-    message.push_back(options.fileNo);
-    valueop_detail::appendLe24(message, chunkOffset);
-    valueop_detail::appendLe24(message, chunkLength);
-    return valueop_detail::deriveAesPlainRequestIv(context, message, outIv, true);
 }
 
 bool ReadDataCommand::tryDecodeEncryptedChunk(
@@ -469,9 +488,9 @@ bool ReadDataCommand::tryDecodeEncryptedChunk(
                     {
                         crcInput.push_back(plaintext[i]);
                     }
-                    const uint32_t expectedNoStatus = valueop_detail::calculateCrc32Desfire(crcInput);
+                    const uint32_t expectedNoStatus = SecureMessagingPolicy::calculateCrc32Desfire(crcInput);
                     crcInput.push_back(0x00U);
-                    const uint32_t expectedWithStatus = valueop_detail::calculateCrc32Desfire(crcInput);
+                    const uint32_t expectedWithStatus = SecureMessagingPolicy::calculateCrc32Desfire(crcInput);
 
                     etl::vector<uint8_t, MAX_FRAME_DATA_SIZE + 16U> crcInputWithHeader;
                     crcInputWithHeader.push_back(READ_DATA_COMMAND_CODE);
@@ -482,9 +501,11 @@ bool ReadDataCommand::tryDecodeEncryptedChunk(
                     {
                         crcInputWithHeader.push_back(plaintext[i]);
                     }
-                    const uint32_t expectedWithHeaderNoStatus = valueop_detail::calculateCrc32Desfire(crcInputWithHeader);
+                    const uint32_t expectedWithHeaderNoStatus =
+                        SecureMessagingPolicy::calculateCrc32Desfire(crcInputWithHeader);
                     crcInputWithHeader.push_back(0x00U);
-                    const uint32_t expectedWithHeaderStatus = valueop_detail::calculateCrc32Desfire(crcInputWithHeader);
+                    const uint32_t expectedWithHeaderStatus =
+                        SecureMessagingPolicy::calculateCrc32Desfire(crcInputWithHeader);
 
                     crcOk =
                         (received == expectedNoStatus) ||
@@ -503,9 +524,9 @@ bool ReadDataCommand::tryDecodeEncryptedChunk(
                     {
                         crcInput.push_back(plaintext[i]);
                     }
-                    const uint16_t expectedNoStatus = valueop_detail::calculateCrc16(crcInput);
+                    const uint16_t expectedNoStatus = SecureMessagingPolicy::calculateCrc16(crcInput);
                     crcInput.push_back(0x00U);
-                    const uint16_t expectedWithStatus = valueop_detail::calculateCrc16(crcInput);
+                    const uint16_t expectedWithStatus = SecureMessagingPolicy::calculateCrc16(crcInput);
                     crcOk = (received == expectedNoStatus) || (received == expectedWithStatus);
                 }
 
@@ -524,21 +545,14 @@ bool ReadDataCommand::tryDecodeEncryptedChunk(
                     outPlainChunk.push_back(plaintext[i]);
                 }
 
-                if (
-                    sessionCipher == SessionCipher::DES ||
-                    (sessionCipher == SessionCipher::DES3_2K && context.authScheme == SessionAuthScheme::Legacy))
+                if (candidateLength >= blockSize)
                 {
-                    // Legacy DES/2K3DES secure messaging uses command-local chaining.
-                    // Keep IV reset between commands.
-                    context.iv.clear();
-                    context.iv.resize(8U, 0x00U);
-                }
-                else if (candidateLength >= blockSize)
-                {
-                    context.iv.clear();
-                    for (size_t i = candidateLength - blockSize; i < candidateLength; ++i)
+                    auto ivUpdateResult = SecureMessagingPolicy::updateContextIvFromEncryptedCiphertext(
+                        context,
+                        ciphertext);
+                    if (!ivUpdateResult)
                     {
-                        context.iv.push_back(ciphertext[i]);
+                        return false;
                     }
                 }
 

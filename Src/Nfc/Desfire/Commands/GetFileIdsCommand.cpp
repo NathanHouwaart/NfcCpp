@@ -10,6 +10,7 @@
  */
 
 #include "Nfc/Desfire/Commands/GetFileIdsCommand.h"
+#include "Nfc/Desfire/SecureMessagingPolicy.h"
 #include "Nfc/Desfire/DesfireContext.h"
 #include "Error/DesfireError.h"
 
@@ -43,6 +44,8 @@ GetFileIdsCommand::GetFileIdsCommand()
     : stage(Stage::Initial)
     , rawPayload()
     , fileIds()
+    , requestIv()
+    , hasRequestIv(false)
 {
 }
 
@@ -53,11 +56,28 @@ etl::string_view GetFileIdsCommand::name() const
 
 etl::expected<DesfireRequest, error::Error> GetFileIdsCommand::buildRequest(const DesfireContext& context)
 {
-    (void)context;
-
     if (stage != Stage::Initial)
     {
         return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
+    }
+
+    requestIv.clear();
+    hasRequestIv = false;
+    if (context.authenticated)
+    {
+        etl::vector<uint8_t, 1> cmacMessage;
+        cmacMessage.push_back(GET_FILE_IDS_COMMAND_CODE);
+
+        auto requestIvResult = SecureMessagingPolicy::derivePlainRequestIv(context, cmacMessage, true);
+        if (requestIvResult)
+        {
+            const auto& derivedIv = requestIvResult.value();
+            for (size_t i = 0U; i < derivedIv.size(); ++i)
+            {
+                requestIv.push_back(derivedIv[i]);
+            }
+            hasRequestIv = true;
+        }
     }
 
     DesfireRequest request;
@@ -101,11 +121,46 @@ etl::expected<DesfireResult, error::Error> GetFileIdsCommand::parseResponse(
     }
 
     size_t dataLength = rawPayload.size();
-
-    // In authenticated sessions some cards append MAC/CMAC bytes to this response.
-    // File IDs are constrained to 0..31, so use that to identify and strip trailing MAC bytes.
-    if (context.authenticated)
+    if (context.authenticated && hasRequestIv)
     {
+        bool verified = false;
+        constexpr size_t macCandidates[3] = {8U, 4U, 0U};
+        for (size_t macIndex = 0U; macIndex < 3U; ++macIndex)
+        {
+            const size_t macLength = macCandidates[macIndex];
+            if (rawPayload.size() < macLength)
+            {
+                continue;
+            }
+
+            const size_t candidateLength = rawPayload.size() - macLength;
+            if (!isPlausibleFileIdPayload(rawPayload, candidateLength))
+            {
+                continue;
+            }
+
+            auto verifyResult = SecureMessagingPolicy::verifyAuthenticatedPlainPayloadAutoMacAndUpdateContextIv(
+                context,
+                rawPayload,
+                result.statusCode,
+                requestIv,
+                candidateLength);
+            if (verifyResult)
+            {
+                dataLength = candidateLength;
+                verified = true;
+                break;
+            }
+        }
+
+        if (!verified)
+        {
+            return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidResponse));
+        }
+    }
+    else if (context.authenticated)
+    {
+        // Compatibility fallback for legacy-auth sessions where authenticated-plain IV/CMAC verification is unavailable.
         if (!isPlausibleFileIdPayload(rawPayload, dataLength))
         {
             if (dataLength >= 8U && isPlausibleFileIdPayload(rawPayload, dataLength - 8U))
@@ -153,6 +208,8 @@ void GetFileIdsCommand::reset()
     stage = Stage::Initial;
     rawPayload.clear();
     fileIds.clear();
+    requestIv.clear();
+    hasRequestIv = false;
 }
 
 const etl::vector<uint8_t, 32>& GetFileIdsCommand::getFileIds() const

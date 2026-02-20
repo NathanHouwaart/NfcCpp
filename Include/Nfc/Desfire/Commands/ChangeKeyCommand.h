@@ -14,6 +14,7 @@
 #include "../IDesfireCommand.h"
 #include "../DesfireKeyType.h"
 #include "../DesfireAuthMode.h"
+#include "Nfc/Desfire/SecureMessagingPolicy.h"
 #include <etl/vector.h>
 #include <etl/optional.h>
 
@@ -105,15 +106,6 @@ namespace nfc
         void reset() override;
 
     private:
-        enum class SessionCipher : uint8_t
-        {
-            DES,
-            DES3_2K,
-            DES3_3K,
-            AES,
-            UNKNOWN
-        };
-
         /**
          * @brief Build key cryptogram
          * 
@@ -145,7 +137,7 @@ namespace nfc
          * @param context DESFire context
          * @return SessionCipher Session cipher
          */
-        SessionCipher resolveSessionCipher(const DesfireContext& context) const;
+        SecureMessagingPolicy::SessionCipher resolveSessionCipher(const DesfireContext& context) const;
 
         /**
          * @brief Compute DESFire CRC16
@@ -164,26 +156,13 @@ namespace nfc
         uint32_t calculateCrc32Desfire(const etl::ivector<uint8_t>& data) const;
 
         /**
-         * @brief Encrypt key cryptogram for transmission
-         * 
-         * @param paddedCryptogram Padded plaintext cryptogram
-         * @param context DESFire context
-         * @param cipher Session cipher
-         * @return etl::expected<etl::vector<uint8_t, 48>, error::Error> Encrypted cryptogram or error
-         */
-        etl::expected<etl::vector<uint8_t, 48>, error::Error> encryptCryptogram(
-            const etl::ivector<uint8_t>& paddedCryptogram,
-            const DesfireContext& context,
-            SessionCipher cipher);
-
-        /**
          * @brief Check if legacy SEND_MODE cryptogram encryption should be used
          * 
          * @param cipher Session cipher
          * @return true Use legacy SEND_MODE decrypt pipeline
          * @return false Use normal CBC encryption
          */
-        bool useLegacySendMode(SessionCipher cipher) const;
+        bool useLegacySendMode(SecureMessagingPolicy::SessionCipher cipher) const;
 
         ChangeKeyCommandOptions options;
         Stage stage;

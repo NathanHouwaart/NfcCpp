@@ -10,37 +10,21 @@
  */
 
 #include "Nfc/Desfire/Commands/ChangeFileSettingsCommand.h"
-#include "Nfc/Desfire/Commands/ValueOperationCryptoUtils.h"
 #include "Nfc/Desfire/DesfireContext.h"
-#include "Utils/DesfireCrypto.h"
 #include "Error/DesfireError.h"
 
 using namespace nfc;
-using namespace crypto;
 
 namespace
 {
     constexpr uint8_t CHANGE_FILE_SETTINGS_COMMAND_CODE = 0x5FU;
-
-    bool isAllZero(const etl::ivector<uint8_t>& data)
-    {
-        for (size_t i = 0U; i < data.size(); ++i)
-        {
-            if (data[i] != 0x00U)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
 }
 
 ChangeFileSettingsCommand::ChangeFileSettingsCommand(const ChangeFileSettingsCommandOptions& options)
     : options(options)
     , stage(Stage::Initial)
     , activeCommandCommunicationSettings(0x00U)
-    , sessionCipher(SessionCipher::UNKNOWN)
+    , sessionCipher(SecureMessagingPolicy::SessionCipher::UNKNOWN)
     , pendingIv()
     , updateContextIv(false)
     , requestIv()
@@ -83,7 +67,7 @@ etl::expected<DesfireRequest, error::Error> ChangeFileSettingsCommand::buildRequ
     updateContextIv = false;
     requestIv.clear();
     hasRequestIv = false;
-    sessionCipher = SessionCipher::UNKNOWN;
+    sessionCipher = SecureMessagingPolicy::SessionCipher::UNKNOWN;
 
     DesfireRequest request;
     request.commandCode = CHANGE_FILE_SETTINGS_COMMAND_CODE;
@@ -99,7 +83,7 @@ etl::expected<DesfireRequest, error::Error> ChangeFileSettingsCommand::buildRequ
         }
 
         sessionCipher = resolveSessionCipher(context);
-        if (sessionCipher == SessionCipher::UNKNOWN)
+        if (sessionCipher == SecureMessagingPolicy::SessionCipher::UNKNOWN)
         {
             return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
         }
@@ -122,9 +106,25 @@ etl::expected<DesfireRequest, error::Error> ChangeFileSettingsCommand::buildRequ
         request.data.push_back(access1);
         request.data.push_back(access2);
 
-        if (context.authenticated && context.iv.size() == 16U && context.sessionKeyEnc.size() >= 16U)
+        if (context.authenticated && !context.sessionKeyEnc.empty())
         {
-            hasRequestIv = deriveAesPlainRequestIv(context, access1, access2, requestIv);
+            etl::vector<uint8_t, 5> message;
+            message.push_back(CHANGE_FILE_SETTINGS_COMMAND_CODE);
+            message.push_back(options.fileNo);
+            message.push_back(options.communicationSettings);
+            message.push_back(access1);
+            message.push_back(access2);
+
+            auto requestIvResult = SecureMessagingPolicy::derivePlainRequestIv(context, message);
+            if (requestIvResult)
+            {
+                requestIv.clear();
+                for (size_t i = 0U; i < requestIvResult.value().size(); ++i)
+                {
+                    requestIv.push_back(requestIvResult.value()[i]);
+                }
+                hasRequestIv = true;
+            }
         }
     }
 
@@ -153,30 +153,37 @@ etl::expected<DesfireResult, error::Error> ChangeFileSettingsCommand::parseRespo
         result.data.push_back(response[i]);
     }
 
-    if (result.isSuccess() && activeCommandCommunicationSettings == 0x03U && updateContextIv)
+    if (result.isSuccess() && activeCommandCommunicationSettings == 0x03U)
     {
-        if (sessionCipher == SessionCipher::AES)
+        SecureMessagingPolicy::EncryptedPayloadProtection protection;
+        for (size_t i = 0U; i < pendingIv.size(); ++i)
         {
-            auto nextIvResult = valueop_detail::deriveAesResponseIvForValueOperation(response, context, pendingIv);
-            if (!nextIvResult)
-            {
-                return etl::unexpected(nextIvResult.error());
-            }
-            valueop_detail::setContextIv(context, nextIvResult.value());
+            protection.requestState.push_back(pendingIv[i]);
         }
-        else
+        protection.updateContextIv = updateContextIv;
+
+        auto ivUpdateResult = SecureMessagingPolicy::updateContextIvForEncryptedCommandResponse(
+            context,
+            response,
+            protection);
+        if (!ivUpdateResult)
         {
-            valueop_detail::setContextIv(context, pendingIv);
+            return etl::unexpected(ivUpdateResult.error());
         }
     }
     else if (result.isSuccess() && activeCommandCommunicationSettings == 0x00U && hasRequestIv)
     {
-        auto nextIvResult = valueop_detail::deriveAesResponseIvForValueOperation(response, context, requestIv);
+        auto nextIvResult = SecureMessagingPolicy::derivePlainResponseIv(context, response, requestIv);
         if (!nextIvResult)
         {
             return etl::unexpected(nextIvResult.error());
         }
-        valueop_detail::setContextIv(context, nextIvResult.value());
+
+        context.iv.clear();
+        for (size_t i = 0U; i < nextIvResult.value().size(); ++i)
+        {
+            context.iv.push_back(nextIvResult.value()[i]);
+        }
     }
 
     stage = Stage::Complete;
@@ -192,7 +199,7 @@ void ChangeFileSettingsCommand::reset()
 {
     stage = Stage::Initial;
     activeCommandCommunicationSettings = 0x00U;
-    sessionCipher = SessionCipher::UNKNOWN;
+    sessionCipher = SecureMessagingPolicy::SessionCipher::UNKNOWN;
     pendingIv.clear();
     updateContextIv = false;
     requestIv.clear();
@@ -257,55 +264,38 @@ uint8_t ChangeFileSettingsCommand::resolveCommandCommunicationSettings(const Des
     return context.authenticated ? 0x03U : 0x00U;
 }
 
-ChangeFileSettingsCommand::SessionCipher ChangeFileSettingsCommand::resolveSessionCipher(const DesfireContext& context) const
+SecureMessagingPolicy::SessionCipher ChangeFileSettingsCommand::resolveSessionCipher(const DesfireContext& context) const
 {
-    SessionCipher requestedCipher = SessionCipher::UNKNOWN;
+    SecureMessagingPolicy::SessionCipher requestedCipher = SecureMessagingPolicy::SessionCipher::UNKNOWN;
     switch (options.sessionKeyType)
     {
         case DesfireKeyType::DES:
-            requestedCipher = SessionCipher::DES;
+            requestedCipher = SecureMessagingPolicy::SessionCipher::DES;
             break;
         case DesfireKeyType::DES3_2K:
-            requestedCipher = SessionCipher::DES3_2K;
+            requestedCipher = SecureMessagingPolicy::SessionCipher::DES3_2K;
             break;
         case DesfireKeyType::DES3_3K:
-            requestedCipher = SessionCipher::DES3_3K;
+            requestedCipher = SecureMessagingPolicy::SessionCipher::DES3_3K;
             break;
         case DesfireKeyType::AES:
-            requestedCipher = SessionCipher::AES;
+            requestedCipher = SecureMessagingPolicy::SessionCipher::AES;
             break;
         case DesfireKeyType::UNKNOWN:
         default:
             break;
     }
 
-    if (requestedCipher == SessionCipher::UNKNOWN && options.authMode == DesfireAuthMode::AES)
+    if (requestedCipher == SecureMessagingPolicy::SessionCipher::UNKNOWN && options.authMode == DesfireAuthMode::AES)
     {
-        requestedCipher = SessionCipher::AES;
+        requestedCipher = SecureMessagingPolicy::SessionCipher::AES;
     }
 
-    SessionCipher inferredCipher = SessionCipher::UNKNOWN;
-    switch (valueop_detail::resolveSessionCipher(context))
-    {
-        case valueop_detail::SessionCipher::AES:
-            inferredCipher = SessionCipher::AES;
-            break;
-        case valueop_detail::SessionCipher::DES:
-            inferredCipher = SessionCipher::DES;
-            break;
-        case valueop_detail::SessionCipher::DES3_2K:
-            inferredCipher = SessionCipher::DES3_2K;
-            break;
-        case valueop_detail::SessionCipher::DES3_3K:
-            inferredCipher = SessionCipher::DES3_3K;
-            break;
-        default:
-            break;
-    }
+    const auto inferredCipher = SecureMessagingPolicy::resolveSessionCipher(context);
 
-    if (requestedCipher != SessionCipher::UNKNOWN)
+    if (requestedCipher != SecureMessagingPolicy::SessionCipher::UNKNOWN)
     {
-        if (inferredCipher == SessionCipher::UNKNOWN || inferredCipher == requestedCipher)
+        if (inferredCipher == SecureMessagingPolicy::SessionCipher::UNKNOWN || inferredCipher == requestedCipher)
         {
             return requestedCipher;
         }
@@ -316,29 +306,15 @@ ChangeFileSettingsCommand::SessionCipher ChangeFileSettingsCommand::resolveSessi
     return inferredCipher;
 }
 
-bool ChangeFileSettingsCommand::useLegacySendMode(SessionCipher cipher) const
+bool ChangeFileSettingsCommand::useLegacySendMode(SecureMessagingPolicy::SessionCipher cipher) const
 {
     if (options.authMode != DesfireAuthMode::LEGACY)
     {
         return false;
     }
 
-    return cipher == SessionCipher::DES || cipher == SessionCipher::DES3_2K;
-}
-
-bool ChangeFileSettingsCommand::deriveAesPlainRequestIv(
-    const DesfireContext& context,
-    uint8_t access1,
-    uint8_t access2,
-    etl::vector<uint8_t, 16>& outIv) const
-{
-    etl::vector<uint8_t, 5> message;
-    message.push_back(CHANGE_FILE_SETTINGS_COMMAND_CODE);
-    message.push_back(options.fileNo);
-    message.push_back(options.communicationSettings);
-    message.push_back(access1);
-    message.push_back(access2);
-    return valueop_detail::deriveAesPlainRequestIv(context, message, outIv);
+    return cipher == SecureMessagingPolicy::SessionCipher::DES ||
+           cipher == SecureMessagingPolicy::SessionCipher::DES3_2K;
 }
 
 etl::expected<etl::vector<uint8_t, 32>, error::Error> ChangeFileSettingsCommand::buildEncryptedPayload(
@@ -353,8 +329,9 @@ etl::expected<etl::vector<uint8_t, 32>, error::Error> ChangeFileSettingsCommand:
 
     if (useLegacySendMode(sessionCipher))
     {
-        const uint16_t crc16 = valueop_detail::calculateCrc16(plaintext);
-        valueop_detail::appendLe16(plaintext, crc16);
+        const uint16_t crc16 = SecureMessagingPolicy::calculateCrc16(plaintext);
+        plaintext.push_back(static_cast<uint8_t>(crc16 & 0xFFU));
+        plaintext.push_back(static_cast<uint8_t>((crc16 >> 8U) & 0xFFU));
     }
     else
     {
@@ -365,103 +342,47 @@ etl::expected<etl::vector<uint8_t, 32>, error::Error> ChangeFileSettingsCommand:
         crcInput.push_back(access1);
         crcInput.push_back(access2);
 
-        const uint32_t crc32 = valueop_detail::calculateCrc32Desfire(crcInput);
-        valueop_detail::appendLe32(plaintext, crc32);
+        const uint32_t crc32 = SecureMessagingPolicy::calculateCrc32Desfire(crcInput);
+        plaintext.push_back(static_cast<uint8_t>(crc32 & 0xFFU));
+        plaintext.push_back(static_cast<uint8_t>((crc32 >> 8U) & 0xFFU));
+        plaintext.push_back(static_cast<uint8_t>((crc32 >> 16U) & 0xFFU));
+        plaintext.push_back(static_cast<uint8_t>((crc32 >> 24U) & 0xFFU));
     }
 
-    const size_t blockSize = (sessionCipher == SessionCipher::AES) ? 16U : 8U;
+    const size_t blockSize = (sessionCipher == SecureMessagingPolicy::SessionCipher::AES) ? 16U : 8U;
     while ((plaintext.size() % blockSize) != 0U)
     {
         plaintext.push_back(0x00U);
     }
 
-    if (useLegacySendMode(sessionCipher))
-    {
-        if (!context.iv.empty())
-        {
-            if (context.iv.size() != 8U || !isAllZero(context.iv))
-            {
-                return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
-            }
-        }
-
-        etl::vector<uint8_t, 32> encrypted;
-        etl::vector<uint8_t, 8> previousBlock;
-        previousBlock.resize(8U, 0x00U);
-
-        for (size_t offset = 0U; offset < plaintext.size(); offset += 8U)
-        {
-            uint8_t xoredBlock[8];
-            for (size_t i = 0U; i < 8U; ++i)
-            {
-                xoredBlock[i] = static_cast<uint8_t>(plaintext[offset + i] ^ previousBlock[i]);
-            }
-
-            uint8_t transformedBlock[8];
-            if (sessionCipher == SessionCipher::DES)
-            {
-                if (context.sessionKeyEnc.size() < 8U)
-                {
-                    return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
-                }
-                DesFireCrypto::desDecrypt(xoredBlock, context.sessionKeyEnc.data(), transformedBlock);
-            }
-            else if (sessionCipher == SessionCipher::DES3_2K)
-            {
-                if (context.sessionKeyEnc.size() < 16U)
-                {
-                    return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
-                }
-                DesFireCrypto::des3Decrypt(xoredBlock, context.sessionKeyEnc.data(), transformedBlock);
-            }
-            else
-            {
-                return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
-            }
-
-            for (size_t i = 0U; i < 8U; ++i)
-            {
-                encrypted.push_back(transformedBlock[i]);
-                previousBlock[i] = transformedBlock[i];
-            }
-        }
-
-        pendingIv.clear();
-        updateContextIv = false;
-        return encrypted;
-    }
-
-    valueop_detail::SessionCipher valueOpCipher = valueop_detail::SessionCipher::UNKNOWN;
-    switch (sessionCipher)
-    {
-        case SessionCipher::DES:
-            valueOpCipher = valueop_detail::SessionCipher::DES;
-            break;
-        case SessionCipher::DES3_2K:
-            valueOpCipher = valueop_detail::SessionCipher::DES3_2K;
-            break;
-        case SessionCipher::DES3_3K:
-            valueOpCipher = valueop_detail::SessionCipher::DES3_3K;
-            break;
-        case SessionCipher::AES:
-            valueOpCipher = valueop_detail::SessionCipher::AES;
-            break;
-        case SessionCipher::UNKNOWN:
-        default:
-            valueOpCipher = valueop_detail::SessionCipher::UNKNOWN;
-            break;
-    }
-
-    auto encryptedResult = valueop_detail::encryptPayload(
-        plaintext,
+    auto protectionResult = SecureMessagingPolicy::protectEncryptedPayload(
         context,
-        valueOpCipher,
-        pendingIv);
-    if (!encryptedResult)
+        plaintext,
+        sessionCipher,
+        useLegacySendMode(sessionCipher));
+    if (!protectionResult)
     {
-        return etl::unexpected(encryptedResult.error());
+        return etl::unexpected(protectionResult.error());
     }
 
-    updateContextIv = true;
-    return encryptedResult.value();
+    const auto& protection = protectionResult.value();
+    if (protection.encryptedPayload.size() > 32U)
+    {
+        return etl::unexpected(error::Error::fromDesfire(error::DesfireError::LengthError));
+    }
+
+    etl::vector<uint8_t, 32> encrypted;
+    for (size_t i = 0U; i < protection.encryptedPayload.size(); ++i)
+    {
+        encrypted.push_back(protection.encryptedPayload[i]);
+    }
+
+    pendingIv.clear();
+    for (size_t i = 0U; i < protection.requestState.size(); ++i)
+    {
+        pendingIv.push_back(protection.requestState[i]);
+    }
+    updateContextIv = protection.updateContextIv;
+
+    return encrypted;
 }

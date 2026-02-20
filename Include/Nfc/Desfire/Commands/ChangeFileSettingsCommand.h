@@ -14,6 +14,7 @@
 #include "../IDesfireCommand.h"
 #include "../DesfireAuthMode.h"
 #include "../DesfireKeyType.h"
+#include "Nfc/Desfire/SecureMessagingPolicy.h"
 #include <etl/vector.h>
 
 namespace nfc
@@ -109,25 +110,11 @@ namespace nfc
         void reset() override;
 
     private:
-        enum class SessionCipher : uint8_t
-        {
-            DES,
-            DES3_2K,
-            DES3_3K,
-            AES,
-            UNKNOWN
-        };
-
         bool validateOptions() const;
         bool buildAccessRightsBytes(uint8_t& access1, uint8_t& access2) const;
         uint8_t resolveCommandCommunicationSettings(const DesfireContext& context) const;
-        SessionCipher resolveSessionCipher(const DesfireContext& context) const;
-        bool useLegacySendMode(SessionCipher cipher) const;
-        bool deriveAesPlainRequestIv(
-            const DesfireContext& context,
-            uint8_t access1,
-            uint8_t access2,
-            etl::vector<uint8_t, 16>& outIv) const;
+        SecureMessagingPolicy::SessionCipher resolveSessionCipher(const DesfireContext& context) const;
+        bool useLegacySendMode(SecureMessagingPolicy::SessionCipher cipher) const;
 
         etl::expected<etl::vector<uint8_t, 32>, error::Error> buildEncryptedPayload(
             const DesfireContext& context,
@@ -137,7 +124,7 @@ namespace nfc
         ChangeFileSettingsCommandOptions options;
         Stage stage;
         uint8_t activeCommandCommunicationSettings;
-        SessionCipher sessionCipher;
+        SecureMessagingPolicy::SessionCipher sessionCipher;
         etl::vector<uint8_t, 16> pendingIv;
         bool updateContextIv;
         etl::vector<uint8_t, 16> requestIv;

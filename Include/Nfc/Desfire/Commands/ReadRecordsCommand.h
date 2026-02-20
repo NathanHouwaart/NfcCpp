@@ -120,7 +120,6 @@ namespace nfc
         bool validateOptions() const;
         uint8_t resolveCommunicationSettings(const DesfireContext& context) const;
         SessionCipher resolveSessionCipher(const DesfireContext& context) const;
-        bool deriveAesPlainRequestIv(const DesfireContext& context, etl::vector<uint8_t, 16>& outIv) const;
         bool tryDecodeEncryptedRecords(DesfireContext& context);
         bool decryptPayload(
             const etl::ivector<uint8_t>& ciphertext,

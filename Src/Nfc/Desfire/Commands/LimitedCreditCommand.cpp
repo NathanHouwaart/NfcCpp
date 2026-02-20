@@ -24,9 +24,8 @@ namespace
 LimitedCreditCommand::LimitedCreditCommand(const LimitedCreditCommandOptions& options)
     : options(options)
     , complete(false)
-    , sessionCipher(valueop_detail::SessionCipher::UNKNOWN)
     , updateContextIv(false)
-    , pendingIv()
+    , requestState()
 {
 }
 
@@ -50,9 +49,8 @@ etl::expected<DesfireRequest, error::Error> LimitedCreditCommand::buildRequest(c
         LIMITED_CREDIT_COMMAND_CODE,
         options,
         context,
-        sessionCipher,
         updateContextIv,
-        pendingIv);
+        requestState);
 }
 
 etl::expected<DesfireResult, error::Error> LimitedCreditCommand::parseResponse(
@@ -62,9 +60,8 @@ etl::expected<DesfireResult, error::Error> LimitedCreditCommand::parseResponse(
     auto parseResult = value_mutation_detail::parseResponse(
         response,
         context,
-        sessionCipher,
         updateContextIv,
-        pendingIv);
+        requestState);
     if (!parseResult)
     {
         return etl::unexpected(parseResult.error());
@@ -82,7 +79,6 @@ bool LimitedCreditCommand::isComplete() const
 void LimitedCreditCommand::reset()
 {
     complete = false;
-    sessionCipher = valueop_detail::SessionCipher::UNKNOWN;
     updateContextIv = false;
-    pendingIv.clear();
+    requestState.clear();
 }

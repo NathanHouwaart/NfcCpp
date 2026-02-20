@@ -10,6 +10,7 @@
  */
 
 #include "Nfc/Desfire/Commands/GetApplicationIdsCommand.h"
+#include "Nfc/Desfire/SecureMessagingPolicy.h"
 #include "Nfc/Desfire/DesfireContext.h"
 #include "Error/DesfireError.h"
 
@@ -25,6 +26,8 @@ GetApplicationIdsCommand::GetApplicationIdsCommand()
     : stage(Stage::Initial)
     , rawPayload()
     , applicationIds()
+    , requestIv()
+    , hasRequestIv(false)
 {
 }
 
@@ -35,8 +38,6 @@ etl::string_view GetApplicationIdsCommand::name() const
 
 etl::expected<DesfireRequest, error::Error> GetApplicationIdsCommand::buildRequest(const DesfireContext& context)
 {
-    (void)context;
-
     DesfireRequest request;
     request.data.clear();
     request.expectedResponseLength = 0;
@@ -44,6 +45,25 @@ etl::expected<DesfireRequest, error::Error> GetApplicationIdsCommand::buildReque
     switch (stage)
     {
         case Stage::Initial:
+            requestIv.clear();
+            hasRequestIv = false;
+            if (context.authenticated)
+            {
+                etl::vector<uint8_t, 1> cmacMessage;
+                cmacMessage.push_back(GET_APPLICATION_IDS_COMMAND_CODE);
+
+                auto requestIvResult = SecureMessagingPolicy::derivePlainRequestIv(context, cmacMessage, true);
+                if (requestIvResult)
+                {
+                    const auto& derivedIv = requestIvResult.value();
+                    for (size_t i = 0U; i < derivedIv.size(); ++i)
+                    {
+                        requestIv.push_back(derivedIv[i]);
+                    }
+                    hasRequestIv = true;
+                }
+            }
+
             request.commandCode = GET_APPLICATION_IDS_COMMAND_CODE;
             return request;
 
@@ -61,8 +81,6 @@ etl::expected<DesfireResult, error::Error> GetApplicationIdsCommand::parseRespon
     const etl::ivector<uint8_t>& response,
     DesfireContext& context)
 {
-    (void)context;
-
     if (response.empty())
     {
         return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidResponse));
@@ -78,26 +96,7 @@ etl::expected<DesfireResult, error::Error> GetApplicationIdsCommand::parseRespon
     }
 
     const size_t frameDataOffset = 1U;
-    size_t frameDataLength = response.size() - frameDataOffset;
-
-    // In authenticated sessions the final response may carry a trailing MAC/CMAC.
-    // Current secure pipe integration does not strip it, so trim here when needed.
-    if (result.isSuccess() && context.authenticated)
-    {
-        const size_t combinedLength = rawPayload.size() + frameDataLength;
-        if ((combinedLength % 3U) != 0U)
-        {
-            if (frameDataLength >= 8U && ((combinedLength - 8U) % 3U) == 0U)
-            {
-                frameDataLength -= 8U;
-            }
-            else if (frameDataLength >= 4U && ((combinedLength - 4U) % 3U) == 0U)
-            {
-                frameDataLength -= 4U;
-            }
-        }
-    }
-
+    const size_t frameDataLength = response.size() - frameDataOffset;
     for (size_t i = 0; i < frameDataLength; ++i)
     {
         if (result.data.full() || rawPayload.full())
@@ -116,14 +115,66 @@ etl::expected<DesfireResult, error::Error> GetApplicationIdsCommand::parseRespon
         return result;
     }
 
-    // Final frame received: payload must be whole AID triplets.
-    if ((rawPayload.size() % 3U) != 0U)
+    size_t payloadLength = rawPayload.size();
+    if (context.authenticated && hasRequestIv)
+    {
+        bool verified = false;
+        constexpr size_t macCandidates[3] = {8U, 4U, 0U};
+        for (size_t macIndex = 0U; macIndex < 3U; ++macIndex)
+        {
+            const size_t macLength = macCandidates[macIndex];
+            if (rawPayload.size() < macLength)
+            {
+                continue;
+            }
+
+            const size_t candidateLength = rawPayload.size() - macLength;
+            if ((candidateLength % 3U) == 0U)
+            {
+                auto verifyResult = SecureMessagingPolicy::verifyAuthenticatedPlainPayloadAutoMacAndUpdateContextIv(
+                    context,
+                    rawPayload,
+                    result.statusCode,
+                    requestIv,
+                    candidateLength);
+                if (verifyResult)
+                {
+                    payloadLength = candidateLength;
+                    verified = true;
+                    break;
+                }
+            }
+        }
+
+        if (!verified)
+        {
+            return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidResponse));
+        }
+    }
+    else if (context.authenticated)
+    {
+        // Compatibility fallback for legacy-auth sessions where authenticated-plain IV/CMAC verification is unavailable.
+        if ((payloadLength % 3U) != 0U)
+        {
+            if (payloadLength >= 8U && ((payloadLength - 8U) % 3U) == 0U)
+            {
+                payloadLength -= 8U;
+            }
+            else if (payloadLength >= 4U && ((payloadLength - 4U) % 3U) == 0U)
+            {
+                payloadLength -= 4U;
+            }
+        }
+    }
+
+    // Final payload must be whole AID triplets.
+    if ((payloadLength % 3U) != 0U)
     {
         return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidResponse));
     }
 
     applicationIds.clear();
-    for (size_t offset = 0; offset < rawPayload.size(); offset += 3U)
+    for (size_t offset = 0; offset < payloadLength; offset += 3U)
     {
         if (applicationIds.full())
         {
@@ -148,6 +199,8 @@ void GetApplicationIdsCommand::reset()
     stage = Stage::Initial;
     rawPayload.clear();
     applicationIds.clear();
+    requestIv.clear();
+    hasRequestIv = false;
 }
 
 const etl::vector<etl::array<uint8_t, 3>, 84>& GetApplicationIdsCommand::getApplicationIds() const

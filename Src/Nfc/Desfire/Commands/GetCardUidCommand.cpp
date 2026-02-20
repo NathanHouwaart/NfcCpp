@@ -10,7 +10,7 @@
  */
 
 #include "Nfc/Desfire/Commands/GetCardUidCommand.h"
-#include "Nfc/Desfire/Commands/ValueOperationCryptoUtils.h"
+#include "Nfc/Desfire/SecureMessagingPolicy.h"
 #include "Nfc/Desfire/DesfireContext.h"
 #include "Utils/DesfireCrypto.h"
 #include "Error/DesfireError.h"
@@ -125,15 +125,15 @@ const etl::vector<uint8_t, 10>& GetCardUidCommand::getUid() const
 
 GetCardUidCommand::SessionCipher GetCardUidCommand::resolveSessionCipher(const DesfireContext& context) const
 {
-    switch (valueop_detail::resolveSessionCipher(context))
+    switch (SecureMessagingPolicy::resolveSessionCipher(context))
     {
-        case valueop_detail::SessionCipher::DES:
+        case SecureMessagingPolicy::SessionCipher::DES:
             return SessionCipher::DES;
-        case valueop_detail::SessionCipher::DES3_2K:
+        case SecureMessagingPolicy::SessionCipher::DES3_2K:
             return SessionCipher::DES3_2K;
-        case valueop_detail::SessionCipher::DES3_3K:
+        case SecureMessagingPolicy::SessionCipher::DES3_3K:
             return SessionCipher::DES3_3K;
-        case valueop_detail::SessionCipher::AES:
+        case SecureMessagingPolicy::SessionCipher::AES:
             return SessionCipher::AES;
         default:
             return SessionCipher::UNKNOWN;
@@ -142,12 +142,12 @@ GetCardUidCommand::SessionCipher GetCardUidCommand::resolveSessionCipher(const D
 
 uint16_t GetCardUidCommand::calculateCrc16(const etl::ivector<uint8_t>& data) const
 {
-    return valueop_detail::calculateCrc16(data);
+    return SecureMessagingPolicy::calculateCrc16(data);
 }
 
 uint32_t GetCardUidCommand::calculateCrc32Desfire(const etl::ivector<uint8_t>& data) const
 {
-    return valueop_detail::calculateCrc32Desfire(data);
+    return SecureMessagingPolicy::calculateCrc32Desfire(data);
 }
 
 bool GetCardUidCommand::tryDecodeEncryptedUid(
@@ -249,16 +249,10 @@ bool GetCardUidCommand::tryDecodeEncryptedUid(
             outUid.push_back(plaintext[i]);
         }
 
-        // Keep CBC IV progression for chained secure commands.
-        if ((cipher == SessionCipher::AES || cipher == SessionCipher::DES3_3K) &&
-            context.iv.size() == blockSize &&
-            candidateLen >= blockSize)
+        auto ivUpdateResult = SecureMessagingPolicy::updateContextIvFromEncryptedCiphertext(context, ciphertext);
+        if (!ivUpdateResult)
         {
-            context.iv.clear();
-            for (size_t i = candidateLen - blockSize; i < candidateLen; ++i)
-            {
-                context.iv.push_back(payload[i]);
-            }
+            return false;
         }
 
         return true;

@@ -10,7 +10,7 @@
  */
 
 #include "Nfc/Desfire/Commands/GetFileSettingsCommand.h"
-#include "Nfc/Desfire/Commands/ValueOperationCryptoUtils.h"
+#include "Nfc/Desfire/SecureMessagingPolicy.h"
 #include "Nfc/Desfire/DesfireContext.h"
 #include "Error/DesfireError.h"
 
@@ -69,17 +69,15 @@ etl::expected<DesfireRequest, error::Error> GetFileSettingsCommand::buildRequest
         cmacMessage.push_back(GET_FILE_SETTINGS_COMMAND_CODE);
         cmacMessage.push_back(fileNo);
 
-        const valueop_detail::SessionCipher sessionCipher = valueop_detail::resolveSessionCipher(context);
-        if (sessionCipher == valueop_detail::SessionCipher::AES)
+        auto requestIvResult = SecureMessagingPolicy::derivePlainRequestIv(context, cmacMessage);
+        if (requestIvResult)
         {
-            hasRequestIv = valueop_detail::deriveAesPlainRequestIv(context, cmacMessage, requestIv);
-        }
-        else if (
-            sessionCipher == valueop_detail::SessionCipher::DES3_3K ||
-            (sessionCipher == valueop_detail::SessionCipher::DES3_2K &&
-             context.authScheme == SessionAuthScheme::Iso))
-        {
-            hasRequestIv = valueop_detail::deriveTktdesPlainRequestIv(context, cmacMessage, requestIv);
+            const auto& derivedIv = requestIvResult.value();
+            for (size_t i = 0; i < derivedIv.size(); ++i)
+            {
+                requestIv.push_back(derivedIv[i]);
+            }
+            hasRequestIv = true;
         }
     }
 
@@ -137,8 +135,9 @@ etl::expected<DesfireResult, error::Error> GetFileSettingsCommand::parseResponse
     }
 
     etl::vector<uint8_t, 64> authenticatedPayload;
+    const bool authenticatedVerificationAvailable = context.authenticated && hasRequestIv;
     const bool authenticatedDecoded =
-        context.authenticated &&
+        authenticatedVerificationAvailable &&
         tryDecodeAuthenticatedPayload(candidate, result.statusCode, context, authenticatedPayload);
 
     auto tryApplyCandidate = [&](const etl::ivector<uint8_t>& source, size_t length) -> bool
@@ -178,8 +177,13 @@ etl::expected<DesfireResult, error::Error> GetFileSettingsCommand::parseResponse
     };
 
     bool parsed = false;
-    if (authenticatedDecoded)
+    if (authenticatedVerificationAvailable)
     {
+        if (!authenticatedDecoded)
+        {
+            return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidResponse));
+        }
+
         parsed = tryApplyCandidate(authenticatedPayload, authenticatedPayload.size());
         if (!parsed)
         {
@@ -195,7 +199,11 @@ etl::expected<DesfireResult, error::Error> GetFileSettingsCommand::parseResponse
             parsed = tryApplyCandidate(candidate, candidate.size() - 8U);
             if (parsed)
             {
-                valueop_detail::setContextIv(context, legacyResponseMac);
+                context.iv.clear();
+                for (size_t i = 0U; i < legacyResponseMac.size(); ++i)
+                {
+                    context.iv.push_back(legacyResponseMac[i]);
+                }
             }
         }
 
@@ -482,54 +490,40 @@ bool GetFileSettingsCommand::tryDecodeAuthenticatedPayload(
 {
     outPayload.clear();
 
-    if (!hasRequestIv || candidate.size() < 8U)
+    if (!hasRequestIv || requestIv.empty() || candidate.empty())
     {
         return false;
     }
 
-    const size_t payloadLength = candidate.size() - 8U;
-    etl::vector<uint8_t, 16> nextIv;
-
-    if (requestIv.size() == 16U && context.sessionKeyEnc.size() >= 16U)
+    constexpr size_t macCandidates[3] = {8U, 4U, 0U};
+    for (size_t macIndex = 0U; macIndex < 3U; ++macIndex)
     {
-        if (!valueop_detail::verifyAesAuthenticatedPlainPayload(
-                candidate,
-                statusCode,
-                context,
-                requestIv,
-                payloadLength,
-                8U,
-                nextIv))
+        const size_t macLength = macCandidates[macIndex];
+        if (candidate.size() < macLength)
         {
-            return false;
+            continue;
         }
-    }
-    else if (requestIv.size() == 8U &&
-             (context.sessionKeyEnc.size() == 16U || context.sessionKeyEnc.size() == 24U))
-    {
-        if (!valueop_detail::verifyTktdesAuthenticatedPlainPayload(
-                candidate,
-                statusCode,
-                context,
-                requestIv,
-                payloadLength,
-                8U,
-                nextIv))
+
+        const size_t payloadLength = candidate.size() - macLength;
+        auto verifyResult = SecureMessagingPolicy::verifyAuthenticatedPlainPayloadAutoMacAndUpdateContextIv(
+            context,
+            candidate,
+            statusCode,
+            requestIv,
+            payloadLength);
+        if (!verifyResult)
         {
-            return false;
+            continue;
         }
-    }
-    else
-    {
-        return false;
+
+        outPayload.clear();
+        for (size_t i = 0; i < payloadLength; ++i)
+        {
+            outPayload.push_back(candidate[i]);
+        }
+
+        return true;
     }
 
-    for (size_t i = 0; i < payloadLength; ++i)
-    {
-        outPayload.push_back(candidate[i]);
-    }
-
-    valueop_detail::setContextIv(context, nextIv);
-
-    return true;
+    return false;
 }

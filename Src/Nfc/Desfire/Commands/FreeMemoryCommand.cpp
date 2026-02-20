@@ -10,7 +10,7 @@
  */
 
 #include "Nfc/Desfire/Commands/FreeMemoryCommand.h"
-#include "Nfc/Desfire/Commands/ValueOperationCryptoUtils.h"
+#include "Nfc/Desfire/SecureMessagingPolicy.h"
 #include "Nfc/Desfire/DesfireContext.h"
 #include "Error/DesfireError.h"
 
@@ -44,11 +44,21 @@ etl::expected<DesfireRequest, error::Error> FreeMemoryCommand::buildRequest(cons
 
     requestIv.clear();
     hasRequestIv = false;
-    if (context.authenticated && context.iv.size() == 16U && context.sessionKeyEnc.size() >= 16U)
+    if (context.authenticated)
     {
         etl::vector<uint8_t, 1> cmacMessage;
         cmacMessage.push_back(FREE_MEMORY_COMMAND_CODE);
-        hasRequestIv = valueop_detail::deriveAesPlainRequestIv(context, cmacMessage, requestIv);
+
+        auto requestIvResult = SecureMessagingPolicy::derivePlainRequestIv(context, cmacMessage);
+        if (requestIvResult)
+        {
+            const auto& derivedIv = requestIvResult.value();
+            for (size_t i = 0; i < derivedIv.size(); ++i)
+            {
+                requestIv.push_back(derivedIv[i]);
+            }
+            hasRequestIv = true;
+        }
     }
 
     DesfireRequest request;
@@ -96,7 +106,22 @@ etl::expected<DesfireResult, error::Error> FreeMemoryCommand::parseResponse(
 
     if (context.authenticated && hasRequestIv)
     {
-        decoded = tryDecodeAesAuthenticatedPayload(candidate, result.statusCode, context, payload);
+        auto verifyResult = SecureMessagingPolicy::verifyAuthenticatedPlainPayloadAutoMacAndUpdateContextIv(
+            context,
+            candidate,
+            result.statusCode,
+            requestIv,
+            3U);
+        if (!verifyResult)
+        {
+            return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidResponse));
+        }
+
+        for (size_t i = 0U; i < 3U; ++i)
+        {
+            payload.push_back(candidate[i]);
+        }
+        decoded = true;
     }
 
     if (!decoded)
@@ -163,54 +188,6 @@ uint32_t FreeMemoryCommand::getFreeMemoryBytes() const
 const etl::vector<uint8_t, 16>& FreeMemoryCommand::getRawPayload() const
 {
     return rawPayload;
-}
-
-bool FreeMemoryCommand::tryDecodeAesAuthenticatedPayload(
-    const etl::ivector<uint8_t>& candidate,
-    uint8_t statusCode,
-    DesfireContext& context,
-    etl::vector<uint8_t, 3>& outPayload)
-{
-    outPayload.clear();
-
-    if (!hasRequestIv || requestIv.size() != 16U || context.sessionKeyEnc.size() < 16U)
-    {
-        return false;
-    }
-
-    if (candidate.size() < 3U)
-    {
-        return false;
-    }
-
-    const size_t payloadLength = 3U;
-    const size_t macLength = candidate.size() - payloadLength;
-    if (macLength != 0U && macLength != 4U && macLength != 8U)
-    {
-        return false;
-    }
-
-    etl::vector<uint8_t, 16> nextIv;
-    if (!valueop_detail::verifyAesAuthenticatedPlainPayload(
-            candidate,
-            statusCode,
-            context,
-            requestIv,
-            payloadLength,
-            macLength,
-            nextIv))
-    {
-        return false;
-    }
-
-    for (size_t i = 0; i < payloadLength; ++i)
-    {
-        outPayload.push_back(candidate[i]);
-    }
-
-    valueop_detail::setContextIv(context, nextIv);
-
-    return true;
 }
 
 uint32_t FreeMemoryCommand::parseLe24(const etl::ivector<uint8_t>& payload)

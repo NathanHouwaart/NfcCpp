@@ -100,7 +100,8 @@ namespace nfc
         Stage stage;
         etl::vector<uint8_t, 252> rawPayload;
         etl::vector<etl::array<uint8_t, 3>, 84> applicationIds;
+        etl::vector<uint8_t, 16> requestIv;
+        bool hasRequestIv = false;
     };
 
 } // namespace nfc
-

@@ -2,6 +2,7 @@
 
 add_library(NfcCpp_Nfc_Desfire OBJECT
     DesfireCard.cpp
+    SecureMessagingPolicy.cpp
     PlainPipe.cpp
     MacPipe.cpp
     EncPipe.cpp

@@ -9,13 +9,19 @@
 #include "Nfc/Desfire/DesfireResult.h"
 #include "Error/Error.h"
 #include "Error/DesfireError.h"
-#include "Nfc/Desfire/Commands/ValueOperationCryptoUtils.h"
 #include <etl/expected.h>
 
 namespace nfc
 {
     namespace create_file_detail
     {
+        inline void appendLe24(etl::ivector<uint8_t>& target, uint32_t value)
+        {
+            target.push_back(static_cast<uint8_t>(value & 0xFFU));
+            target.push_back(static_cast<uint8_t>((value >> 8U) & 0xFFU));
+            target.push_back(static_cast<uint8_t>((value >> 16U) & 0xFFU));
+        }
+
         template <typename TOptions>
         inline bool validateCommonOptions(const TOptions& options)
         {
@@ -91,7 +97,7 @@ namespace nfc
             request.data.push_back(options.communicationSettings);
             request.data.push_back(accessLow);
             request.data.push_back(accessHigh);
-            valueop_detail::appendLe24(request.data, options.fileSize);
+            appendLe24(request.data, options.fileSize);
             request.expectedResponseLength = 0U;
             return request;
         }
@@ -110,8 +116,8 @@ namespace nfc
             request.data.push_back(options.communicationSettings);
             request.data.push_back(accessLow);
             request.data.push_back(accessHigh);
-            valueop_detail::appendLe24(request.data, options.recordSize);
-            valueop_detail::appendLe24(request.data, options.maxRecords);
+            appendLe24(request.data, options.recordSize);
+            appendLe24(request.data, options.maxRecords);
             request.expectedResponseLength = 0U;
             return request;
         }
@@ -134,4 +140,3 @@ namespace nfc
         }
     } // namespace create_file_detail
 } // namespace nfc
-

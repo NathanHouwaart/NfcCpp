@@ -123,11 +123,6 @@ namespace nfc
         uint16_t effectiveChunkSize() const;
         uint8_t resolveCommunicationSettings(const DesfireContext& context) const;
         SessionCipher resolveSessionCipher(const DesfireContext& context) const;
-        bool deriveAesPlainRequestIv(
-            const DesfireContext& context,
-            uint32_t chunkOffset,
-            uint32_t chunkLength,
-            etl::vector<uint8_t, 16>& outIv) const;
         bool tryDecodeEncryptedChunk(DesfireContext& context, etl::vector<uint8_t, MAX_FRAME_DATA_SIZE>& outPlainChunk);
         bool decryptPayload(
             const etl::ivector<uint8_t>& ciphertext,

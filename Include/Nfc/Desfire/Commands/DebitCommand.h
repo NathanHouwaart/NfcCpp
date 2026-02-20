@@ -14,7 +14,6 @@
 #include <cstdint>
 #include <etl/vector.h>
 #include "../IDesfireCommand.h"
-#include "ValueOperationCryptoUtils.h"
 
 namespace nfc
 {
@@ -85,9 +84,8 @@ namespace nfc
     private:
         DebitCommandOptions options;
         bool complete;
-        valueop_detail::SessionCipher sessionCipher;
         bool updateContextIv;
-        etl::vector<uint8_t, 16> pendingIv;
+        etl::vector<uint8_t, 16> requestState;
     };
 
 } // namespace nfc

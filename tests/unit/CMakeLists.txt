@@ -204,3 +204,23 @@ target_include_directories(test_desfire_read_write_data
 )
 
 add_test(NAME DesfireReadWriteDataCommandTests COMMAND test_desfire_read_write_data)
+
+# DESFire SecureMessagingPolicy tests
+add_executable(test_desfire_secure_messaging_policy
+    DesfireSecureMessagingPolicyTests.cpp
+)
+
+target_link_libraries(test_desfire_secure_messaging_policy
+    PRIVATE
+        NfcCpp::NfcCpp
+        etl::etl
+        gtest
+        gtest_main
+)
+
+target_include_directories(test_desfire_secure_messaging_policy
+    PRIVATE
+        ${CMAKE_SOURCE_DIR}/Include
+)
+
+add_test(NAME DesfireSecureMessagingPolicyTests COMMAND test_desfire_secure_messaging_policy)

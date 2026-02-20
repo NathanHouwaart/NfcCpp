@@ -10,7 +10,7 @@
  */
 
 #include "Nfc/Desfire/Commands/CommitTransactionCommand.h"
-#include "Nfc/Desfire/Commands/ValueOperationCryptoUtils.h"
+#include "Nfc/Desfire/SecureMessagingPolicy.h"
 #include "Nfc/Desfire/DesfireContext.h"
 #include "Error/DesfireError.h"
 
@@ -64,51 +64,18 @@ etl::expected<DesfireResult, error::Error> CommitTransactionCommand::parseRespon
         result.data.push_back(response[i]);
     }
 
-    // In AES/3K3DES authenticated sessions, CommitTransaction is a plain
-    // command with response CMAC. Keep IV progression aligned for the next
-    // command.
-    if (result.isSuccess() &&
-        context.authenticated &&
-        !context.sessionKeyEnc.empty())
+    if (result.isSuccess())
     {
-        const valueop_detail::SessionCipher cipher = valueop_detail::resolveSessionCipher(context);
         etl::vector<uint8_t, 1> cmacMessage;
         cmacMessage.push_back(COMMIT_TRANSACTION_COMMAND_CODE);
-
-        if (cipher == valueop_detail::SessionCipher::AES)
+        auto ivUpdateResult = SecureMessagingPolicy::updateContextIvForPlainCommand(
+            context,
+            cmacMessage,
+            response,
+            8U);
+        if (!ivUpdateResult)
         {
-            etl::vector<uint8_t, 16> requestIv;
-            if (!valueop_detail::deriveAesPlainRequestIv(context, cmacMessage, requestIv))
-            {
-                return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
-            }
-
-            auto nextIvResult = valueop_detail::deriveAesPlainResponseIv(response, context, requestIv, 8U);
-            if (!nextIvResult)
-            {
-                return etl::unexpected(nextIvResult.error());
-            }
-
-            valueop_detail::setContextIv(context, nextIvResult.value());
-        }
-        else if (
-            cipher == valueop_detail::SessionCipher::DES3_3K ||
-            (cipher == valueop_detail::SessionCipher::DES3_2K &&
-             !valueop_detail::useLegacyDesCryptoMode(context, cipher)))
-        {
-            etl::vector<uint8_t, 16> requestIv;
-            if (!valueop_detail::deriveTktdesPlainRequestIv(context, cmacMessage, requestIv))
-            {
-                return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
-            }
-
-            auto nextIvResult = valueop_detail::deriveTktdesPlainResponseIv(response, context, requestIv, 8U);
-            if (!nextIvResult)
-            {
-                return etl::unexpected(nextIvResult.error());
-            }
-
-            valueop_detail::setContextIv(context, nextIvResult.value());
+            return etl::unexpected(ivUpdateResult.error());
         }
     }
 

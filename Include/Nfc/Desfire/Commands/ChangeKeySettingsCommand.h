@@ -14,6 +14,7 @@
 #include "../IDesfireCommand.h"
 #include "../DesfireAuthMode.h"
 #include "../DesfireKeyType.h"
+#include "Nfc/Desfire/SecureMessagingPolicy.h"
 #include <etl/vector.h>
 
 namespace nfc
@@ -92,23 +93,10 @@ namespace nfc
         void reset() override;
 
     private:
-        enum class SessionCipher : uint8_t
-        {
-            DES,
-            DES3_2K,
-            DES3_3K,
-            AES,
-            UNKNOWN
-        };
-
         etl::expected<etl::vector<uint8_t, 32>, error::Error> buildEncryptedPayload(const DesfireContext& context);
-        etl::expected<etl::vector<uint8_t, 32>, error::Error> encryptPayload(
-            const etl::ivector<uint8_t>& plaintext,
-            const DesfireContext& context,
-            SessionCipher cipher);
 
-        SessionCipher resolveSessionCipher(const DesfireContext& context) const;
-        bool useLegacySendMode(SessionCipher cipher) const;
+        SecureMessagingPolicy::SessionCipher resolveSessionCipher(const DesfireContext& context) const;
+        bool useLegacySendMode(SecureMessagingPolicy::SessionCipher cipher) const;
         uint16_t calculateCrc16(const etl::ivector<uint8_t>& data) const;
         uint32_t calculateCrc32Desfire(const etl::ivector<uint8_t>& data) const;
 
@@ -119,4 +107,3 @@ namespace nfc
     };
 
 } // namespace nfc
-

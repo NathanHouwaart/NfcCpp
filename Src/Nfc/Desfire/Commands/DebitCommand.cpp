@@ -24,9 +24,8 @@ namespace
 DebitCommand::DebitCommand(const DebitCommandOptions& options)
     : options(options)
     , complete(false)
-    , sessionCipher(valueop_detail::SessionCipher::UNKNOWN)
     , updateContextIv(false)
-    , pendingIv()
+    , requestState()
 {
 }
 
@@ -50,9 +49,8 @@ etl::expected<DesfireRequest, error::Error> DebitCommand::buildRequest(const Des
         DEBIT_COMMAND_CODE,
         options,
         context,
-        sessionCipher,
         updateContextIv,
-        pendingIv);
+        requestState);
 }
 
 etl::expected<DesfireResult, error::Error> DebitCommand::parseResponse(
@@ -62,9 +60,8 @@ etl::expected<DesfireResult, error::Error> DebitCommand::parseResponse(
     auto parseResult = value_mutation_detail::parseResponse(
         response,
         context,
-        sessionCipher,
         updateContextIv,
-        pendingIv);
+        requestState);
     if (!parseResult)
     {
         return etl::unexpected(parseResult.error());
@@ -82,7 +79,6 @@ bool DebitCommand::isComplete() const
 void DebitCommand::reset()
 {
     complete = false;
-    sessionCipher = valueop_detail::SessionCipher::UNKNOWN;
     updateContextIv = false;
-    pendingIv.clear();
+    requestState.clear();
 }

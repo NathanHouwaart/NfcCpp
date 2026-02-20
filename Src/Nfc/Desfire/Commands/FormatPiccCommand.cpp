@@ -10,7 +10,7 @@
  */
 
 #include "Nfc/Desfire/Commands/FormatPiccCommand.h"
-#include "Nfc/Desfire/Commands/ValueOperationCryptoUtils.h"
+#include "Nfc/Desfire/SecureMessagingPolicy.h"
 #include "Nfc/Desfire/DesfireContext.h"
 #include "Error/DesfireError.h"
 
@@ -64,28 +64,19 @@ etl::expected<DesfireResult, error::Error> FormatPiccCommand::parseResponse(
         result.data.push_back(response[i]);
     }
 
-    // In AES authenticated sessions, FormatPICC is a plain command with
-    // response CMAC. Keep IV progression aligned for follow-up commands.
-    if (result.isSuccess() &&
-        context.authenticated &&
-        context.iv.size() == 16U &&
-        context.sessionKeyEnc.size() >= 16U)
+    if (result.isSuccess())
     {
-        etl::vector<uint8_t, 16> requestIv;
         etl::vector<uint8_t, 1> cmacMessage;
         cmacMessage.push_back(FORMAT_PICC_COMMAND_CODE);
-        if (!valueop_detail::deriveAesPlainRequestIv(context, cmacMessage, requestIv))
+        auto ivUpdateResult = SecureMessagingPolicy::updateContextIvForPlainCommand(
+            context,
+            cmacMessage,
+            response,
+            8U);
+        if (!ivUpdateResult)
         {
-            return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
+            return etl::unexpected(ivUpdateResult.error());
         }
-
-        auto nextIvResult = valueop_detail::deriveAesPlainResponseIv(response, context, requestIv, 8U);
-        if (!nextIvResult)
-        {
-            return etl::unexpected(nextIvResult.error());
-        }
-
-        valueop_detail::setContextIv(context, nextIvResult.value());
     }
 
     complete = true;

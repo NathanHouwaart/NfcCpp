@@ -10,7 +10,7 @@
  */
 
 #include "Nfc/Desfire/Commands/WriteRecordCommand.h"
-#include "Nfc/Desfire/Commands/ValueOperationCryptoUtils.h"
+#include "Nfc/Desfire/SecureMessagingPolicy.h"
 #include "Nfc/Desfire/DesfireContext.h"
 #include "Utils/DesfireCrypto.h"
 #include "Error/DesfireError.h"
@@ -85,9 +85,7 @@ etl::expected<DesfireRequest, error::Error> WriteRecordCommand::buildRequest(con
                 return etl::unexpected(error::Error::fromDesfire(error::DesfireError::InvalidState));
             }
 
-            legacyDesCryptoMode =
-                (context.authScheme == SessionAuthScheme::Legacy) &&
-                (sessionCipher == SessionCipher::DES || sessionCipher == SessionCipher::DES3_2K);
+            legacyDesCryptoMode = SecureMessagingPolicy::isLegacyDesOr2KSession(context);
         }
 
         resetProgress();
@@ -197,65 +195,13 @@ etl::expected<DesfireResult, error::Error> WriteRecordCommand::parseResponse(
 
     if (updateContextIv && activeCommunicationSettings == 0x03U)
     {
-        if (sessionCipher == SessionCipher::AES)
+        auto ivUpdateResult = SecureMessagingPolicy::updateContextIvForValueOperationResponse(
+            context,
+            response,
+            pendingIv);
+        if (!ivUpdateResult)
         {
-            auto nextIvResult = valueop_detail::deriveAesResponseIvForValueOperation(response, context, pendingIv);
-            if (!nextIvResult)
-            {
-                return etl::unexpected(nextIvResult.error());
-            }
-
-            context.iv.clear();
-            const auto& nextIv = nextIvResult.value();
-            for (size_t i = 0; i < nextIv.size(); ++i)
-            {
-                context.iv.push_back(nextIv[i]);
-            }
-        }
-        else if (sessionCipher == SessionCipher::DES3_3K)
-        {
-            auto nextIvResult = valueop_detail::deriveTktdesResponseIvForValueOperation(response, context, pendingIv);
-            if (!nextIvResult)
-            {
-                return etl::unexpected(nextIvResult.error());
-            }
-
-            context.iv.clear();
-            const auto& nextIv = nextIvResult.value();
-            for (size_t i = 0; i < nextIv.size(); ++i)
-            {
-                context.iv.push_back(nextIv[i]);
-            }
-        }
-        else if (sessionCipher == SessionCipher::DES3_2K && !legacyDesCryptoMode)
-        {
-            auto nextIvResult = valueop_detail::deriveTktdesResponseIvForValueOperation(response, context, pendingIv);
-            if (!nextIvResult)
-            {
-                return etl::unexpected(nextIvResult.error());
-            }
-
-            context.iv.clear();
-            const auto& nextIv = nextIvResult.value();
-            for (size_t i = 0; i < nextIv.size(); ++i)
-            {
-                context.iv.push_back(nextIv[i]);
-            }
-        }
-        else if (sessionCipher == SessionCipher::DES || (sessionCipher == SessionCipher::DES3_2K && legacyDesCryptoMode))
-        {
-            // Legacy DES/2K3DES secure messaging uses command-local chaining.
-            // Keep IV reset between commands.
-            context.iv.clear();
-            context.iv.resize(8U, 0x00U);
-        }
-        else
-        {
-            context.iv.clear();
-            for (size_t i = 0; i < pendingIv.size(); ++i)
-            {
-                context.iv.push_back(pendingIv[i]);
-            }
+            return etl::unexpected(ivUpdateResult.error());
         }
     }
 
@@ -390,25 +336,19 @@ uint8_t WriteRecordCommand::resolveCommunicationSettings(const DesfireContext& c
 
 WriteRecordCommand::SessionCipher WriteRecordCommand::resolveSessionCipher(const DesfireContext& context) const
 {
-    if (context.iv.size() == 16U && context.sessionKeyEnc.size() >= 16U)
+    switch (SecureMessagingPolicy::resolveSessionCipher(context))
     {
-        return SessionCipher::AES;
+        case SecureMessagingPolicy::SessionCipher::DES:
+            return SessionCipher::DES;
+        case SecureMessagingPolicy::SessionCipher::DES3_2K:
+            return SessionCipher::DES3_2K;
+        case SecureMessagingPolicy::SessionCipher::DES3_3K:
+            return SessionCipher::DES3_3K;
+        case SecureMessagingPolicy::SessionCipher::AES:
+            return SessionCipher::AES;
+        default:
+            return SessionCipher::UNKNOWN;
     }
-
-    if (context.sessionKeyEnc.size() == 8U)
-    {
-        return SessionCipher::DES;
-    }
-    if (context.sessionKeyEnc.size() == 16U)
-    {
-        return SessionCipher::DES3_2K;
-    }
-    if (context.sessionKeyEnc.size() == 24U)
-    {
-        return SessionCipher::DES3_3K;
-    }
-
-    return SessionCipher::UNKNOWN;
 }
 
 uint16_t WriteRecordCommand::effectivePlainChunkBudget() const
@@ -462,7 +402,7 @@ WriteRecordCommand::buildEncryptedChunkPayload(
 
     if (sessionCipher == SessionCipher::DES || (sessionCipher == SessionCipher::DES3_2K && legacyDesCryptoMode))
     {
-        const uint16_t crc16 = valueop_detail::calculateCrc16(plaintext);
+        const uint16_t crc16 = SecureMessagingPolicy::calculateCrc16(plaintext);
         appendLe16(plaintext, crc16);
     }
     else
@@ -477,7 +417,7 @@ WriteRecordCommand::buildEncryptedChunkPayload(
             crcInput.push_back(plaintext[i]);
         }
 
-        const uint32_t crc32 = valueop_detail::calculateCrc32Desfire(crcInput);
+        const uint32_t crc32 = SecureMessagingPolicy::calculateCrc32Desfire(crcInput);
         appendLe32(plaintext, crc32);
     }
 

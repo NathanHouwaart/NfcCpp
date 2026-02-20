@@ -76,8 +76,6 @@ namespace nfc
     private:
         uint8_t fileNo;
         bool complete;
-        etl::vector<uint8_t, 16> requestIv;
-        bool hasRequestIv;
     };
 
 } // namespace nfc
